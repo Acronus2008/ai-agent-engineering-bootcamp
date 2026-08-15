@@ -72,13 +72,19 @@
   .nav-footer{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:18px; margin-top:20px; font-family:var(--font-mono); font-size:12px;}
   .nav-footer a{text-decoration:none; border:1px solid var(--border); padding:7px 12px; border-radius:2px;}
   .nav-footer a:hover{border-color:var(--accent2);}
+
+  .top-bar{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;}
+  .lang-switch{display:flex; gap:4px; font-family:var(--font-mono); font-size:11px;}
+  .lang-switch a, .lang-switch span{padding:3px 9px; border:1px solid var(--border); border-radius:2px; text-decoration:none; color:var(--muted); letter-spacing:.04em;}
+  .lang-switch .lang-current{color:var(--accent); border-color:var(--accent); font-weight:600;}
+  .lang-switch a:hover{border-color:var(--accent2); color:var(--accent2);}
 </style>
 </head>
 <body>
 
 
 <div class="wrap">
-  <a class="backlink" href="index.html">&larr; Volver al hub</a>
+  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/glosario.html">EN</a></div></div>
 
   <header class="masthead">
     <div class="eyebrow">Referencia · AI Agent Engineering Bootcamp</div>

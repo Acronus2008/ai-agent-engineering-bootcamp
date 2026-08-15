@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -126,116 +126,116 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/day-07.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../day-07.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Semana 2 · Día 07 · Systems &amp; Cloud</div>
+    <div class="eyebrow">Week 2 · Day 07 · Systems &amp; Cloud</div>
     <div class="title-row">
       <span class="day-numeral">07</span>
       <h1>Distributed Systems</h1>
     </div>
-    <p class="sub">CAP, Saga, Outbox, idempotency — todo esto ya lo conoces. Hoy: aplicarlo a la pregunta que todo entrevistador de FDE hace tarde o temprano.</p>
+    <p class="sub">CAP, Saga, Outbox, idempotency — you already know all of this. Today: apply it to the question every FDE interviewer asks sooner or later.</p>
     <div class="meta-row">
       <span><b>~100 min</b></span>
-      <span>Prerrequisito: <b>Día 06</b></span>
-      <span>Conecta con: <b>Día 08 — Cloud Architecture</b></span>
+      <span>Prerequisite: <b>Day 06</b></span>
+      <span>Connects to: <b>Day 08 — Cloud Architecture</b></span>
     </div>
   </header>
 
   <section>
-    <div class="section-label">Objetivo del día</div>
-    <p>Responder con solidez: <b>"¿qué ocurre si un agente intenta ejecutar dos veces la misma operación?"</b> — y hacerlo cubriendo idempotency, límites transaccionales, autorización, auditoría y estrategia de retry en una sola respuesta estructurada.</p>
+    <div class="section-label">Today's objective</div>
+    <p>Answer solidly: <b>"what happens if an agent tries to execute the same operation twice?"</b> — and do it covering idempotency, transactional limits, authorization, auditing, and retry strategy in a single structured answer.</p>
   </section>
 
   <section>
-    <div class="section-label">Contenido</div>
+    <div class="section-label">Content</div>
     <div class="concept-grid">
       <div class="concept">
         <div class="concept-term">CAP Theorem</div>
-        <h3>Aplicado a decisiones de tool, no solo de base de datos</h3>
-        <p>Durante una partición, ¿la tool prioriza consistencia (rechaza el request) o disponibilidad (responde con datos potencialmente desactualizados)? Depende del costo de cada error: un "estado de pedido" desactualizado es tolerable; un "saldo disponible" no.</p>
+        <h3>Applied to tool decisions, not just databases</h3>
+        <p>During a partition, does the tool prioritize consistency (reject the request) or availability (respond with potentially stale data)? It depends on the cost of each error: a stale "order status" is tolerable; a stale "available balance" is not.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Eventual Consistency</div>
-        <h3>Aceptable para la mayoría de las lecturas de un agente</h3>
-        <p>Si el agente lee de un read replica o de un índice de RAG que se actualiza cada X minutos, eso es eventual consistency — perfectamente válido para preguntas informativas, no para decisiones que muevan dinero o inventario.</p>
+        <h3>Acceptable for most of an agent's reads</h3>
+        <p>If the agent reads from a read replica or a RAG index that updates every X minutes, that's eventual consistency — perfectly valid for informational questions, not for decisions that move money or inventory.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Distributed Transactions &amp; Saga</div>
-        <h3>Una acción del agente casi nunca es una sola transacción ACID</h3>
-        <p>"Procesar un reembolso" puede tocar: sistema de pagos, base de pedidos, sistema de notificaciones — cada uno con su propia transacción local. El patrón Saga encadena estos pasos con <b>compensating actions</b>: si el paso 3 falla, deshaces (o compensas) los efectos de los pasos 1 y 2 ya ejecutados.</p>
+        <h3>An agent action is almost never a single ACID transaction</h3>
+        <p>"Process a refund" can touch: payment system, orders database, notification system — each with its own local transaction. The Saga pattern chains these steps with <b>compensating actions</b>: if step 3 fails, you undo (or compensate for) the effects of steps 1 and 2 that already executed.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Outbox Pattern</div>
-        <h3>Publicar un evento de forma confiable junto a un cambio de estado</h3>
-        <p>Cuando una tool actualiza su base de datos Y necesita emitir un evento (ej. "reembolso procesado" → notificar al agente para que informe al usuario), escribir ambos en la misma transacción local (tabla de outbox) y publicar el evento después, de forma asíncrona, evita el caso donde el estado cambia pero el evento se pierde.</p>
+        <h3>Reliably publishing an event alongside a state change</h3>
+        <p>When a tool updates its database AND needs to emit an event (e.g., "refund processed" → notify the agent to inform the user), writing both in the same local transaction (an outbox table) and publishing the event afterward, asynchronously, avoids the case where the state changes but the event gets lost.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Ordering</div>
-        <h3>El orden de las tool calls importa, y no siempre lo garantiza el modelo</h3>
-        <p>Si el agente debe "verificar inventario" antes de "cobrar", esa precondición debe validarse dentro de la tool misma (rechazar el cobro si no hay verificación previa registrada) — nunca confiar en que el LLM siempre respetará el orden correcto.</p>
+        <h3>The order of tool calls matters, and the model doesn't always guarantee it</h3>
+        <p>If the agent must "check inventory" before "charging," that precondition must be validated inside the tool itself (reject the charge if there's no recorded prior verification) — never trust that the LLM will always respect the correct order.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Exactly-once vs At-least-once</div>
-        <h3>Exactly-once no existe a nivel de red — se simula con idempotency</h3>
-        <p>Asume que cada tool call puede llegar más de una vez (at-least-once, por retries). El resultado "effectively-once" se logra combinando entrega at-least-once con una tool idempotente — no persiguiendo exactly-once real, que es prácticamente imposible de garantizar end-to-end.</p>
+        <h3>Exactly-once doesn't exist at the network level — it's simulated with idempotency</h3>
+        <p>Assume any tool call can arrive more than once (at-least-once, from retries). The "effectively-once" outcome is achieved by combining at-least-once delivery with an idempotent tool — not by chasing real exactly-once, which is practically impossible to guarantee end-to-end.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Distributed Locks</div>
-        <h3>Cuando dos canales pueden disparar la misma acción a la vez</h3>
-        <p>Si el mismo usuario interactúa por chat y por voz simultáneamente, un lock sobre la clave de la operación (ej. <code>order_id</code>) evita que ambas conversaciones ejecuten la misma acción crítica en paralelo.</p>
+        <h3>When two channels could trigger the same action at once</h3>
+        <p>If the same user is interacting via chat and voice simultaneously, a lock on the operation's key (e.g., <code>order_id</code>) prevents both conversations from executing the same critical action in parallel.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Backpressure, Queues &amp; Streams</div>
-        <h3>Repaso rápido con el vocabulario de agentes</h3>
-        <p>Backpressure = el sistema le dice al orquestador "más despacio" en vez de caerse. Queues = distribución punto a punto de trabajo (una tarea, un consumidor). Streams (Kafka) = log ordenado, múltiples consumidores independientes — útil cuando varios sistemas necesitan reaccionar al mismo evento del agente.</p>
+        <h3>A quick review with agent vocabulary</h3>
+        <p>Backpressure = the system tells the orchestrator "slow down" instead of falling over. Queues = point-to-point work distribution (one task, one consumer). Streams (Kafka) = an ordered log, multiple independent consumers — useful when several systems need to react to the same agent event.</p>
       </div>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Diagrama de implementación</div>
-    <h2>El Saga de reembolso, paso a paso</h2>
-    <p>Cuatro pasos con su propia transacción local — y una rama explícita para cuando el paso 3 falla después de que el pago (paso 2) ya se emitió.</p>
+    <div class="section-label">Implementation diagram</div>
+    <h2>The refund Saga, step by step</h2>
+    <p>Four steps with their own local transaction — and an explicit branch for when step 3 fails after the payment (step 2) has already been issued.</p>
     <figure class="diagram">
-      <svg viewBox="0 0 640 200" role="img" aria-label="Diagrama: Saga de reembolso con cuatro pasos — verificar elegibilidad, emitir reembolso con idempotency key, actualizar pedido con patrón outbox, notificar cliente. Si el paso de actualizar pedido falla después de que el pago ya se emitió, la rama de compensación reintenta o escala a revisión humana, sin revertir el pago.">
+      <svg viewBox="0 0 640 200" role="img" aria-label="Diagram: refund Saga with four steps — verify eligibility, issue refund with an idempotency key, update order with the outbox pattern, notify customer. If the update-order step fails after the payment was already issued, the compensation branch retries or escalates to human review, without reverting the payment.">
         <defs>
           <marker id="d7arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker>
         </defs>
 
         <rect x="10" y="20" width="130" height="40" rx="3" class="dbox"/>
-        <text x="75" y="40" text-anchor="middle" class="dtext">Verificar</text>
-        <text x="75" y="54" text-anchor="middle" class="dtext-muted">elegibilidad</text>
+        <text x="75" y="40" text-anchor="middle" class="dtext">Verify</text>
+        <text x="75" y="54" text-anchor="middle" class="dtext-muted">eligibility</text>
         <line x1="140" y1="40" x2="158" y2="40" class="darrow" marker-end="url(#d7arrow)"/>
 
         <rect x="160" y="20" width="150" height="40" rx="3" class="dbox-accent"/>
-        <text x="235" y="40" text-anchor="middle" class="dtext">Emitir reembolso</text>
+        <text x="235" y="40" text-anchor="middle" class="dtext">Issue refund</text>
         <text x="235" y="54" text-anchor="middle" class="dtext-muted">idempotency key</text>
         <line x1="310" y1="40" x2="328" y2="40" class="darrow" marker-end="url(#d7arrow)"/>
 
         <rect x="330" y="20" width="140" height="40" rx="3" class="dbox"/>
-        <text x="400" y="40" text-anchor="middle" class="dtext">Actualizar pedido</text>
+        <text x="400" y="40" text-anchor="middle" class="dtext">Update order</text>
         <text x="400" y="54" text-anchor="middle" class="dtext-muted">+ outbox event</text>
         <line x1="470" y1="40" x2="488" y2="40" class="darrow" marker-end="url(#d7arrow)"/>
 
         <rect x="490" y="20" width="140" height="40" rx="3" class="dbox"/>
-        <text x="560" y="40" text-anchor="middle" class="dtext">Notificar cliente</text>
-        <text x="560" y="54" text-anchor="middle" class="dtext-muted">vía outbox</text>
+        <text x="560" y="40" text-anchor="middle" class="dtext">Notify customer</text>
+        <text x="560" y="54" text-anchor="middle" class="dtext-muted">via outbox</text>
 
         <line x1="400" y1="60" x2="400" y2="108" class="darrow" marker-end="url(#d7arrow)"/>
-        <text x="415" y="88" class="dtext-muted">si falla aquí...</text>
+        <text x="415" y="88" class="dtext-muted">if this fails...</text>
         <rect x="260" y="110" width="280" height="54" rx="3" class="dbox"/>
-        <text x="400" y="132" text-anchor="middle" class="dtext">Reintentar / escalar a revisión humana</text>
-        <text x="400" y="150" text-anchor="middle" class="dtext-bad">NO revierte el pago ya emitido</text>
+        <text x="400" y="132" text-anchor="middle" class="dtext">Retry / escalate to human review</text>
+        <text x="400" y="150" text-anchor="middle" class="dtext-bad">Does NOT revert the already-issued payment</text>
       </svg>
-      <figcaption>La "compensación" del pago no es revertirlo — casi nunca es posible ni deseable. Es reconciliar.</figcaption>
+      <figcaption>The payment's "compensation" isn't reverting it — that's rarely possible or desirable. It's reconciling.</figcaption>
     </figure>
   </section>
 
   <section>
-    <div class="section-label">Ejemplo de implementación</div>
-    <h2>Orquestador de Saga, en código</h2>
-    <p>El patrón general: cada paso sabe cómo ejecutarse y, si aplica, cómo compensarse.</p>
+    <div class="section-label">Implementation example</div>
+    <h2>Saga orchestrator, in code</h2>
+    <p>The general pattern: each step knows how to execute and, if applicable, how to compensate.</p>
     <div class="code-block">
       <div class="code-head"><span>refund_saga.py</span><span class="lang">python</span></div>
       <pre><span class="code-kw">class</span> SagaStep:
@@ -249,8 +249,8 @@
             context = step.execute(context)
             completed.append(step)
         <span class="code-kw">except</span> StepFailed <span class="code-kw">as</span> e:
-            <span class="code-comment"># Compensa en orden inverso — pero el pago (paso 2) no se</span>
-            <span class="code-comment"># "revierte": su compensación real es escalar, no deshacer.</span>
+            <span class="code-comment"># Compensate in reverse order — but the payment (step 2) isn't</span>
+            <span class="code-comment"># "reverted": its real compensation is to escalate, not undo.</span>
             <span class="code-kw">for</span> done <span class="code-kw">in</span> reversed(completed):
                 <span class="code-kw">if</span> done.compensate:
                     done.compensate(context)
@@ -259,106 +259,106 @@
 refund_saga = [
     SagaStep(<span class="code-str">"verify"</span>, verify_eligibility),
     SagaStep(<span class="code-str">"charge"</span>, issue_refund, compensate=escalate_to_review),
-    SagaStep(<span class="code-str">"update_order"</span>, update_order_status),  <span class="code-comment"># usa Outbox internamente</span>
+    SagaStep(<span class="code-str">"update_order"</span>, update_order_status),  <span class="code-comment"># uses Outbox internally</span>
     SagaStep(<span class="code-str">"notify"</span>, notify_customer),
 ]</pre>
     </div>
-    <p style="font-size:13px; color:var(--muted); margin-top:8px;">La compensación de <code>charge</code> no revierte el pago — llama a <code>escalate_to_review</code>, que es lo que discutimos en el ejercicio de abajo.</p>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">The <code>charge</code> compensation doesn't revert the payment — it calls <code>escalate_to_review</code>, which is what we discuss in the exercise below.</p>
   </section>
 
   <section>
-    <div class="section-label">Ejercicio práctico</div>
+    <div class="section-label">Practical exercise</div>
     <div class="exercise-box">
-      <h2>Caso: procesar un reembolso vía agente</h2>
-      <p>Flujo: (1) verificar elegibilidad (lectura), (2) emitir el reembolso en el proveedor de pagos (escritura externa, puede fallar parcialmente), (3) actualizar el estado del pedido (escritura interna), (4) notificar al cliente.</p>
+      <h2>Case: process a refund via an agent</h2>
+      <p>Flow: (1) verify eligibility (read), (2) issue the refund with the payment provider (external write, can fail partially), (3) update the order status (internal write), (4) notify the customer.</p>
       <ol>
-        <li>¿Cómo estructuras esto como Saga? ¿Cuál es la compensating action si el paso 3 falla después de que el paso 2 ya se ejecutó?</li>
-        <li>¿Dónde usarías el Outbox pattern?</li>
-        <li>¿Qué necesita ser idempotente, y con qué key?</li>
+        <li>How do you structure this as a Saga? What's the compensating action if step 3 fails after step 2 already executed?</li>
+        <li>Where would you use the Outbox pattern?</li>
+        <li>What needs to be idempotent, and with what key?</li>
       </ol>
       <details>
-        <summary>Ver enfoque sugerido</summary>
+        <summary>See suggested approach</summary>
         <div class="solution">
-          <p><b>1.</b> Cada paso es una transacción local con su propia compensación. Si el paso 3 (actualizar pedido) falla después de que el reembolso ya se emitió (paso 2), la compensación NO es "revertir el reembolso" (rara vez es posible ni deseable) — es reintentar el paso 3 hasta lograrlo, o escalar a revisión humana si sigue fallando, dejando el reembolso ya emitido registrado como "pendiente de reconciliar".</p>
-          <p><b>2.</b> En el paso 3: al actualizar el estado del pedido en la misma transacción local, se escribe también el evento "reembolso procesado" en una tabla outbox — un proceso separado lo publica de forma confiable, disparando la notificación al cliente (paso 4) sin acoplar esa notificación a la transacción de la base de datos.</p>
-          <p><b>3.</b> La llamada al proveedor de pagos (paso 2) necesita una idempotency key generada al iniciar el flujo (no en cada retry) — así, si el agente reintenta todo el flujo por un timeout, el proveedor de pagos reconoce la misma operación y no emite un segundo reembolso.</p>
+          <p><b>1.</b> Each step is a local transaction with its own compensation. If step 3 (update order) fails after the refund was already issued (step 2), the compensation is NOT "revert the refund" (rarely possible or desirable) — it's retrying step 3 until it succeeds, or escalating to human review if it keeps failing, leaving the already-issued refund flagged as "pending reconciliation."</p>
+          <p><b>2.</b> In step 3: when updating the order status in the same local transaction, you also write the "refund processed" event to an outbox table — a separate process reliably publishes it, triggering the customer notification (step 4) without coupling that notification to the database transaction.</p>
+          <p><b>3.</b> The call to the payment provider (step 2) needs an idempotency key generated at the start of the flow (not on each retry) — that way, if the agent retries the whole flow due to a timeout, the payment provider recognizes it as the same operation and doesn't issue a second refund.</p>
         </div>
       </details>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <div class="section-label">Related interview questions</div>
     <ul class="iq-list">
-      <li>¿Qué ocurre si un agente intenta ejecutar dos veces la misma operación financiera?</li>
-      <li>¿Cuándo elegirías eventual consistency para la lectura de una tool?</li>
-      <li>¿Cómo aplica el patrón Saga a una acción de agente multi-paso? ¿Qué es una compensating action?</li>
-      <li>¿Qué es el Outbox pattern y por qué importa para disparar eventos de forma confiable desde una acción del agente?</li>
-      <li>¿Cómo evitas condiciones de carrera cuando dos canales intentan modificar el mismo recurso vía el mismo agente?</li>
+      <li>What happens if an agent tries to execute the same financial operation twice?</li>
+      <li>When would you choose eventual consistency for a tool's read?</li>
+      <li>How does the Saga pattern apply to a multi-step agent action? What's a compensating action?</li>
+      <li>What's the Outbox pattern and why does it matter for reliably triggering events from an agent action?</li>
+      <li>How do you avoid race conditions when two channels try to modify the same resource via the same agent?</li>
     </ul>
   </section>
 
   <section>
-    <div class="section-label">Quiz de autoevaluación</div>
+    <div class="section-label">Self-check quiz</div>
     <div id="quiz"></div>
-    <div class="quiz-score" id="quizScore">0 / 6 respondidas correctamente</div>
+    <div class="quiz-score" id="quizScore">0 / 6 answered correctly</div>
   </section>
 
   <section>
-    <div class="section-label">Checklist de cierre</div>
+    <div class="section-label">Closing checklist</div>
     <div class="checklist" id="checklist">
-      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Puedo responder "¿qué pasa si se ejecuta dos veces?" cubriendo idempotency + Saga + auditoría en una sola respuesta.</label></div>
-      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Distingo Saga de una transacción distribuida clásica y sé qué es una compensating action.</label></div>
-      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Sé explicar el Outbox pattern con un ejemplo propio.</label></div>
-      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Resolví el ejercicio del reembolso sin ver la solución primero.</label></div>
-      <div class="check-row"><input type="checkbox" id="c5"><label for="c5">Completé el quiz con 6/6.</label></div>
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">I can answer "what happens if it runs twice?" covering idempotency + Saga + auditing in a single answer.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">I can distinguish Saga from a classic distributed transaction and know what a compensating action is.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">I can explain the Outbox pattern with my own example.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">I solved the refund exercise before looking at the solution.</label></div>
+      <div class="check-row"><input type="checkbox" id="c5"><label for="c5">I completed the quiz with 6/6.</label></div>
     </div>
   </section>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
-    <span>Día 07 de 14</span>
-    <a href="day-08.html">Día 08 &rarr;</a>
+    <a href="../index.html">&larr; Hub</a>
+    <span>Day 07 of 14</span>
+    <a href="day-08.html">Day 08 &rarr;</a>
   </div>
 </div>
 
 <script>
   const QUIZ = [
     {
-      q: "'Exactly-once' delivery a nivel de red es...",
-      opts: ["El estándar por defecto en cualquier sistema bien diseñado", "Prácticamente imposible de garantizar; se simula con at-least-once + idempotency", "Solo relevante para bases de datos SQL", "Innecesario si usas HTTPS"],
+      q: "'Exactly-once' delivery at the network level is...",
+      opts: ["The default standard in any well-designed system", "Practically impossible to guarantee; it's simulated with at-least-once + idempotency", "Only relevant for SQL databases", "Unnecessary if you use HTTPS"],
       correct: 1,
-      explain: "El resultado 'effectively-once' se logra combinando entrega at-least-once (retries) con una tool que es idempotente ante duplicados."
+      explain: "The 'effectively-once' outcome is achieved by combining at-least-once delivery (retries) with a tool that's idempotent against duplicates."
     },
     {
-      q: "En el patrón Saga, una 'compensating action' es...",
-      opts: ["Un reintento automático del mismo paso", "Una acción que deshace o compensa el efecto de un paso anterior ya ejecutado, cuando un paso posterior falla", "Un mecanismo de caching", "Un tipo de lock distribuido"],
+      q: "In the Saga pattern, a 'compensating action' is...",
+      opts: ["An automatic retry of the same step", "An action that undoes or compensates for the effect of an already-executed prior step, when a later step fails", "A caching mechanism", "A type of distributed lock"],
       correct: 1,
-      explain: "Como no hay rollback ACID entre servicios distintos, cada paso define su propia forma de compensar si el flujo falla más adelante."
+      explain: "Since there's no ACID rollback across different services, each step defines its own way to compensate if the flow fails later."
     },
     {
-      q: "¿Para qué sirve el Outbox pattern?",
-      opts: ["Para acelerar las lecturas de la base de datos", "Para garantizar que un evento se publique de forma confiable junto con un cambio de estado en la misma transacción local", "Para reemplazar la necesidad de un message broker", "Es exclusivo de sistemas sin IA"],
+      q: "What is the Outbox pattern for?",
+      opts: ["To speed up database reads", "To guarantee that an event is reliably published alongside a state change, in the same local transaction", "To replace the need for a message broker", "It's exclusive to non-AI systems"],
       correct: 1,
-      explain: "Evita el caso donde el estado cambia en la DB pero el evento asociado se pierde por una falla entre el commit y la publicación."
+      explain: "It avoids the case where the state changes in the DB but the associated event is lost due to a failure between commit and publish."
     },
     {
-      q: "¿Por qué no deberías confiar en que el LLM siempre respete el orden correcto de tool calls (ej. verificar antes de cobrar)?",
-      opts: ["El LLM siempre respeta el orden perfectamente", "Porque es un proceso de decisión no determinístico; la precondición debe validarse dentro de la tool misma", "Porque las tools no tienen orden", "Solo importa en sistemas de un solo agente"],
+      q: "Why shouldn't you trust the LLM to always respect the correct order of tool calls (e.g., verify before charging)?",
+      opts: ["The LLM always respects the order perfectly", "Because it's a non-deterministic decision process; the precondition must be validated inside the tool itself", "Because tools don't have an order", "It only matters in single-agent systems"],
       correct: 1,
-      explain: "La garantía de orden y precondiciones debe vivir en código determinístico (la tool), no depender de que el modelo 'lo haga bien' siempre."
+      explain: "The guarantee of order and preconditions must live in deterministic code (the tool), not depend on the model always 'doing it right'."
     },
     {
-      q: "Un distributed lock sobre la clave de una operación (ej. order_id) es útil cuando...",
-      opts: ["Nunca es necesario en sistemas con agentes", "Dos canales o sesiones distintas podrían intentar ejecutar la misma acción crítica en paralelo", "Solo aplica a bases de datos NoSQL", "Reemplaza la necesidad de idempotency"],
+      q: "A distributed lock on an operation's key (e.g., order_id) is useful when...",
+      opts: ["It's never necessary in agent systems", "Two different channels or sessions could try to execute the same critical action in parallel", "It only applies to NoSQL databases", "It replaces the need for idempotency"],
       correct: 1,
-      explain: "Complementa (no reemplaza) la idempotency: evita que dos ejecuciones concurrentes pisen el mismo recurso al mismo tiempo."
+      explain: "It complements (doesn't replace) idempotency: it prevents two concurrent executions from stepping on the same resource at the same time."
     },
     {
-      q: "Eventual consistency es aceptable para una tool de un agente cuando...",
-      opts: ["Nunca es aceptable en un contexto enterprise", "La lectura es informativa y el costo de mostrar un dato levemente desactualizado es bajo", "Siempre, sin excepciones", "Solo si el usuario lo pide explícitamente"],
+      q: "Eventual consistency is acceptable for an agent's tool when...",
+      opts: ["It's never acceptable in an enterprise context", "The read is informational and the cost of showing slightly stale data is low", "Always, without exceptions", "Only if the user explicitly asks for it"],
       correct: 1,
-      explain: "El criterio es el costo del error: para consultas informativas es tolerable; para decisiones financieras o de inventario, no."
+      explain: "The criterion is the cost of the error: tolerable for informational queries, not for financial or inventory decisions."
     }
   ];
   const quizEl = document.getElementById('quiz');
@@ -378,7 +378,7 @@ refund_saga = [
         if (idx === item.correct) { btn.classList.add('correct'); correctCount++; }
         else { btn.classList.add('incorrect'); box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct'); }
         document.getElementById(`explain-${i}`).classList.add('show');
-        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} answered correctly (${answered}/${QUIZ.length} seen)`;
       });
     });
   });

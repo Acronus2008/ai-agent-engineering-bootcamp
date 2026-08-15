@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -136,115 +136,115 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/day-05.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../day-05.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Semana 1 · Día 05 · AI Agents &amp; Enterprise Architecture <span class="week-done">Cierra semana 1</span></div>
+    <div class="eyebrow">Week 1 · Day 05 · AI Agents &amp; Enterprise Architecture <span class="week-done">Closes week 1</span></div>
     <div class="title-row">
       <span class="day-numeral">05</span>
       <h1>Production AI &amp; Reliability</h1>
     </div>
-    <p class="sub">Retries, circuit breakers e idempotency ya los dominas de backend clásico. Hoy: aplicarlos al loop de un agente, y la capa nueva — evals, costo por token y versionado de prompts.</p>
+    <p class="sub">Retries, circuit breakers, and idempotency you already master from classic backend. Today: apply them to an agent's loop, and the new layer — evals, cost per token, and prompt versioning.</p>
     <div class="meta-row">
       <span><b>~100 min</b></span>
-      <span>Prerrequisito: <b>Día 04</b></span>
-      <span>Conecta con: <b>Día 06 — System Design</b></span>
+      <span>Prerequisite: <b>Day 04</b></span>
+      <span>Connects to: <b>Day 06 — System Design</b></span>
     </div>
   </header>
 
   <section>
-    <div class="section-label">Objetivo del día</div>
-    <p>Cerrar la Semana 1 con la pregunta que separa un demo de una solución real: <b>¿qué pasa cuando algo falla?</b> — un tool call, el LLM, la red — y cómo lo sabrías antes de que te lo diga un cliente enojado.</p>
+    <div class="section-label">Today's objective</div>
+    <p>Close Week 1 with the question that separates a demo from a real solution: <b>what happens when something fails?</b> — a tool call, the LLM, the network — and how you'd know before an angry customer tells you.</p>
   </section>
 
   <section>
-    <div class="section-label">Contenido</div>
+    <div class="section-label">Content</div>
 
-    <div class="group-title">Reliability clásica, aplicada al loop del agente</div>
+    <div class="group-title">Classic reliability, applied to the agent's loop</div>
     <div class="concept-grid">
       <div class="concept">
         <div class="concept-term">Retries &amp; Timeouts</div>
-        <h3>Todo tool call y toda llamada al LLM necesita ambos</h3>
-        <p>Sin timeout, el loop del agente puede quedar colgado indefinidamente a mitad de una conversación. Los retries deben ser acotados (backoff, máximo de intentos) — nunca dejar que el agente reintente indefinidamente dentro de su propio razonamiento.</p>
+        <h3>Every tool call and every LLM call needs both</h3>
+        <p>Without a timeout, an agent's loop can hang indefinitely mid-conversation. Retries must be bounded (backoff, max attempts) — never let the agent retry indefinitely within its own reasoning.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Circuit Breakers</div>
-        <h3>Fallar rápido cuando una dependencia está caída</h3>
-        <p>Si una tool falla repetidamente, el circuit breaker corta las llamadas y fuerza un fallback inmediato — evita que el agente siga "intentando" mientras el usuario espera.</p>
+        <h3>Fail fast when a dependency is down</h3>
+        <p>If a tool fails repeatedly, the circuit breaker cuts calls and forces an immediate fallback — it keeps the agent from continuing to "try" while the user waits.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Idempotency</div>
-        <h3>Crítico cuando el que reintenta puede ser el agente O el usuario</h3>
-        <p>Un timeout seguido de un retry, o un usuario repitiendo "hazlo de nuevo", puede disparar la misma acción dos veces. Cada tool que modifica estado necesita una idempotency key.</p>
+        <h3>Critical when the one retrying can be the agent OR the user</h3>
+        <p>A timeout followed by a retry, or a user repeating "do it again," can trigger the same action twice. Every state-modifying tool needs an idempotency key.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Fallbacks</div>
-        <h3>Una respuesta degradada es mejor que colgarse</h3>
-        <p>Si una tool no está disponible: "no puedo consultar eso ahora, te conecto con una persona" — nunca dejar que el agente invente el dato faltante.</p>
+        <h3>A degraded response beats hanging</h3>
+        <p>If a tool is unavailable: "I can't check that right now, let me connect you with someone" — never let the agent invent the missing data.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Rate Limiting</div>
-        <h3>Protege al proveedor del LLM y a los sistemas downstream</h3>
-        <p>Un agente en loop (por bug o por injection) puede generar tráfico explosivo hacia tools o hacia el proveedor del modelo — necesita límites igual que cualquier cliente automatizado.</p>
+        <h3>Protects the LLM provider and downstream systems</h3>
+        <p>An agent stuck in a loop (from a bug or an injection) can generate explosive traffic toward tools or the model provider — it needs limits like any automated client.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Queues &amp; DLQ</div>
-        <h3>Para las acciones asíncronas que dispara el agente</h3>
-        <p>Un evento de fulfillment que falla tras sus reintentos no debe perderse silenciosamente — va a una dead-letter queue para investigación, igual que en cualquier pipeline async.</p>
+        <h3>For the asynchronous actions an agent triggers</h3>
+        <p>A fulfillment event that fails after its retries shouldn't be silently lost — it goes to a dead-letter queue for investigation, same as any async pipeline.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Observability, Tracing, Metrics, Logging</div>
-        <h3>Un solo trace que cruza LLM calls + tool calls + orquestación</h3>
-        <p>La diferencia con backend clásico: necesitas ver la <b>cadena de razonamiento completa</b> de un request — qué decidió el modelo, qué tool llamó, con qué resultado, en qué orden — como un único trace distribuido, no llamadas sueltas.</p>
+        <h3>A single trace spanning LLM calls + tool calls + orchestration</h3>
+        <p>The difference from classic backend: you need to see the <b>full reasoning chain</b> of a request — what the model decided, which tool it called, with what result, in what order — as a single distributed trace, not scattered calls.</p>
       </div>
     </div>
 
-    <div class="group-title">Lo específico de AI en producción</div>
+    <div class="group-title">What's specific to AI in production</div>
     <div class="concept-grid">
       <div class="concept">
         <div class="concept-term">Model Fallback</div>
-        <h3>Qué pasa si el proveedor del LLM está caído</h3>
-        <p>Arquitectura pluggable: si el modelo primario falla o degrada, se cae a un modelo secundario (otro proveedor o uno más simple) — con la expectativa explícita de que la calidad puede bajar temporalmente.</p>
+        <h3>What happens if the LLM provider is down</h3>
+        <p>Pluggable architecture: if the primary model fails or degrades, it falls back to a secondary model (another provider or a simpler one) — with the explicit expectation that quality may drop temporarily.</p>
       </div>
       <div class="concept">
-        <div class="concept-term">Token Usage &amp; Costo</div>
-        <h3>Un loop descontrolado también es un incidente de costo</h3>
-        <p>Cada sesión/request debería tener un presupuesto de tokens. Sin límite, un bug en la lógica de orquestación (o una injection) puede generar un loop que dispara el costo sin que nadie lo note hasta la factura.</p>
+        <div class="concept-term">Token Usage &amp; Cost</div>
+        <h3>A runaway loop is also a cost incident</h3>
+        <p>Every session/request should have a token budget. Without a limit, a bug in the orchestration logic (or an injection) can trigger a loop that runs up cost without anyone noticing until the bill arrives.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Latency</div>
-        <h3>El LLM es casi siempre el paso más lento del pipeline</h3>
-        <p>Streaming de respuesta, paralelizar tool calls independientes cuando sea posible, y presupuestar latencia por paso — igual que optimizarías cualquier request de alta latencia.</p>
+        <h3>The LLM is almost always the slowest step in the pipeline</h3>
+        <p>Response streaming, parallelizing independent tool calls where possible, and budgeting latency per step — just like you'd optimize any high-latency request.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Hallucination Monitoring</div>
-        <h3>No es un test que pasas una vez, es una métrica continua</h3>
-        <p>Señales en producción: tasa de respuestas sin soporte en los documentos recuperados, contradicciones detectadas por un modelo evaluador, feedback negativo de usuarios — trackeadas en el tiempo, no solo validadas pre-lanzamiento.</p>
+        <h3>Not a test you pass once, a continuous metric</h3>
+        <p>Production signals: rate of responses unsupported by retrieved documents, contradictions flagged by an evaluator model, negative user feedback — tracked over time, not just validated pre-launch.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Tool Failures</div>
-        <h3>Deben llegar al agente como observación estructurada, no tragarse</h3>
-        <p>Si una tool falla y el error se traga silenciosamente, el agente puede alucinar un resultado. El error estructurado le da al agente la información para decidir: reintentar, usar un fallback, o escalar.</p>
+        <h3>Must reach the agent as a structured observation, never swallowed</h3>
+        <p>If a tool fails and the error is silently swallowed, the agent may hallucinate a result. A structured error gives the agent the information to decide: retry, use a fallback, or escalate.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Prompt / Version Management</div>
-        <h3>Los prompts son código: versionados, testeados, con rollback</h3>
-        <p>Un cambio de prompt es un cambio de comportamiento en producción — mismo rigor que un deploy: canary, evaluación antes de 100% rollout, capacidad de revertir.</p>
+        <h3>Prompts are code: versioned, tested, with rollback</h3>
+        <p>A prompt change is a production behavior change — same rigor as a deploy: canary, evaluation before 100% rollout, ability to revert.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Agent Evaluation</div>
-        <h3>Offline (golden set) + online (muestreo de conversaciones reales)</h3>
-        <p>Un set de casos de prueba fijos detecta regresiones antes de deploy. Un muestreo continuo de conversaciones reales (revisión humana o LLM-as-judge) detecta lo que el golden set no anticipó.</p>
+        <h3>Offline (golden set) + online (sampling real conversations)</h3>
+        <p>A fixed test-case set catches regressions before deploy. Continuous sampling of real conversations (human review or LLM-as-judge) catches what the golden set didn't anticipate.</p>
       </div>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Diagrama de implementación</div>
-    <h2>Retry + idempotency en acción</h2>
-    <p>El mismo <code>idempotency_key</code> viaja en ambos intentos — es lo que convierte un timeout más un retry en "una sola operación", no en dos.</p>
+    <div class="section-label">Implementation diagram</div>
+    <h2>Retry + idempotency in action</h2>
+    <p>The same <code>idempotency_key</code> travels on both attempts — that's what turns a timeout plus a retry into "one single operation," not two.</p>
     <figure class="diagram">
-      <svg viewBox="0 0 620 250" role="img" aria-label="Diagrama de secuencia: el usuario pide crear un ticket, el primer intento hace timeout, el segundo intento reenvía la misma idempotency key, el servicio detecta la duplicación y devuelve el mismo ticket ya creado, y el agente confirma al usuario.">
+      <svg viewBox="0 0 620 250" role="img" aria-label="Sequence diagram: the user asks to create a ticket, the first attempt times out, the second attempt resends the same idempotency key, the service detects the duplicate and returns the already-created ticket, and the agent confirms to the user.">
         <defs>
           <marker id="d5arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker>
           <marker id="d5arrow-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head-bad"/></marker>
@@ -263,43 +263,43 @@
         <text x="540" y="33" text-anchor="middle" class="dlabel">Ticket Service</text>
 
         <line x1="60" y1="62" x2="294" y2="62" class="darrow" marker-end="url(#d5arrow)"/>
-        <text x="180" y="56" text-anchor="middle" class="dtext-muted">1. crear ticket</text>
+        <text x="180" y="56" text-anchor="middle" class="dtext-muted">1. create ticket</text>
 
         <line x1="300" y1="90" x2="534" y2="90" class="darrow" marker-end="url(#d5arrow)"/>
-        <text x="420" y="84" text-anchor="middle" class="dtext-muted">2. create_ticket(key=K) — intento 1</text>
+        <text x="420" y="84" text-anchor="middle" class="dtext-muted">2. create_ticket(key=K) — attempt 1</text>
 
         <line x1="540" y1="118" x2="306" y2="118" class="darrow-bad" stroke-dasharray="4,3" marker-end="url(#d5arrow-bad)"/>
-        <text x="420" y="112" text-anchor="middle" class="dtext-bad">3. timeout (5s) — sin respuesta</text>
+        <text x="420" y="112" text-anchor="middle" class="dtext-bad">3. timeout (5s) — no response</text>
 
         <line x1="300" y1="146" x2="534" y2="146" class="darrow-accent" marker-end="url(#d5arrow-accent)"/>
-        <text x="420" y="140" text-anchor="middle" class="dtext-accent">4. retry create_ticket(key=K) — intento 2</text>
+        <text x="420" y="140" text-anchor="middle" class="dtext-accent">4. retry create_ticket(key=K) — attempt 2</text>
 
         <line x1="540" y1="174" x2="306" y2="174" class="darrow" marker-end="url(#d5arrow)"/>
-        <text x="420" y="168" text-anchor="middle" class="dtext-muted">5. 200 OK ticket_id=T1 (dedup por key)</text>
+        <text x="420" y="168" text-anchor="middle" class="dtext-muted">5. 200 OK ticket_id=T1 (dedup by key)</text>
 
         <line x1="300" y1="202" x2="66" y2="202" class="darrow" marker-end="url(#d5arrow)"/>
-        <text x="180" y="196" text-anchor="middle" class="dtext-muted">6. ticket confirmado</text>
+        <text x="180" y="196" text-anchor="middle" class="dtext-muted">6. ticket confirmed</text>
 
-        <text x="310" y="228" text-anchor="middle" class="dtext-muted">si el intento 2 también falla → circuit breaker abre → fallback inmediato, sin más reintentos</text>
+        <text x="310" y="228" text-anchor="middle" class="dtext-muted">if attempt 2 also fails → circuit breaker opens → immediate fallback, no more retries</text>
       </svg>
-      <figcaption>La key (K) es la que decide "es la misma operación" — no el número de intentos.</figcaption>
+      <figcaption>The key (K) is what decides "this is the same operation" — not the number of attempts.</figcaption>
     </figure>
   </section>
 
   <section>
-    <div class="section-label">Ejemplo de implementación</div>
-    <h2>Wrapper idempotente con retry acotado</h2>
-    <p>La key se genera una sola vez, al iniciar el flujo — nunca dentro del loop de retry.</p>
+    <div class="section-label">Implementation example</div>
+    <h2>Idempotent wrapper with bounded retry</h2>
+    <p>The key is generated once, at the start of the flow — never inside the retry loop.</p>
     <div class="code-block">
       <div class="code-head"><span>reliable_tool_call.py</span><span class="lang">python</span></div>
       <pre><span class="code-kw">import</span> time, uuid
 
 <span class="code-kw">def</span> call_with_retry(fn, *, max_attempts=2, timeout_s=5, backoff_s=1):
-    idempotency_key = str(uuid.uuid4())  <span class="code-comment"># generada UNA vez, fuera del loop</span>
+    idempotency_key = str(uuid.uuid4())  <span class="code-comment"># generated ONCE, outside the loop</span>
 
     <span class="code-kw">for</span> attempt <span class="code-kw">in</span> range(1, max_attempts + 1):
         <span class="code-kw">if</span> circuit_breaker.is_open(fn.__name__):
-            <span class="code-kw">return</span> fallback_response()  <span class="code-comment"># fail fast, no más intentos</span>
+            <span class="code-kw">return</span> fallback_response()  <span class="code-comment"># fail fast, no more attempts</span>
 
         <span class="code-kw">try</span>:
             result = fn(idempotency_key=idempotency_key, timeout=timeout_s)
@@ -309,75 +309,75 @@
             circuit_breaker.record_failure(fn.__name__)
             <span class="code-kw">if</span> attempt == max_attempts:
                 <span class="code-kw">return</span> fallback_response()
-            time.sleep(backoff_s * attempt)  <span class="code-comment"># backoff corto, acotado</span>
+            time.sleep(backoff_s * attempt)  <span class="code-comment"># short, bounded backoff</span>
 
 <span class="code-kw">def</span> fallback_response() -> dict:
-    <span class="code-comment"># Honesto con el usuario, nunca inventa un resultado</span>
-    <span class="code-kw">return</span> {<span class="code-str">"status"</span>: <span class="code-str">"pending_verification"</span>, <span class="code-str">"message"</span>: <span class="code-str">"Estamos confirmando tu ticket."</span>}</pre>
+    <span class="code-comment"># Honest with the user, never invents a result</span>
+    <span class="code-kw">return</span> {<span class="code-str">"status"</span>: <span class="code-str">"pending_verification"</span>, <span class="code-str">"message"</span>: <span class="code-str">"We're confirming your ticket."</span>}</pre>
     </div>
-    <p style="font-size:13px; color:var(--muted); margin-top:8px;">El <code>circuit_breaker</code> es solo un contador con umbral y un flag — no necesitas una librería para empezar, solo la disciplina de nunca reintentar sin límite.</p>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">The <code>circuit_breaker</code> is just a counter with a threshold and a flag — you don't need a library to get started, just the discipline of never retrying without a limit.</p>
   </section>
 
   <section>
-    <div class="section-label">Ejercicio práctico</div>
+    <div class="section-label">Practical exercise</div>
     <div class="exercise-box">
-      <h2>Caso: la tool "crear ticket" falla intermitentemente por timeout</h2>
-      <p>Uno de cada veinte llamados a <code>create_ticket</code> hace timeout a los 5s, pero el ticket a veces sí se crea del lado del sistema legacy (el timeout es en la respuesta, no en la operación).</p>
+      <h2>Case: the "create ticket" tool intermittently fails with a timeout</h2>
+      <p>One out of every twenty calls to <code>create_ticket</code> times out at 5s, but the ticket is sometimes actually created on the legacy system's side (the timeout is on the response, not the operation).</p>
       <ol>
-        <li>¿Cómo diseñas la idempotency key para esta tool?</li>
-        <li>¿Qué política de retry aplicarías, y por qué?</li>
-        <li>¿Qué ve el usuario mientras tanto, y qué queda en el trace para depurarlo después?</li>
+        <li>How do you design the idempotency key for this tool?</li>
+        <li>What retry policy would you apply, and why?</li>
+        <li>What does the user see in the meantime, and what stays in the trace to debug it later?</li>
       </ol>
       <details>
-        <summary>Ver enfoque sugerido</summary>
+        <summary>See suggested approach</summary>
         <div class="solution">
-          <p><b>1.</b> Una idempotency key generada por el agente al iniciar la operación (no por el sistema legacy), enviada en cada intento — el backend del ticket la usa para detectar "ya procesé esto" y devolver el mismo resultado en vez de crear un duplicado.</p>
-          <p><b>2.</b> Retry único con backoff corto, y si vuelve a fallar, no seguir reintentando indefinidamente — pasar a fallback (avisar al usuario que se está verificando) en vez de que el agente "decida" reintentar por su cuenta dentro del razonamiento.</p>
-          <p><b>3.</b> El usuario ve un mensaje honesto ("estoy confirmando si se creó el ticket"), nunca una afirmación no verificada. El trace debe registrar la idempotency key, cada intento, su timeout, y el resultado final de la verificación — para poder reconstruir exactamente qué pasó si el cliente reclama un ticket duplicado.</p>
+          <p><b>1.</b> An idempotency key generated by the agent when it starts the operation (not by the legacy system), sent on every attempt — the ticket backend uses it to detect "I already processed this" and return the same result instead of creating a duplicate.</p>
+          <p><b>2.</b> A single retry with short backoff, and if it fails again, stop — don't keep retrying indefinitely — move to a fallback (tell the user it's being verified) instead of letting the agent "decide" to retry on its own within its reasoning.</p>
+          <p><b>3.</b> The user sees an honest message ("I'm confirming whether the ticket was created"), never an unverified claim. The trace must record the idempotency key, each attempt, its timeout, and the final verification result — so you can reconstruct exactly what happened if the customer reports a duplicate ticket.</p>
         </div>
       </details>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <div class="section-label">Related interview questions</div>
     <ul class="iq-list">
-      <li>¿Cómo haces idempotente una tool call cuando el sistema subyacente no lo soporta nativamente?</li>
-      <li>¿Qué pasa si el proveedor del LLM está caído? ¿Cómo diseñas el fallback?</li>
-      <li>¿Cómo construirías un trace distribuido a través del razonamiento multi-paso de un agente?</li>
-      <li>¿Cómo evalúas la calidad de un agente en producción, no solo antes del lanzamiento?</li>
-      <li>¿Cuál es tu estrategia para controlar un uso descontrolado de tokens/costo por un loop del agente?</li>
+      <li>How do you make a tool call idempotent when the underlying system doesn't natively support it?</li>
+      <li>What happens if the LLM provider is down? How do you design the fallback?</li>
+      <li>How would you build a distributed trace across an agent's multi-step reasoning?</li>
+      <li>How do you evaluate an agent's quality in production, not just before launch?</li>
+      <li>What's your strategy for controlling runaway token usage/cost from an agent loop?</li>
     </ul>
   </section>
 
   <section>
-    <div class="section-label">Quiz de autoevaluación — Día 05</div>
+    <div class="section-label">Self-check quiz — Day 05</div>
     <div id="quiz5"></div>
-    <div class="quiz-score" id="quizScore5">0 / 6 respondidas correctamente</div>
+    <div class="quiz-score" id="quizScore5">0 / 6 answered correctly</div>
   </section>
 
   <section>
-    <div class="section-label">Repaso rápido — Semana 1 completa</div>
-    <p style="color:var(--muted); font-size:13px; margin-top:-6px;">Cinco preguntas cruzando los cinco días. Si fallas alguna, vale la pena volver al día correspondiente antes de avanzar a la Semana 2.</p>
+    <div class="section-label">Quick review — Week 1 complete</div>
+    <p style="color:var(--muted); font-size:13px; margin-top:-6px;">Five questions crossing all five days. If you miss any, it's worth revisiting that day before moving on to Week 2.</p>
     <div id="quizWeek1"></div>
-    <div class="quiz-score" id="quizScoreWeek1">0 / 5 respondidas correctamente</div>
+    <div class="quiz-score" id="quizScoreWeek1">0 / 5 answered correctly</div>
   </section>
 
   <section>
-    <div class="section-label">Checklist de cierre — Semana 1</div>
+    <div class="section-label">Closing checklist — Week 1</div>
     <div class="checklist" id="checklist">
-      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Puedo diseñar idempotency para una tool call que puede duplicarse.</label></div>
-      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Sé qué es un golden set y para qué sirve frente a la evaluación online.</label></div>
-      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Puedo explicar por qué un prompt necesita versionado como el código.</label></div>
-      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Completé los 5 días de la Semana 1 con sus quizzes en 6/6 o mejor.</label></div>
-      <div class="check-row"><input type="checkbox" id="c5"><label for="c5">Puedo dibujar de memoria el diagrama completo: Channel → Agent Runtime → LLM/Memory/RAG/Tools → sistemas enterprise.</label></div>
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">I can design idempotency for a tool call that could be duplicated.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">I know what a golden set is and what it's for vs. online evaluation.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">I can explain why a prompt needs versioning like code.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">I completed all 5 days of Week 1 with their quizzes at 6/6 or better.</label></div>
+      <div class="check-row"><input type="checkbox" id="c5"><label for="c5">I can draw the full diagram from memory: Channel → Agent Runtime → LLM/Memory/RAG/Tools → enterprise systems.</label></div>
     </div>
   </section>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
-    <span>Día 05 de 14 · fin Semana 1</span>
-    <a href="day-06.html">Día 06 &rarr;</a>
+    <a href="../index.html">&larr; Hub</a>
+    <span>Day 05 of 14 · end of Week 1</span>
+    <a href="day-06.html">Day 06 &rarr;</a>
   </div>
 </div>
 
@@ -400,7 +400,7 @@
           if (idx === item.correct) { btn.classList.add('correct'); correctCount++; }
           else { btn.classList.add('incorrect'); box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct'); }
           document.getElementById(`${containerId}-explain-${i}`).classList.add('show');
-          document.getElementById(scoreId).textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+          document.getElementById(scoreId).textContent = `${correctCount} / ${QUIZ.length} answered correctly (${answered}/${QUIZ.length} seen)`;
         });
       });
     });
@@ -408,83 +408,83 @@
 
   buildQuiz('quiz5', 'quizScore5', [
     {
-      q: "¿Por qué es peligroso dejar que el agente reintente indefinidamente una tool call fallida dentro de su propio razonamiento?",
-      opts: ["No es peligroso, más intentos siempre ayudan", "Puede generar retry storms, costo descontrolado y una experiencia colgada para el usuario", "Los LLMs no pueden hacer retries", "Solo afecta el uso de memoria RAM"],
+      q: "Why is it dangerous to let the agent retry a failed tool call indefinitely within its own reasoning?",
+      opts: ["It isn't dangerous, more attempts always help", "It can generate retry storms, runaway cost, and a hung experience for the user", "LLMs can't do retries", "It only affects RAM usage"],
       correct: 1,
-      explain: "Los retries deben ser acotados y controlados por el sistema, no dejados a discreción del modelo dentro del loop."
+      explain: "Retries must be bounded and controlled by the system, not left to the model's discretion inside the loop."
     },
     {
-      q: "Un circuit breaker en la arquitectura de un agente sirve principalmente para...",
-      opts: ["Aumentar la creatividad del modelo", "Cortar llamadas a una dependencia que falla repetidamente y forzar un fallback rápido", "Reemplazar la necesidad de logging", "Acelerar las respuestas del LLM"],
+      q: "A circuit breaker in an agent's architecture mainly serves to...",
+      opts: ["Increase the model's creativity", "Cut calls to a repeatedly failing dependency and force a quick fallback", "Replace the need for logging", "Speed up the LLM's responses"],
       correct: 1,
-      explain: "Evita que el agente siga golpeando una dependencia caída mientras el usuario espera — falla rápido y degrada con gracia."
+      explain: "It keeps the agent from continuing to hammer a downed dependency while the user waits — fail fast and degrade gracefully."
     },
     {
-      q: "¿Qué distingue la evaluación 'offline' de la 'online' de un agente?",
+      q: "What distinguishes 'offline' from 'online' agent evaluation?",
       opts: [
-        "Offline usa internet, online no",
-        "Offline corre contra un golden set fijo antes de deploy; online muestrea conversaciones reales en producción",
-        "Son exactamente lo mismo",
-        "Offline es solo para modelos pequeños"
+        "Offline uses the internet, online doesn't",
+        "Offline runs against a fixed golden set before deploy; online samples real production conversations",
+        "They're exactly the same",
+        "Offline is only for small models"
       ],
       correct: 1,
-      explain: "Offline detecta regresiones conocidas antes de lanzar. Online detecta lo que el golden set no anticipó, con tráfico real."
+      explain: "Offline catches known regressions before launch. Online catches what the golden set didn't anticipate, with real traffic."
     },
     {
-      q: "Si una tool call falla, ¿qué debería pasar con ese error?",
-      opts: ["Tragarse silenciosamente para no confundir al modelo", "Llegar al agente como observación estructurada para que pueda decidir el siguiente paso", "Terminar automáticamente la conversación", "Ignorarse y responder con un valor por defecto sin avisar"],
+      q: "If a tool call fails, what should happen to that error?",
+      opts: ["Swallowed silently so as not to confuse the model", "Reach the agent as a structured observation so it can decide the next step", "Automatically end the conversation", "Ignored and answer with a default value without notice"],
       correct: 1,
-      explain: "Un error tragado silenciosamente es la puerta de entrada a una alucinación — el agente necesita ver el fallo para razonar sobre él."
+      explain: "A silently swallowed error is the doorway to a hallucination — the agent needs to see the failure to reason about it."
     },
     {
-      q: "¿Por qué los prompts requieren versionado similar al código?",
+      q: "Why do prompts require versioning similar to code?",
       opts: [
-        "No lo requieren, son solo texto",
-        "Porque un cambio de prompt es un cambio de comportamiento en producción, y necesitas poder auditar y revertir",
-        "Solo por razones de copyright",
-        "Únicamente para ahorrar tokens"
+        "They don't, they're just text",
+        "Because a prompt change is a production behavior change, and you need to be able to audit and revert it",
+        "Only for copyright reasons",
+        "Only to save tokens"
       ],
       correct: 1,
-      explain: "Sin versionado no puedes saber qué prompt produjo qué comportamiento, ni revertir un cambio que degradó la calidad."
+      explain: "Without versioning you can't know which prompt produced which behavior, nor revert a change that degraded quality."
     },
     {
-      q: "El presupuesto de tokens por sesión/request es importante principalmente porque...",
-      opts: ["Es un requisito legal", "Un loop descontrolado (por bug o injection) puede disparar el costo sin que nadie lo note hasta la factura", "Mejora la precisión del modelo", "Reduce la necesidad de guardrails"],
+      q: "The per-session/request token budget matters mainly because...",
+      opts: ["It's a legal requirement", "A runaway loop (from a bug or injection) can drive up cost without anyone noticing until the bill arrives", "It improves model accuracy", "It reduces the need for guardrails"],
       correct: 1,
-      explain: "Es tanto un control de reliability como de costo — sin límite, un fallo silencioso se convierte en un incidente financiero."
+      explain: "It's both a reliability and a cost control — without a limit, a silent failure becomes a financial incident."
     }
   ]);
 
   buildQuiz('quizWeek1', 'quizScoreWeek1', [
     {
-      q: "(Día 1) Function calling significa que el LLM...",
-      opts: ["Ejecuta código directamente en un sandbox", "Propone una acción; tu backend valida y decide si ejecutarla", "Nunca puede interactuar con sistemas externos", "Reemplaza la necesidad de APIs"],
+      q: "(Day 1) Function calling means the LLM...",
+      opts: ["Executes code directly in a sandbox", "Proposes an action; your backend validates and decides whether to execute it", "Can never interact with external systems", "Replaces the need for APIs"],
       correct: 1,
-      explain: "El punto de control siempre es tu backend, no el modelo."
+      explain: "The control point is always your backend, not the model."
     },
     {
-      q: "(Día 2) ¿Qué separa a single-agent de multi-agent como decisión de diseño?",
-      opts: ["El tamaño del modelo usado", "Si hay dominios heterogéneos con distintos scopes de seguridad que justifiquen la separación", "Multi-agent siempre es superior", "No hay diferencia real"],
+      q: "(Day 2) What separates single-agent from multi-agent as a design decision?",
+      opts: ["The size of the model used", "Whether there are heterogeneous domains with different security scopes that justify the split", "Multi-agent is always superior", "There's no real difference"],
       correct: 1,
-      explain: "Multi-agent se justifica por separación real de dominio/seguridad, no por complejidad percibida."
+      explain: "Multi-agent is justified by real domain/security separation, not by perceived complexity."
     },
     {
-      q: "(Día 3) ¿Cuándo preferirías un evento (Kafka) sobre una tool call síncrona?",
-      opts: ["Siempre", "Cuando la acción dispara un proceso downstream que no bloquea la respuesta al usuario", "Nunca, los agentes solo usan REST", "Solo si el sistema legacy usa SOAP"],
+      q: "(Day 3) When would you prefer an event (Kafka) over a synchronous tool call?",
+      opts: ["Always", "When the action triggers a downstream process that doesn't block the response to the user", "Never, agents only use REST", "Only if the legacy system uses SOAP"],
       correct: 1,
-      explain: "Los eventos desacoplan al agente de sistemas que no necesita esperar."
+      explain: "Events decouple the agent from systems it doesn't need to wait for."
     },
     {
-      q: "(Día 4) La defensa más efectiva contra excessive agency es...",
-      opts: ["Un prompt más largo", "Tools de scope mínimo + aprobación humana para acciones de alto impacto", "Desactivar todas las tools", "Confiar en el modelo"],
+      q: "(Day 4) The most effective defense against excessive agency is...",
+      opts: ["A longer prompt", "Minimum-scope tools + human approval for high-impact actions", "Disabling all tools", "Trusting the model"],
       correct: 1,
-      explain: "Es un problema de arquitectura, no de prompting."
+      explain: "It's an architecture problem, not a prompting one."
     },
     {
-      q: "(Día 5) Un trace distribuido de un agente debería mostrar...",
-      opts: ["Solo el tiempo total de respuesta", "La cadena completa: decisiones del modelo, tool calls y sus resultados, en orden", "Únicamente los errores", "Solo se aplica a sistemas sin IA"],
+      q: "(Day 5) A distributed trace for an agent should show...",
+      opts: ["Only the total response time", "The full chain: model decisions, tool calls, and their results, in order", "Only errors", "It only applies to non-AI systems"],
       correct: 1,
-      explain: "Necesitas ver el razonamiento completo para depurar por qué el agente tomó una decisión específica."
+      explain: "You need to see the full reasoning to debug why the agent made a specific decision."
     }
   ]);
 

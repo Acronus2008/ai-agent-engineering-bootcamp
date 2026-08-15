@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -116,186 +116,186 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/day-06.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../day-06.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Semana 2 · Día 06 · Systems &amp; Cloud <span class="week-start">Abre semana 2</span></div>
+    <div class="eyebrow">Week 2 · Day 06 · Systems &amp; Cloud <span class="week-start">Opens week 2</span></div>
     <div class="title-row">
       <span class="day-numeral">06</span>
       <h1>System Design Framework</h1>
     </div>
-    <p class="sub">El framework de 16 pasos que vas a usar en la entrevista técnica — memorízalo como una checklist, no como un guion rígido.</p>
+    <p class="sub">The 16-step framework you'll use in the technical interview — memorize it as a checklist, not a rigid script.</p>
     <div class="meta-row">
       <span><b>~100 min</b></span>
-      <span>Prerrequisito: <b>Semana 1 completa</b></span>
-      <span>Conecta con: <b>Día 07 — Distributed Systems</b></span>
+      <span>Prerequisite: <b>Week 1 complete</b></span>
+      <span>Connects to: <b>Day 07 — Distributed Systems</b></span>
     </div>
   </header>
 
   <section>
-    <div class="section-label">Objetivo del día</div>
-    <p>System Design clásico ya lo sabes hacer. Hoy: el framework específico para casos con IA, y practicar recorrerlo en voz alta con un caso guiado — la habilidad que se evalúa no es "sabes las piezas", es "las recorres en orden bajo presión".</p>
+    <div class="section-label">Today's objective</div>
+    <p>You already know how to do classic System Design. Today: the specific framework for AI cases, and practicing walking through it out loud with a guided case — the skill being evaluated isn't "you know the pieces," it's "you walk through them in order under pressure."</p>
   </section>
 
   <section>
-    <div class="section-label">El framework de 16 pasos</div>
+    <div class="section-label">The 16-step framework</div>
     <ol class="steps">
-      <li><b>1. Clarificar el problema</b> No empieces a diseñar sin entender qué se está pidiendo realmente.</li>
-      <li><b>2. Identificar usuarios</b> ¿Quién interactúa con el sistema? ¿Clientes finales, agentes internos, ambos?</li>
-      <li><b>3. Definir objetivos</b> ¿Qué éxito significa aquí? Conéctalo a una métrica de negocio si puedes.</li>
-      <li><b>4. Requisitos funcionales</b> Qué debe hacer el sistema, en lenguaje concreto.</li>
-      <li><b>5. Requisitos no funcionales</b> Latencia, disponibilidad, throughput, consistencia.</li>
-      <li><b>6. Restricciones</b> Presupuesto, sistemas legacy existentes, compliance, plazos.</li>
-      <li><b>7. Arquitectura de alto nivel</b> Las cajas grandes: canal, orquestación, integración, datos.</li>
-      <li><b>8. Arquitectura del agente</b> Agent runtime, tools, memory, RAG — el diagrama del Día 02.</li>
-      <li><b>9. Integraciones</b> Qué sistemas toca, con qué protocolo, síncrono o async.</li>
-      <li><b>10. Datos</b> Qué se persiste, dónde, con qué modelo (RAG, transaccional, ambos).</li>
-      <li><b>11. Seguridad</b> Identity, scopes, guardrails — el Día 04 aplicado al caso.</li>
-      <li><b>12. Resiliencia</b> Qué pasa cuando algo falla — el Día 05 aplicado al caso.</li>
-      <li><b>13. Observabilidad</b> Cómo sabrías que algo salió mal antes que el cliente te lo diga.</li>
-      <li><b>14. Escalabilidad</b> Qué se rompe primero si el tráfico se multiplica por 10.</li>
-      <li><b>15. Trade-offs</b> Nombra las alternativas que descartaste y por qué.</li>
-      <li><b>16. Rollout</b> Cómo lanzas esto sin apostar todo de una vez — canary, feature flags, piloto.</li>
+      <li><b>1. Clarify the problem</b> Don't start designing without understanding what's actually being asked.</li>
+      <li><b>2. Identify users</b> Who interacts with the system? End customers, internal agents, both?</li>
+      <li><b>3. Define objectives</b> What does success mean here? Tie it to a business metric if you can.</li>
+      <li><b>4. Functional requirements</b> What the system must do, in concrete terms.</li>
+      <li><b>5. Non-functional requirements</b> Latency, availability, throughput, consistency.</li>
+      <li><b>6. Constraints</b> Budget, existing legacy systems, compliance, deadlines.</li>
+      <li><b>7. High-level architecture</b> The big boxes: channel, orchestration, integration, data.</li>
+      <li><b>8. Agent architecture</b> Agent runtime, tools, memory, RAG — the Day 02 diagram.</li>
+      <li><b>9. Integrations</b> Which systems it touches, with what protocol, sync or async.</li>
+      <li><b>10. Data</b> What gets persisted, where, with what model (RAG, transactional, both).</li>
+      <li><b>11. Security</b> Identity, scopes, guardrails — Day 04 applied to the case.</li>
+      <li><b>12. Resilience</b> What happens when something fails — Day 05 applied to the case.</li>
+      <li><b>13. Observability</b> How you'd know something went wrong before the customer tells you.</li>
+      <li><b>14. Scalability</b> What breaks first if traffic multiplies by 10.</li>
+      <li><b>15. Trade-offs</b> Name the alternatives you discarded and why.</li>
+      <li><b>16. Rollout</b> How you launch this without betting everything at once — canary, feature flags, pilot.</li>
     </ol>
   </section>
 
   <section>
-    <div class="section-label">Cómo usarlo bajo presión</div>
-    <p>No lo recites de memoria en la entrevista — úsalo como un mapa mental para no quedarte en blanco. El error más común no es "no saber la arquitectura", es <b>saltar directo al paso 7 sin clarificar el problema primero</b>. El entrevistador está evaluando tu proceso tanto como tu resultado.</p>
-    <div class="analogy"><b>Regla práctica</b>Pasa al menos 3-5 minutos en los pasos 1-6 antes de dibujar una sola caja. Un candidato que clarifica bien y diseña algo simple gana sobre uno que diseña algo elaborado para el problema equivocado.</div>
+    <div class="section-label">How to use it under pressure</div>
+    <p>Don't recite it from memory in the interview — use it as a mental map so you don't freeze. The most common mistake isn't "not knowing the architecture," it's <b>jumping straight to step 7 without clarifying the problem first</b>. The interviewer is evaluating your process as much as your result.</p>
+    <div class="analogy"><b>Practical rule</b>Spend at least 3-5 minutes on steps 1-6 before drawing a single box. A candidate who clarifies well and designs something simple beats one who designs something elaborate for the wrong problem.</div>
   </section>
 
   <section>
-    <div class="section-label">Caso práctico guiado</div>
+    <div class="section-label">Guided practice case</div>
     <div class="exercise-box">
-      <h2>Enunciado: "Diseña un agente que ayude a los reps de ventas a preparar reuniones."</h2>
-      <p>Es intencionalmente ambiguo. Recorre los primeros 6 pasos <b>en voz alta</b>, como si estuvieras en la entrevista, antes de ver el enfoque sugerido.</p>
+      <h2>Prompt: "Design an agent that helps sales reps prepare for meetings."</h2>
+      <p>It's intentionally ambiguous. Walk through the first 6 steps <b>out loud</b>, as if you were in the interview, before looking at the suggested approach.</p>
       <details>
-        <summary>Ver enfoque sugerido para los pasos 1-6</summary>
+        <summary>See suggested approach for steps 1-6</summary>
         <div class="solution">
-          <p><b>1. Clarificar:</b> "¿Preparar significa resumir el historial del cliente, sugerir talking points, o ambos? ¿Es antes de la reunión o también durante?" — nunca asumas el alcance.</p>
-          <p><b>2. Usuarios:</b> Reps de ventas (usuario primario). Posiblemente managers que revisan calidad de preparación (usuario secundario).</p>
-          <p><b>3. Objetivo:</b> Reducir el tiempo de prep de 30 min a 5 min, manteniendo o mejorando la calidad de la reunión (nota el patrón del Día 19 del plan: KPI concreto, no "usar IA").</p>
-          <p><b>4. Funcionales:</b> Resumir historial de CRM, últimas interacciones, noticias recientes de la empresa del cliente, sugerir 3 talking points.</p>
-          <p><b>5. No funcionales:</b> Debe estar listo &lt;30s antes de que empiece la reunión (viene del calendario), alta disponibilidad en horario laboral, no necesita ser tiempo real dentro de la reunión.</p>
-          <p><b>6. Restricciones:</b> CRM existente (Salesforce), datos del cliente son sensibles (no pueden salir de la red corporativa), equipo de ventas no técnico.</p>
+          <p><b>1. Clarify:</b> "Does 'prepare' mean summarizing the customer's history, suggesting talking points, or both? Is it before the meeting or also during?" — never assume scope.</p>
+          <p><b>2. Users:</b> Sales reps (primary user). Possibly managers who review prep quality (secondary user).</p>
+          <p><b>3. Objective:</b> Cut prep time from 30 minutes to 5, while maintaining or improving meeting quality — a concrete KPI, not "use AI."</p>
+          <p><b>4. Functional:</b> Summarize CRM history, recent interactions, recent news about the customer's company, suggest 3 talking points.</p>
+          <p><b>5. Non-functional:</b> Must be ready &lt;30s before the meeting starts (triggered by the calendar), high availability during business hours, doesn't need to be real-time during the meeting itself.</p>
+          <p><b>6. Constraints:</b> Existing CRM (Salesforce), customer data is sensitive (can't leave the corporate network), non-technical sales team.</p>
         </div>
       </details>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Diagrama de implementación</div>
-    <h2>Cómo se vería (pasos 7-9, aplicados al caso de ventas)</h2>
-    <p>El ejercicio guiado se detuvo en el paso 6 (restricciones). Así se ve continuar hasta la arquitectura.</p>
+    <div class="section-label">Implementation diagram</div>
+    <h2>What it would look like (steps 7-9, applied to the sales case)</h2>
+    <p>The guided exercise stopped at step 6 (constraints). This is what continuing through to the architecture looks like.</p>
     <figure class="diagram">
-      <svg viewBox="0 0 640 180" role="img" aria-label="Diagrama: un evento de calendario dispara el Agent Runtime, que consulta el historial de CRM y noticias recientes de la empresa, genera un resumen con talking points, y lo entrega al representante de ventas por Slack o email antes de la reunión.">
+      <svg viewBox="0 0 640 180" role="img" aria-label="Diagram: a calendar event triggers the Agent Runtime, which queries CRM history and recent company news, generates a talking-points summary, and delivers it to the sales rep via Slack or email before the meeting.">
         <defs>
           <marker id="d6arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker>
         </defs>
 
         <rect x="10" y="20" width="140" height="40" rx="3" class="dbox"/>
-        <text x="80" y="44" text-anchor="middle" class="dtext">Evento de calendario</text>
+        <text x="80" y="44" text-anchor="middle" class="dtext">Calendar event</text>
         <line x1="150" y1="40" x2="188" y2="40" class="darrow" marker-end="url(#d6arrow)"/>
 
         <rect x="190" y="20" width="140" height="40" rx="3" class="dbox-accent"/>
         <text x="260" y="44" text-anchor="middle" class="dtext-accent">Agent Runtime</text>
 
         <line x1="245" y1="60" x2="235" y2="98" class="darrow" marker-end="url(#d6arrow)"/>
-        <text x="200" y="82" class="dtext-muted">consulta CRM</text>
+        <text x="200" y="82" class="dtext-muted">queries CRM</text>
         <rect x="175" y="100" width="110" height="40" rx="3" class="dbox"/>
-        <text x="230" y="124" text-anchor="middle" class="dtext">Historial CRM</text>
+        <text x="230" y="124" text-anchor="middle" class="dtext">CRM history</text>
 
         <line x1="285" y1="60" x2="355" y2="98" class="darrow" marker-end="url(#d6arrow)"/>
-        <text x="330" y="82" class="dtext-muted">consulta noticias</text>
+        <text x="330" y="82" class="dtext-muted">queries news</text>
         <rect x="305" y="100" width="110" height="40" rx="3" class="dbox"/>
-        <text x="360" y="124" text-anchor="middle" class="dtext">Noticias recientes</text>
+        <text x="360" y="124" text-anchor="middle" class="dtext">Recent news</text>
 
         <line x1="330" y1="40" x2="458" y2="40" class="darrow" marker-end="url(#d6arrow)"/>
-        <text x="395" y="34" text-anchor="middle" class="dtext-muted">genera resumen</text>
+        <text x="395" y="34" text-anchor="middle" class="dtext-muted">generates summary</text>
         <rect x="460" y="20" width="160" height="40" rx="3" class="dbox"/>
         <text x="540" y="44" text-anchor="middle" class="dtext">Talking points</text>
 
         <line x1="540" y1="60" x2="540" y2="98" class="darrow" marker-end="url(#d6arrow)"/>
-        <text x="555" y="82" class="dtext-muted">&lt;30s antes</text>
+        <text x="555" y="82" class="dtext-muted">&lt;30s before</text>
         <rect x="460" y="100" width="160" height="40" rx="3" class="dbox"/>
-        <text x="540" y="124" text-anchor="middle" class="dtext">Rep de ventas (Slack/email)</text>
+        <text x="540" y="124" text-anchor="middle" class="dtext">Sales rep (Slack/email)</text>
       </svg>
-      <figcaption>Nota que ambas consultas (CRM, noticias) son de solo lectura — no hay escritura ni acción irreversible en este flujo.</figcaption>
+      <figcaption>Note both queries (CRM, news) are read-only — no writes or irreversible actions in this flow.</figcaption>
     </figure>
   </section>
 
   <section>
-    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <div class="section-label">Related interview questions</div>
     <ul class="iq-list">
-      <li>¿Por qué clarificar el problema antes de diseñar, incluso si crees entenderlo?</li>
-      <li>¿Cómo decides qué requisitos no funcionales importan más para un caso dado?</li>
-      <li>¿Qué haces si el entrevistador no te da suficiente información?</li>
-      <li>¿Cómo presentas trade-offs sin sonar indeciso?</li>
-      <li>¿Por qué el rollout es parte del diseño y no un detalle de implementación aparte?</li>
+      <li>Why clarify the problem before designing, even if you think you understand it?</li>
+      <li>How do you decide which non-functional requirements matter most for a given case?</li>
+      <li>What do you do if the interviewer doesn't give you enough information?</li>
+      <li>How do you present trade-offs without sounding indecisive?</li>
+      <li>Why is rollout part of the design and not a separate implementation detail?</li>
     </ul>
   </section>
 
   <section>
-    <div class="section-label">Quiz de autoevaluación</div>
+    <div class="section-label">Self-check quiz</div>
     <div id="quiz"></div>
-    <div class="quiz-score" id="quizScore">0 / 6 respondidas correctamente</div>
+    <div class="quiz-score" id="quizScore">0 / 6 answered correctly</div>
   </section>
 
   <section>
-    <div class="section-label">Checklist de cierre</div>
+    <div class="section-label">Closing checklist</div>
     <div class="checklist" id="checklist">
-      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Puedo recitar los 16 pasos sin ver la lista.</label></div>
-      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Practiqué los pasos 1-6 del caso de ventas en voz alta antes de ver la solución.</label></div>
-      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Sé explicar por qué clarificar primero gana sobre diseñar rápido.</label></div>
-      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Completé el quiz con 6/6.</label></div>
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">I can recite the 16 steps without looking at the list.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">I practiced steps 1-6 of the sales case out loud before looking at the solution.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">I can explain why clarifying first beats designing fast.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">I completed the quiz with 6/6.</label></div>
     </div>
   </section>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
-    <span>Día 06 de 14</span>
-    <a href="day-07.html">Día 07 &rarr;</a>
+    <a href="../index.html">&larr; Hub</a>
+    <span>Day 06 of 14</span>
+    <a href="day-07.html">Day 07 &rarr;</a>
   </div>
 </div>
 
 <script>
   const QUIZ = [
     {
-      q: "¿Cuál es el error más común al empezar un caso de System Design?",
-      opts: ["Hacer demasiadas preguntas de clarificación", "Saltar directo a dibujar arquitectura sin clarificar el problema primero", "Mencionar trade-offs", "Hablar del rollout"],
+      q: "What's the most common mistake when starting a System Design case?",
+      opts: ["Asking too many clarifying questions", "Jumping straight to drawing architecture without clarifying the problem first", "Mentioning trade-offs", "Talking about rollout"],
       correct: 1,
-      explain: "El entrevistador evalúa el proceso — diseñar rápido lo incorrecto pesa más en contra que tardar en clarificar."
+      explain: "The interviewer evaluates the process — quickly designing the wrong thing counts against you more than taking time to clarify."
     },
     {
-      q: "Los requisitos no funcionales (paso 5) incluyen principalmente...",
-      opts: ["Qué debe hacer el sistema funcionalmente", "Latencia, disponibilidad, throughput, consistencia", "El presupuesto del proyecto", "La lista de usuarios"],
+      q: "Non-functional requirements (step 5) mainly include...",
+      opts: ["What the system must functionally do", "Latency, availability, throughput, consistency", "The project's budget", "The list of users"],
       correct: 1,
-      explain: "Los funcionales son el 'qué hace'; los no funcionales son las cualidades bajo las que debe operar."
+      explain: "Functional requirements are the 'what it does'; non-functional ones are the qualities it must operate under."
     },
     {
-      q: "¿Por qué 'rollout' (paso 16) es parte del diseño de sistema y no un detalle aparte?",
-      opts: ["No lo es, se puede omitir siempre", "Porque cómo lanzas algo sin riesgo (canary, feature flags) es parte de diseñar la solución completa", "Solo aplica a sistemas sin IA", "Es responsabilidad exclusiva de DevOps, nunca del diseño"],
+      q: "Why is 'rollout' (step 16) part of the system design and not a separate detail?",
+      opts: ["It isn't, it can always be skipped", "Because how you launch something without risk (canary, feature flags) is part of designing the full solution", "It only applies to non-AI systems", "It's solely DevOps's responsibility, never design's"],
       correct: 1,
-      explain: "Un buen diseño incluye cómo mitigar el riesgo de lanzarlo — es tan parte de la solución como la arquitectura misma."
+      explain: "A good design includes how to mitigate the risk of launching it — it's as much a part of the solution as the architecture itself."
     },
     {
-      q: "Si el entrevistador da poca información sobre el caso, la mejor respuesta es...",
-      opts: ["Asumir lo más común y seguir sin preguntar", "Hacer preguntas de clarificación específicas y declarar los supuestos que sí tomas", "Pedir que reformule todo el problema", "Quedarte en silencio esperando más detalles"],
+      q: "If the interviewer gives little information about the case, the best response is to...",
+      opts: ["Assume the most common scenario and proceed without asking", "Ask specific clarifying questions and state the assumptions you do make", "Ask them to restate the entire problem", "Stay silent waiting for more details"],
       correct: 1,
-      explain: "Clarificar activamente, y ser explícito sobre los supuestos que decides tomar, demuestra el proceso que se está evaluando."
+      explain: "Actively clarifying, and being explicit about the assumptions you're making, demonstrates the process being evaluated."
     },
     {
-      q: "¿Qué papel juega el paso 15 (trade-offs) en la evaluación del candidato?",
-      opts: ["Ninguno, es opcional", "Demuestra que consideraste alternativas y entiendes las consecuencias de tu elección", "Solo importa si el entrevistador pregunta directamente", "Sirve para rellenar tiempo"],
+      q: "What role does step 15 (trade-offs) play in evaluating the candidate?",
+      opts: ["None, it's optional", "It shows you considered alternatives and understand the consequences of your choice", "It only matters if the interviewer asks directly", "It's there to fill time"],
       correct: 1,
-      explain: "Nombrar lo que descartaste y por qué es evidencia de pensamiento arquitectónico, no solo de conocer patrones."
+      explain: "Naming what you discarded and why is evidence of architectural thinking, not just knowing patterns."
     },
     {
-      q: "El paso 8 ('arquitectura del agente') se refiere específicamente a...",
-      opts: ["La infraestructura de red", "Agent runtime, tools, memory y RAG — el diagrama base del Día 02", "El presupuesto del proyecto", "Los requisitos no funcionales"],
+      q: "Step 8 ('agent architecture') specifically refers to...",
+      opts: ["Network infrastructure", "Agent runtime, tools, memory, and RAG — the base diagram from Day 02", "The project budget", "Non-functional requirements"],
       correct: 1,
-      explain: "Es donde aterrizas el framework general de System Design en los componentes específicos de un agente de IA."
+      explain: "It's where you land the general System Design framework on the specific components of an AI agent."
     }
   ];
   const quizEl = document.getElementById('quiz');
@@ -315,7 +315,7 @@
         if (idx === item.correct) { btn.classList.add('correct'); correctCount++; }
         else { btn.classList.add('incorrect'); box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct'); }
         document.getElementById(`explain-${i}`).classList.add('show');
-        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} answered correctly (${answered}/${QUIZ.length} seen)`;
       });
     });
   });

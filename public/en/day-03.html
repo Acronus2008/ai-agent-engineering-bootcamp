@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -131,89 +131,89 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/day-03.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../day-03.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Semana 1 · Día 03 · AI Agents &amp; Enterprise Architecture</div>
+    <div class="eyebrow">Week 1 · Day 03 · AI Agents &amp; Enterprise Architecture</div>
     <div class="title-row">
       <span class="day-numeral">03</span>
       <h1>Enterprise Integration</h1>
     </div>
-    <p class="sub">El agente vive rodeado de CRM, ERP, colas y APIs legacy. Hoy es puro mapeo: qué protocolo usar para qué capacidad, y cómo autorizar cada llamada.</p>
+    <p class="sub">The agent lives surrounded by CRM, ERP, queues, and legacy APIs. Today is pure mapping: which protocol to use for which capability, and how to authorize every call.</p>
     <div class="meta-row">
       <span><b>~90 min</b></span>
-      <span>Prerrequisito: <b>Día 02</b></span>
-      <span>Conecta con: <b>Día 04 — Security</b></span>
+      <span>Prerequisite: <b>Day 02</b></span>
+      <span>Connects to: <b>Day 04 — Security</b></span>
     </div>
   </header>
 
   <section>
-    <div class="section-label">Objetivo del día</div>
-    <p>Ya sabes construir APIs, consumir eventos y manejar OAuth2 — eso no cambia. Lo que cambia es <b>quién</b> decide cuándo llamar cada integración: hoy es un LLM, no una rama de código fija, así que cada integración necesita un contrato más explícito y más defensivo.</p>
+    <div class="section-label">Today's objective</div>
+    <p>You already know how to build APIs, consume events, and handle OAuth2 — that doesn't change. What changes is <b>who</b> decides when to call each integration: today it's an LLM, not a fixed code branch, so every integration needs a more explicit, more defensive contract.</p>
   </section>
 
   <section>
-    <div class="section-label">Principio clave</div>
-    <div class="principle-box">"El agente no debería acceder directamente a los sistemas críticos; debe hacerlo mediante herramientas y APIs con autorización y controles adecuados."</div>
+    <div class="section-label">Key principle</div>
+    <div class="principle-box">"The agent should not access critical systems directly; it must do so through tools and APIs with proper authorization and controls."</div>
   </section>
 
   <section>
-    <div class="section-label">Contenido</div>
+    <div class="section-label">Content</div>
     <div class="concept-grid">
       <div class="concept">
         <div class="concept-term">REST</div>
-        <h3>El default para exponer una tool</h3>
-        <p>Request/response síncrono, contrato predecible, fácil de describir como schema para el LLM. Es la forma más simple de envolver una capacidad de negocio como tool.</p>
+        <h3>The default for exposing a tool</h3>
+        <p>Synchronous request/response, predictable contract, easy to describe as a schema for the LLM. It's the simplest way to wrap a business capability as a tool.</p>
       </div>
       <div class="concept">
         <div class="concept-term">GraphQL</div>
-        <h3>Potente para el humano, ambiguo para el modelo</h3>
-        <p>Resuelve over/under-fetching, pero un schema GraphQL completo es difícil de acotar como definición de tool (demasiadas combinaciones posibles). En la práctica: envuelve el GraphQL detrás de una tool REST-like con queries predefinidas y parametrizadas.</p>
+        <h3>Powerful for a human, ambiguous for the model</h3>
+        <p>It solves over/under-fetching, but a full GraphQL schema is hard to bound as a tool definition (too many possible combinations). In practice: wrap the GraphQL behind a REST-like tool with predefined, parameterized queries.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Kafka / Event-driven</div>
-        <h3>Para acciones que no necesitan respuesta inmediata</h3>
-        <p>Si la acción del agente dispara un proceso downstream (fulfillment, notificación a otro equipo) y no necesita esperar el resultado para continuar la conversación, un evento es mejor que una llamada síncrona: desacopla al agente de la disponibilidad de ese sistema.</p>
+        <h3>For actions that don't need an immediate response</h3>
+        <p>If the agent's action triggers a downstream process (fulfillment, notifying another team) and doesn't need to wait for the result to continue the conversation, an event beats a synchronous call: it decouples the agent from that system's availability.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Webhooks</div>
-        <h3>La forma en que el mundo despierta al agente</h3>
-        <p>Cuando algo pasa fuera del turno de conversación (un pago se confirma, un humano aprueba una acción pendiente), un webhook reactiva el agente para continuar donde quedó — clave para flujos con human-in-the-loop.</p>
+        <h3>How the world wakes the agent up</h3>
+        <p>When something happens outside the conversation turn (a payment confirms, a human approves a pending action), a webhook reactivates the agent to continue where it left off — key for human-in-the-loop flows.</p>
       </div>
       <div class="concept">
         <div class="concept-term">Databases</div>
-        <h3>Nunca una tool en sí misma</h3>
-        <p>El agente no debería tener una tool tipo "run SQL query". Siempre pasa por un servicio que valida, aplica reglas de negocio y deja rastro de auditoría — igual que exigirías en cualquier sistema con usuarios externos.</p>
+        <h3>Never a tool by itself</h3>
+        <p>The agent shouldn't have a "run SQL query" type tool. It should always go through a service that validates, applies business rules, and leaves an audit trail — the same as you'd require in any system with external users.</p>
       </div>
       <div class="concept">
         <div class="concept-term">CRM / ERP / SaaS / Legacy</div>
-        <h3>La realidad: rara vez hay una API limpia</h3>
-        <p>Muchas veces necesitas un adapter/anti-corruption layer entre el sistema legacy y la tool que expones al agente — traduce el modelo de datos viejo a un contrato simple y estable.</p>
+        <h3>Reality: a clean API is rare</h3>
+        <p>You often need an adapter/anti-corruption layer between the legacy system and the tool you expose to the agent — it translates the old data model into a simple, stable contract.</p>
       </div>
       <div class="concept">
         <div class="concept-term">OAuth2 / OIDC</div>
-        <h3>Quién autoriza qué, en nombre de quién</h3>
-        <p>El agente actúa <b>en nombre de un usuario</b> (delegated authorization) o con un service account de scope acotado. El token que usa la tool debe llevar los mismos scopes que tendría el usuario si hiciera la acción manualmente — nunca más.</p>
+        <h3>Who authorizes what, on whose behalf</h3>
+        <p>The agent acts <b>on behalf of a user</b> (delegated authorization) or with a scoped service account. The token a tool uses must carry the same scopes the user would have if performing the action manually — never more.</p>
       </div>
       <div class="concept">
         <div class="concept-term">IAM</div>
-        <h3>Least privilege, por tool</h3>
-        <p>Cada tool tiene su propio scope mínimo necesario. Una tool de "consultar pedido" no debería poder "cancelar pedido" — aunque ambas toquen el mismo sistema.</p>
+        <h3>Least privilege, per tool</h3>
+        <p>Every tool has its own minimum necessary scope. An "order lookup" tool shouldn't be able to "cancel order" — even if both touch the same system.</p>
       </div>
       <div class="concept">
         <div class="concept-term">API Gateway</div>
-        <h3>El chokepoint donde vive el control</h3>
-        <p>Todas las tool calls del agente pasan por un punto central de auth, rate limiting y logging — es también donde suele vivir buena parte de los guardrails de seguridad (Día 04).</p>
+        <h3>The chokepoint where control lives</h3>
+        <p>Every one of the agent's tool calls passes through a central point of auth, rate limiting, and logging — it's also usually where a good chunk of the security guardrails live (Day 04).</p>
       </div>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Diagrama de implementación</div>
-    <h2>La capa de integración completa</h2>
-    <p>Cómo se ve en la práctica el principio del día: el agente solo habla con el API Gateway, nunca directo con CRM, legacy o el bus de eventos.</p>
+    <div class="section-label">Implementation diagram</div>
+    <h2>The full integration layer</h2>
+    <p>How today's principle looks in practice: the agent only talks to the API Gateway, never directly to CRM, legacy, or the event bus.</p>
     <figure class="diagram">
-      <svg viewBox="0 0 680 300" role="img" aria-label="Diagrama: el Agent Runtime llama al API Gateway, que enruta hacia una tool REST síncrona contra un SaaS CRM con OAuth2, hacia un adapter que envuelve un sistema legacy SOAP, y hacia un evento asíncrono publicado en un bus para disparar fulfillment.">
+      <svg viewBox="0 0 680 300" role="img" aria-label="Diagram: the Agent Runtime calls the API Gateway, which routes to a synchronous REST tool against a SaaS CRM with OAuth2, to an adapter wrapping a legacy SOAP system, and to an asynchronous event published to a bus to trigger fulfillment.">
         <defs>
           <marker id="d3arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
             <path d="M0,0 L10,5 L0,10 z" class="darrow-head"/>
@@ -226,7 +226,7 @@
 
         <rect x="230" y="72" width="220" height="34" rx="3" class="dbox"/>
         <text x="340" y="94" text-anchor="middle" class="dlabel">API Gateway</text>
-        <text x="340" y="120" text-anchor="middle" class="dtext-muted">auth · rate limit · logging · única puerta</text>
+        <text x="340" y="120" text-anchor="middle" class="dtext-muted">auth · rate limit · logging · single door</text>
 
         <line x1="230" y1="90" x2="90" y2="150" class="darrow" marker-end="url(#d3arrow)"/>
         <line x1="340" y1="106" x2="340" y2="150" class="darrow" marker-end="url(#d3arrow)"/>
@@ -246,147 +246,147 @@
 
         <line x1="90" y1="186" x2="90" y2="222" class="darrow" marker-end="url(#d3arrow)"/>
         <rect x="20" y="224" width="140" height="34" rx="3" class="dbox"/>
-        <text x="90" y="246" text-anchor="middle" class="dtext-muted">CRM del cliente</text>
+        <text x="90" y="246" text-anchor="middle" class="dtext-muted">Customer's CRM</text>
 
         <line x1="340" y1="186" x2="340" y2="222" class="darrow" marker-end="url(#d3arrow)"/>
         <rect x="270" y="224" width="140" height="34" rx="3" class="dbox"/>
-        <text x="340" y="246" text-anchor="middle" class="dtext-muted">Sistema SOAP legacy</text>
+        <text x="340" y="246" text-anchor="middle" class="dtext-muted">Legacy SOAP system</text>
 
         <line x1="590" y1="186" x2="590" y2="222" class="darrow" marker-end="url(#d3arrow)"/>
         <rect x="520" y="224" width="140" height="34" rx="3" class="dbox"/>
         <text x="590" y="246" text-anchor="middle" class="dtext-muted">Fulfillment (async)</text>
       </svg>
-      <figcaption>Línea punteada = camino asíncrono (evento). Líneas sólidas = llamada síncrona con respuesta esperada.</figcaption>
+      <figcaption>Dashed line = asynchronous path (event). Solid lines = synchronous call with an expected response.</figcaption>
     </figure>
   </section>
 
   <section>
-    <div class="section-label">Ejemplo de implementación</div>
-    <h2>El adapter que envuelve el sistema SOAP legacy</h2>
-    <p>La tool que ve el agente es REST limpio; el adapter absorbe toda la fealdad de SOAP detrás.</p>
+    <div class="section-label">Implementation example</div>
+    <h2>The adapter wrapping the legacy SOAP system</h2>
+    <p>The tool the agent sees is clean REST; the adapter absorbs all of SOAP's ugliness behind it.</p>
     <div class="code-block">
       <div class="code-head"><span>ticket_adapter.py</span><span class="lang">python</span></div>
       <pre><span class="code-kw">from</span> fastapi <span class="code-kw">import</span> FastAPI, HTTPException
-<span class="code-kw">import</span> zeep  <span class="code-comment"># cliente SOAP</span>
+<span class="code-kw">import</span> zeep  <span class="code-comment"># SOAP client</span>
 
 app = FastAPI()
 soap_client = zeep.Client(<span class="code-str">"https://legacy.internal/tickets?wsdl"</span>)
 
-<span class="code-comment"># Contrato REST limpio — esto es lo único que el agente conoce como tool</span>
+<span class="code-comment"># Clean REST contract — this is the only thing the agent knows as a tool</span>
 <span class="code-kw">@app</span>.post(<span class="code-str">"/tickets"</span>)
 <span class="code-kw">def</span> create_ticket(payload: TicketCreate, token: str = Depends(verify_oauth_scope)):
     <span class="code-kw">if not</span> token.has_scope(<span class="code-str">"tickets:write"</span>):
         <span class="code-kw">raise</span> HTTPException(403, <span class="code-str">"missing tickets:write scope"</span>)
 
     <span class="code-kw">try</span>:
-        <span class="code-comment"># Traduce el modelo REST simple al request SOAP real</span>
+        <span class="code-comment"># Translates the simple REST model into the actual SOAP request</span>
         soap_response = soap_client.service.CreateIncident(
             CustomerId=payload.customer_id,
             Description=payload.description,
             Priority=map_priority(payload.priority),
         )
     <span class="code-kw">except</span> zeep.exceptions.Fault <span class="code-kw">as</span> e:
-        <span class="code-comment"># Error estructurado — el agente lo ve como observación, no como crash</span>
+        <span class="code-comment"># Structured error — the agent sees it as an observation, not a crash</span>
         <span class="code-kw">raise</span> HTTPException(502, {<span class="code-str">"error"</span>: <span class="code-str">"legacy_system_fault"</span>, <span class="code-str">"detail"</span>: str(e)})
 
     <span class="code-kw">return</span> {<span class="code-str">"ticket_id"</span>: soap_response.IncidentId, <span class="code-str">"status"</span>: <span class="code-str">"created"</span>}</pre>
     </div>
-    <p style="font-size:13px; color:var(--muted); margin-top:8px;">El agente nunca sabe que existe SOAP — solo ve <code>POST /tickets</code> con un schema JSON, exactamente como cualquier otra tool.</p>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">The agent never knows SOAP exists — it only sees <code>POST /tickets</code> with a JSON schema, exactly like any other tool.</p>
   </section>
 
   <section>
-    <div class="section-label">Ejercicio práctico</div>
+    <div class="section-label">Practical exercise</div>
     <div class="exercise-box">
-      <h2>Caso: agente que gestiona incidencias de un cliente</h2>
-      <p>El agente debe: (a) consultar datos del cliente en Salesforce (CRM SaaS, REST + OAuth2), (b) crear un ticket en un sistema legacy de soporte que solo expone SOAP, (c) disparar el proceso de fulfillment cuando el ticket se resuelve.</p>
+      <h2>Case: an agent that manages customer incidents</h2>
+      <p>The agent must: (a) look up customer data in Salesforce (SaaS CRM, REST + OAuth2), (b) create a ticket in a legacy support system that only exposes SOAP, (c) trigger the fulfillment process once the ticket is resolved.</p>
       <ol>
-        <li>¿Qué protocolo/patrón usarías para cada una de las tres integraciones, y por qué?</li>
-        <li>¿Cómo envuelves el sistema legacy SOAP para que sea una tool utilizable por el agente?</li>
-        <li>¿Qué scope de OAuth2 le darías a la tool de Salesforce — y qué NO debería poder hacer?</li>
+        <li>Which protocol/pattern would you use for each of the three integrations, and why?</li>
+        <li>How do you wrap the legacy SOAP system so it's usable as a tool by the agent?</li>
+        <li>What OAuth2 scope would you give the Salesforce tool — and what should it NOT be able to do?</li>
       </ol>
       <details>
-        <summary>Ver enfoque sugerido</summary>
+        <summary>See suggested approach</summary>
         <div class="solution">
-          <p><b>1.</b> Salesforce → REST síncrono (necesitas el dato ya para responder). Ticket legacy → REST síncrono también (necesitas confirmar creación), pero envuelto. Fulfillment → evento asíncrono (Kafka/EventBridge), no bloquea la conversación.</p>
-          <p><b>2.</b> Un servicio adapter propio expone un endpoint REST simple (<code>POST /tickets</code>) que internamente traduce a la llamada SOAP — el agente nunca ve SOAP, solo ve un contrato REST limpio con su propio schema de tool.</p>
-          <p><b>3.</b> Scope de solo lectura sobre el objeto Contact/Case del cliente autenticado — nunca write, y nunca acceso a otros clientes. Si se necesita escribir (ej. actualizar un campo), es una tool distinta, con su propio scope y probablemente aprobación humana.</p>
+          <p><b>1.</b> Salesforce → synchronous REST (you need the data now to respond). Legacy ticket → synchronous REST too (you need to confirm creation), but wrapped. Fulfillment → asynchronous event (Kafka/EventBridge), doesn't block the conversation.</p>
+          <p><b>2.</b> A dedicated adapter service exposes a simple REST endpoint (<code>POST /tickets</code>) that internally translates to the SOAP call — the agent never sees SOAP, only a clean REST contract with its own tool schema.</p>
+          <p><b>3.</b> Read-only scope over the authenticated customer's Contact/Case object — never write, and never access to other customers. If a write is needed (e.g., updating a field), that's a separate tool, with its own scope and likely human approval.</p>
         </div>
       </details>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <div class="section-label">Related interview questions</div>
     <ul class="iq-list">
-      <li>¿Cómo expondrías un sistema SOAP legacy como tool para un agente?</li>
-      <li>¿Cuándo usarías un evento (Kafka) en vez de una tool call directa para una acción del agente?</li>
-      <li>¿Cómo manejas una tool call que necesita aprobación humana antes de ejecutarse (ej. un reembolso)?</li>
-      <li>¿Dónde encaja el API Gateway en la arquitectura de un agente, y por qué ahí?</li>
-      <li>¿Cómo limitan los scopes de OAuth2 lo que un agente puede hacer en nombre de un usuario?</li>
+      <li>How would you expose a legacy SOAP system as a tool for an agent?</li>
+      <li>When would you use an event (Kafka) instead of a direct tool call for an agent action?</li>
+      <li>How do you handle a tool call that needs human approval before executing (e.g., a refund)?</li>
+      <li>Where does the API Gateway fit in an agent's architecture, and why there?</li>
+      <li>How do OAuth2 scopes limit what an agent can do on a user's behalf?</li>
     </ul>
   </section>
 
   <section>
-    <div class="section-label">Quiz de autoevaluación</div>
+    <div class="section-label">Self-check quiz</div>
     <div id="quiz"></div>
-    <div class="quiz-score" id="quizScore">0 / 6 respondidas correctamente</div>
+    <div class="quiz-score" id="quizScore">0 / 6 answered correctly</div>
   </section>
 
   <section>
-    <div class="section-label">Checklist de cierre</div>
+    <div class="section-label">Closing checklist</div>
     <div class="checklist" id="checklist">
-      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Sé cuándo elegir evento vs llamada síncrona para una acción del agente.</label></div>
-      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Puedo explicar por qué el agente nunca debería tener una tool "run SQL".</label></div>
-      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Entiendo delegated authorization y por qué el scope del token importa.</label></div>
-      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Resolví el ejercicio del caso Salesforce/legacy sin ver la solución primero.</label></div>
-      <div class="check-row"><input type="checkbox" id="c5"><label for="c5">Completé el quiz con 6/6.</label></div>
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">I know when to choose an event vs. a synchronous call for an agent action.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">I can explain why the agent should never have a "run SQL" tool.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">I understand delegated authorization and why the token's scope matters.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">I solved the Salesforce/legacy case exercise before looking at the solution.</label></div>
+      <div class="check-row"><input type="checkbox" id="c5"><label for="c5">I completed the quiz with 6/6.</label></div>
     </div>
   </section>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
-    <span>Día 03 de 14</span>
-    <a href="day-04.html">Día 04 &rarr;</a>
+    <a href="../index.html">&larr; Hub</a>
+    <span>Day 03 of 14</span>
+    <a href="day-04.html">Day 04 &rarr;</a>
   </div>
 </div>
 
 <script>
   const QUIZ = [
     {
-      q: "¿Cuál es el escenario más apropiado para usar un evento (Kafka) en vez de una tool call síncrona?",
-      opts: ["Cuando necesitas la respuesta inmediatamente para continuar la conversación", "Cuando la acción dispara un proceso downstream y el agente no necesita esperar su resultado", "Siempre, los eventos son mejores que REST", "Nunca, los agentes solo deberían usar REST"],
+      q: "What's the most appropriate scenario for using an event (Kafka) instead of a synchronous tool call?",
+      opts: ["When you need the response immediately to continue the conversation", "When the action triggers a downstream process and the agent doesn't need to wait for its result", "Always, events are better than REST", "Never, agents should only use REST"],
       correct: 1,
-      explain: "Los eventos desacoplan al agente de sistemas que no necesita esperar — ideal para side effects que no bloquean la respuesta al usuario."
+      explain: "Events decouple the agent from systems it doesn't need to wait for — ideal for side effects that don't block the response to the user."
     },
     {
-      q: "¿Por qué el agente no debería tener una tool tipo 'ejecutar SQL arbitrario'?",
-      opts: ["Porque el LLM no entiende SQL", "Porque elimina el punto de validación, autorización y auditoría que da una tool bien definida", "Porque las bases de datos son lentas", "No hay problema, es una buena práctica"],
+      q: "Why shouldn't the agent have an 'execute arbitrary SQL' type tool?",
+      opts: ["Because the LLM doesn't understand SQL", "Because it removes the validation, authorization, and audit checkpoint a well-defined tool provides", "Because databases are slow", "There's no issue, it's good practice"],
       correct: 1,
-      explain: "Una tool específica te da un contrato acotado donde validar y auditar. SQL libre es equivalente a dar acceso root al modelo."
+      explain: "A specific tool gives you a bounded contract where you can validate and audit. Free-form SQL is equivalent to giving the model root access."
     },
     {
-      q: "En delegated authorization vía OAuth2, el token que usa una tool debería tener...",
-      opts: ["Todos los scopes posibles, por si acaso", "Los mismos scopes que tendría el usuario si hiciera la acción manualmente, nunca más", "Ningún scope, la tool no necesita autorización", "Un scope distinto por cada conversación, sin relación al usuario"],
+      q: "In OAuth2 delegated authorization, the token a tool uses should have...",
+      opts: ["Every possible scope, just in case", "The same scopes the user would have doing the action manually, never more", "No scope, the tool doesn't need authorization", "A different scope per conversation, unrelated to the user"],
       correct: 1,
-      explain: "El principio es que el agente actúa con exactamente el mismo nivel de permiso que el usuario en cuyo nombre opera — ni más ni menos."
+      explain: "The principle is that the agent acts with exactly the same permission level as the user it acts on behalf of — no more, no less."
     },
     {
-      q: "¿Qué rol cumple el API Gateway en la arquitectura de un agente?",
-      opts: ["Es opcional y no aporta nada relevante", "Chokepoint central de auth, rate limiting y logging para todas las tool calls", "Reemplaza la necesidad de tools bien definidas", "Solo se usa para servir contenido estático"],
+      q: "What role does the API Gateway play in an agent's architecture?",
+      opts: ["It's optional and adds nothing relevant", "Central chokepoint for auth, rate limiting, and logging across all tool calls", "It replaces the need for well-defined tools", "It's only used to serve static content"],
       correct: 1,
-      explain: "Es el punto central donde se puede aplicar control y observabilidad de forma consistente sobre todas las llamadas del agente."
+      explain: "It's the central point where you can apply consistent control and observability across all of the agent's calls."
     },
     {
-      q: "Para envolver un sistema legacy SOAP como tool de un agente, la mejor práctica es...",
-      opts: ["Exponer el WSDL directamente al modelo", "Construir un adapter que traduce a un contrato REST simple y estable", "Pedirle al modelo que genere el XML SOAP directamente", "No es posible integrar sistemas legacy con agentes"],
+      q: "To wrap a legacy SOAP system as an agent tool, best practice is to...",
+      opts: ["Expose the WSDL directly to the model", "Build an adapter that translates it into a simple, stable REST contract", "Ask the model to generate the raw SOAP XML itself", "It isn't possible to integrate legacy systems with agents"],
       correct: 1,
-      explain: "Un anti-corruption layer aísla al agente de la complejidad del sistema legacy detrás de un contrato limpio."
+      explain: "An anti-corruption layer isolates the agent from the legacy system's complexity behind a clean contract."
     },
     {
-      q: "Una acción que requiere aprobación humana antes de ejecutarse (ej. un reembolso) se maneja mejor...",
-      opts: ["Dejando que el agente la ejecute y notifique después", "Con una tool que crea una solicitud pendiente, y un webhook que reactiva al agente cuando se aprueba", "Ignorando la necesidad de aprobación si el usuario insiste", "Bloqueando por completo esa capacidad del agente"],
+      q: "An action that requires human approval before executing (e.g., a refund) is best handled by...",
+      opts: ["Letting the agent execute it and notify afterward", "A tool that creates a pending request, plus a webhook that reactivates the agent once it's approved", "Ignoring the approval requirement if the user insists", "Blocking that agent capability entirely"],
       correct: 1,
-      explain: "El patrón es: la tool no ejecuta directamente, crea un pending approval; un evento/webhook externo notifica cuando se aprueba, y el agente retoma el flujo."
+      explain: "The pattern is: the tool doesn't execute directly, it creates a pending approval; an external event/webhook notifies when it's approved, and the agent resumes the flow."
     }
   ];
   const quizEl = document.getElementById('quiz');
@@ -406,7 +406,7 @@ soap_client = zeep.Client(<span class="code-str">"https://legacy.internal/ticket
         if (idx === item.correct) { btn.classList.add('correct'); correctCount++; }
         else { btn.classList.add('incorrect'); box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct'); }
         document.getElementById(`explain-${i}`).classList.add('show');
-        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} answered correctly (${answered}/${QUIZ.length} seen)`;
       });
     });
   });

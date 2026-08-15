@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -116,31 +116,31 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/day-09.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../day-09.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Semana 2 · Día 09 · Systems &amp; Cloud</div>
+    <div class="eyebrow">Week 2 · Day 09 · Systems &amp; Cloud</div>
     <div class="title-row">
       <span class="day-numeral">09</span>
       <h1>Composition Case</h1>
     </div>
-    <p class="sub">La otra mitad de la entrevista técnica: no te dan un problema técnico, te dan un problema de negocio ambiguo. La habilidad que se evalúa es problem decomposition.</p>
+    <p class="sub">The other half of the technical interview: you're not given a technical problem, you're given an ambiguous business problem. The skill being evaluated is problem decomposition.</p>
     <div class="meta-row">
       <span><b>~90 min</b></span>
-      <span>Prerrequisito: <b>Día 06</b></span>
-      <span>Conecta con: <b>Día 10 — Mock System Design</b></span>
+      <span>Prerequisite: <b>Day 06</b></span>
+      <span>Connects to: <b>Day 10 — Mock System Design</b></span>
     </div>
   </header>
 
   <section>
-    <div class="section-label">Objetivo del día</div>
-    <p>Distinguir un Composition Case de un System Design case: aquí el problema no viene definido, viene como una queja o una observación de negocio. Tu trabajo es convertir eso en algo accionable <b>antes</b> de pensar en arquitectura.</p>
+    <div class="section-label">Today's objective</div>
+    <p>Distinguish a Composition Case from a System Design case: here the problem doesn't come predefined, it comes as a complaint or a business observation. Your job is to turn that into something actionable <b>before</b> thinking about architecture.</p>
   </section>
 
   <section>
-    <div class="section-label">El framework</div>
+    <div class="section-label">The framework</div>
     <figure class="diagram">
-      <svg viewBox="0 0 660 260" role="img" aria-label="Diagrama del framework de Composition Case en nueve pasos, en zigzag: Problem, Users, Pain Points en la primera fila; Business Value, Processes, Automation Opportunities en la segunda, en orden inverso; Risks, Architecture, Implementation en la tercera. Architecture es el octavo paso de nueve.">
+      <svg viewBox="0 0 660 260" role="img" aria-label="Diagram of the nine-step Composition Case framework, in a zigzag: Problem, Users, Pain Points in the first row; Business Value, Processes, Automation Opportunities in the second, in reverse order; Risks, Architecture, Implementation in the third. Architecture is the eighth of nine steps.">
         <defs>
           <marker id="d9arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker>
         </defs>
@@ -176,129 +176,129 @@
         <rect x="450" y="200" width="200" height="40" rx="3" class="dbox"/>
         <text x="550" y="224" text-anchor="middle" class="dtext">9 · Implementation</text>
       </svg>
-      <figcaption>Architecture es el paso 8 de 9 — un candidato que salta ahí en el paso 2 está resolviendo un problema que todavía no entendió.</figcaption>
+      <figcaption>Architecture is step 8 of 9 — a candidate who jumps there on step 2 is solving a problem they haven't understood yet.</figcaption>
     </figure>
 
     <ol class="steps">
-      <li><b>Problem</b> Lo que te dan casi siempre es un síntoma, no el problema real. Reformúlalo en tus propias palabras antes de avanzar.</li>
-      <li><b>Users</b> Quién vive el problema — casi siempre hay más de un grupo, con intereses que no siempre coinciden.</li>
-      <li><b>Pain Points</b> Fricción concreta por cada grupo de usuario — no "es lento", sino "el usuario X pierde Y minutos haciendo Z manualmente".</li>
-      <li><b>Business Value</b> Conecta el pain point a una métrica que le importe al negocio: tiempo, costo, retención, riesgo.</li>
-      <li><b>Processes</b> Mapea el proceso actual (as-is) antes de proponer nada — sin esto, cualquier solución es una suposición.</li>
-      <li><b>Automation Opportunities</b> Dentro del proceso mapeado, ¿dónde ayuda realmente la automatización/IA — y dónde no debería tocarse?</li>
-      <li><b>Risks</b> Qué puede salir mal con la automatización propuesta: técnico, de negocio, de compliance.</li>
-      <li><b>Architecture</b> Recién aquí — el boceto técnico de la solución (aquí conectas con el Día 06).</li>
-      <li><b>Implementation</b> Plan por fases: qué se lanza primero (MVP), qué viene después, cómo se mide el éxito.</li>
+      <li><b>Problem</b> What you're given is almost always a symptom, not the real problem. Rephrase it in your own words before moving on.</li>
+      <li><b>Users</b> Who lives with the problem — there's almost always more than one group, with interests that don't always align.</li>
+      <li><b>Pain Points</b> Concrete friction for each user group — not "it's slow," but "user X loses Y minutes doing Z manually."</li>
+      <li><b>Business Value</b> Connect the pain point to a metric the business cares about: time, cost, retention, risk.</li>
+      <li><b>Processes</b> Map the current (as-is) process before proposing anything — without this, any solution is a guess.</li>
+      <li><b>Automation Opportunities</b> Within the mapped process, where does automation/AI actually help — and where shouldn't it be touched?</li>
+      <li><b>Risks</b> What can go wrong with the proposed automation: technical, business, compliance.</li>
+      <li><b>Architecture</b> Only here — the technical sketch of the solution (this is where you connect to Day 06).</li>
+      <li><b>Implementation</b> A phased plan: what ships first (MVP), what comes next, how success is measured.</li>
     </ol>
   </section>
 
   <section>
     <div class="section-label">Composition Case vs System Design</div>
-    <div class="analogy"><b>La diferencia clave</b>System Design asume que el problema ya está definido y evalúa profundidad técnica. Composition Case evalúa si puedes convertir ambigüedad de negocio en un problema bien definido — la arquitectura es solo el resultado final, no el foco de la evaluación.</div>
+    <div class="analogy"><b>The key difference</b>System Design assumes the problem is already defined and evaluates technical depth. Composition Case evaluates whether you can turn business ambiguity into a well-defined problem — the architecture is just the final output, not the focus of the evaluation.</div>
   </section>
 
   <section>
-    <div class="section-label">Caso práctico</div>
+    <div class="section-label">Practice case</div>
     <div class="exercise-box">
-      <h2>Enunciado: "El personal de bodega de una empresa de logística pierde 2 horas diarias reconciliando discrepancias entre el WMS y los sistemas de las transportadoras."</h2>
-      <p>Recorre el framework completo en voz alta antes de ver el enfoque sugerido.</p>
+      <h2>Prompt: "A logistics company's warehouse staff lose 2 hours a day reconciling discrepancies between the WMS and the carriers' systems."</h2>
+      <p>Walk through the full framework out loud before looking at the suggested approach.</p>
       <details>
-        <summary>Ver enfoque sugerido</summary>
+        <summary>See suggested approach</summary>
         <div class="solution">
           <h4>Problem</h4>
-          <p>El enunciado da un síntoma (2 horas perdidas). El problema real podría ser: falta de visibilidad en tiempo real de discrepancias, o un proceso de reconciliación inherentemente manual sin punto de verdad único.</p>
+          <p>The prompt gives a symptom (2 hours lost). The real problem could be: lack of real-time visibility into discrepancies, or an inherently manual reconciliation process with no single source of truth.</p>
           <h4>Users</h4>
-          <p>Personal de bodega (ejecuta la reconciliación), supervisores de logística (necesitan reportes precisos), clientes finales (afectados indirectamente por retrasos no detectados a tiempo).</p>
+          <p>Warehouse staff (run the reconciliation), logistics supervisors (need accurate reports), end customers (indirectly affected by delays not caught in time).</p>
           <h4>Pain Points</h4>
-          <p>Bodega: revisar manualmente dos sistemas que no se sincronizan. Supervisores: reportes con datos desactualizados. Clientes: envíos con estado incorrecto.</p>
+          <p>Warehouse: manually cross-checking two systems that don't sync. Supervisors: reports with stale data. Customers: shipments with incorrect status.</p>
           <h4>Business Value</h4>
-          <p>2h/día × personal de bodega = costo laboral directo cuantificable; además, discrepancias no detectadas a tiempo generan reclamos de clientes y penalidades con transportadoras.</p>
+          <p>2h/day × warehouse staff = quantifiable direct labor cost; plus, discrepancies not caught in time generate customer complaints and carrier penalties.</p>
           <h4>Processes</h4>
-          <p>As-is: exportar datos de ambos sistemas, comparar manualmente en una hoja de cálculo, marcar discrepancias, corregir a mano en el WMS.</p>
+          <p>As-is: export data from both systems, compare manually in a spreadsheet, flag discrepancies, fix them by hand in the WMS.</p>
           <h4>Automation Opportunities</h4>
-          <p>Un agente puede automatizar la comparación y el flagging de discrepancias — pero la decisión de <i>cómo resolver</i> cada discrepancia (¿es un error de captura, un envío perdido, un problema de la transportadora?) probablemente necesita criterio humano al inicio, con el agente aprendiendo patrones con el tiempo.</p>
+          <p>An agent can automate the comparison and flagging of discrepancies — but the decision of <i>how to resolve</i> each discrepancy (is it a data-entry error, a lost shipment, a carrier issue?) probably needs human judgment at first, with the agent learning patterns over time.</p>
           <h4>Risks</h4>
-          <p>Falsos positivos/negativos en la detección erosionan la confianza del equipo. Corregir automáticamente sin supervisión podría ocultar errores sistémicos reales en vez de exponerlos.</p>
-          <h4>Architecture (breve)</h4>
-          <p>Agente con dos tools de solo lectura (WMS API, API de transportadoras) que compara y genera un reporte de discrepancias priorizado — sin escritura automática al inicio.</p>
+          <p>False positives/negatives in detection erode the team's trust. Auto-correcting without supervision could hide real systemic errors instead of exposing them.</p>
+          <h4>Architecture (brief)</h4>
+          <p>An agent with two read-only tools (WMS API, carrier API) that compares and generates a prioritized discrepancy report — no automatic writes at first.</p>
           <h4>Implementation</h4>
-          <p>Fase 1 (MVP): detección y reporte automático, sin corrección automática — reduce el tiempo de "encontrar" el problema. Fase 2: sugerencias de resolución basadas en patrones históricos, con aprobación humana. Fase 3: auto-resolución para los casos de mayor confianza.</p>
+          <p>Phase 1 (MVP): automatic detection and reporting, no auto-correction — cuts the time to "find" the problem. Phase 2: resolution suggestions based on historical patterns, with human approval. Phase 3: auto-resolution for the highest-confidence cases.</p>
         </div>
       </details>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <div class="section-label">Related interview questions</div>
     <ul class="iq-list">
-      <li>¿Cómo evitas saltar directo a "construyamos un agente" antes de entender el problema?</li>
-      <li>¿Qué haces cuando el "problema" que te dan es en realidad el síntoma de algo más profundo?</li>
-      <li>¿Cómo priorizas entre varias oportunidades de automatización posibles?</li>
-      <li>¿Cómo comunicas un riesgo sin que suene a que estás diciendo que no a la idea?</li>
-      <li>¿Cuál es la diferencia central entre un Composition Case y un caso de System Design?</li>
+      <li>How do you avoid jumping straight to "let's build an agent" before understanding the problem?</li>
+      <li>What do you do when the "problem" you're given is actually a symptom of something deeper?</li>
+      <li>How do you prioritize between several possible automation opportunities?</li>
+      <li>How do you communicate a risk without sounding like you're saying no to the idea?</li>
+      <li>What's the central difference between a Composition Case and a System Design case?</li>
     </ul>
   </section>
 
   <section>
-    <div class="section-label">Quiz de autoevaluación</div>
+    <div class="section-label">Self-check quiz</div>
     <div id="quiz"></div>
-    <div class="quiz-score" id="quizScore">0 / 6 respondidas correctamente</div>
+    <div class="quiz-score" id="quizScore">0 / 6 answered correctly</div>
   </section>
 
   <section>
-    <div class="section-label">Checklist de cierre</div>
+    <div class="section-label">Closing checklist</div>
     <div class="checklist" id="checklist">
-      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Puedo recitar los 9 pasos del framework sin ver la lista.</label></div>
-      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Sé explicar la diferencia entre Composition Case y System Design en una frase.</label></div>
-      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Recorrí el caso de logística en voz alta antes de ver la solución.</label></div>
-      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Completé el quiz con 6/6.</label></div>
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">I can recite the framework's 9 steps without looking at the list.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">I can explain the difference between Composition Case and System Design in one sentence.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">I walked through the logistics case out loud before looking at the solution.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">I completed the quiz with 6/6.</label></div>
     </div>
   </section>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
-    <span>Día 09 de 14</span>
-    <a href="day-10.html">Día 10 &rarr;</a>
+    <a href="../index.html">&larr; Hub</a>
+    <span>Day 09 of 14</span>
+    <a href="day-10.html">Day 10 &rarr;</a>
   </div>
 </div>
 
 <script>
   const QUIZ = [
     {
-      q: "¿Por qué 'Architecture' aparece en el paso 8 de 9 en el framework de Composition Case?",
-      opts: ["Es un error, debería ir primero", "Porque diseñar antes de entender problema, usuarios y proceso es resolver algo que aún no está definido", "Porque la arquitectura no importa en este tipo de caso", "Porque siempre se evalúa al final sin importar el orden de trabajo"],
+      q: "Why does 'Architecture' appear at step 8 of 9 in the Composition Case framework?",
+      opts: ["It's a mistake, it should go first", "Because designing before understanding the problem, users, and process means solving something not yet defined", "Because architecture doesn't matter in this type of case", "Because it's always evaluated last regardless of work order"],
       correct: 1,
-      explain: "El orden fuerza a entender el negocio antes de proponer una solución técnica — es la esencia de la evaluación."
+      explain: "The order forces you to understand the business before proposing a technical solution — that's the essence of the evaluation."
     },
     {
-      q: "¿Cuál es la diferencia central entre Composition Case y System Design?",
-      opts: ["No hay diferencia real", "Composition Case evalúa transformar ambigüedad de negocio en un problema bien definido; System Design asume el problema definido y evalúa profundidad técnica", "System Design es más fácil", "Composition Case no incluye arquitectura en absoluto"],
+      q: "What's the central difference between Composition Case and System Design?",
+      opts: ["There's no real difference", "Composition Case evaluates turning business ambiguity into a well-defined problem; System Design assumes the problem is defined and evaluates technical depth", "System Design is easier", "Composition Case doesn't include architecture at all"],
       correct: 1,
-      explain: "Composition Case es sobre todo problem decomposition; la arquitectura es solo el resultado final del proceso."
+      explain: "Composition Case is mostly about problem decomposition; the architecture is just the process's final output."
     },
     {
-      q: "El enunciado de un Composition Case casi siempre es...",
-      opts: ["Un problema técnico completamente definido", "Un síntoma de negocio que hay que reformular antes de resolver", "Innecesario de clarificar", "Idéntico a un caso de System Design"],
+      q: "The prompt for a Composition Case is almost always...",
+      opts: ["A fully defined technical problem", "A business symptom that must be reframed before solving", "Unnecessary to clarify", "Identical to a System Design case"],
       correct: 1,
-      explain: "Lo que se da como 'problema' suele ser una queja u observación — el candidato debe encontrar el problema real detrás."
+      explain: "What's given as the 'problem' is usually a complaint or observation — the candidate must find the real problem behind it."
     },
     {
-      q: "¿Por qué 'Processes' (mapear el as-is) va antes de 'Automation Opportunities'?",
-      opts: ["No hay razón, el orden es arbitrario", "Sin entender el proceso actual, cualquier propuesta de automatización es una suposición sin base", "Porque los procesos nunca cambian", "Porque automatizar siempre es la respuesta correcta"],
+      q: "Why does 'Processes' (mapping the as-is) come before 'Automation Opportunities'?",
+      opts: ["No reason, the order is arbitrary", "Without understanding the current process, any automation proposal is an unfounded guess", "Because processes never change", "Because automating is always the right answer"],
       correct: 1,
-      explain: "No puedes decidir bien dónde automatizar sin primero entender cómo funciona el proceso hoy."
+      explain: "You can't decide well where to automate without first understanding how the process works today."
     },
     {
-      q: "En el paso 'Risks', el objetivo es principalmente...",
-      opts: ["Convencer al entrevistador de no automatizar nada", "Identificar qué puede salir mal (técnico, negocio, compliance) con la solución propuesta", "Listar riesgos genéricos sin conexión al caso", "Omitir este paso si el caso parece simple"],
+      q: "In the 'Risks' step, the goal is mainly to...",
+      opts: ["Convince the interviewer not to automate anything", "Identify what can go wrong (technical, business, compliance) with the proposed solution", "List generic risks unconnected to the case", "Skip this step if the case seems simple"],
       correct: 1,
-      explain: "Nombrar riesgos específicos del caso demuestra pensamiento crítico, no solo entusiasmo por la solución."
+      explain: "Naming risks specific to the case demonstrates critical thinking, not just enthusiasm for the solution."
     },
     {
-      q: "¿Qué caracteriza una buena fase de 'Implementation' en este framework?",
-      opts: ["Lanzar la solución completa de una vez", "Un MVP acotado primero, con fases posteriores basadas en confianza/aprendizaje", "No planificar fases, solo la arquitectura final", "Automatizar el 100% del proceso desde el día uno"],
+      q: "What characterizes a good 'Implementation' phase in this framework?",
+      opts: ["Launching the complete solution all at once", "A bounded MVP first, with later phases based on confidence/learning", "Not planning phases, only the final architecture", "Automating 100% of the process from day one"],
       correct: 1,
-      explain: "Un rollout por fases reduce riesgo y permite aprender antes de automatizar decisiones de alto impacto."
+      explain: "A phased rollout reduces risk and lets you learn before automating high-impact decisions."
     }
   ];
   const quizEl = document.getElementById('quiz');
@@ -318,7 +318,7 @@
         if (idx === item.correct) { btn.classList.add('correct'); correctCount++; }
         else { btn.classList.add('incorrect'); box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct'); }
         document.getElementById(`explain-${i}`).classList.add('show');
-        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} answered correctly (${answered}/${QUIZ.length} seen)`;
       });
     });
   });

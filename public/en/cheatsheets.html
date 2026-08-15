@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
-<title>Cheat Sheets FDE</title>
+<title>FDE Cheat Sheets</title>
 <style>
   :root{
     --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
@@ -91,12 +91,12 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/cheatsheets.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../cheatsheets.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Referencia · AI Agent Engineering Bootcamp</div>
+    <div class="eyebrow">Reference · AI Agent Engineering Bootcamp</div>
     <h1>Cheat Sheets</h1>
-    <p class="sub">Un one-pager denso por track. Para repaso el día antes de la entrevista, no para primera lectura.</p>
+    <p class="sub">One dense one-pager per track. For review the day before the interview, not for first reading.</p>
     <div class="toc">
       <a href="#s1">01 AI Agents</a>
       <a href="#s2">02 System Design</a>
@@ -109,7 +109,7 @@
   <div class="sheet" id="s1">
     <div class="sheet-head"><span class="sheet-title">AI Agents</span><span class="sheet-num">01 / 05</span></div>
     <figure class="diagram">
-      <svg viewBox="0 0 600 95" role="img" aria-label="Diagrama compacto: User a Channel a Agent Runtime, que contiene LLM, Memory, RAG y Tools; Tools es la única salida hacia sistemas externos.">
+      <svg viewBox="0 0 600 95" role="img" aria-label="Compact diagram: User to Channel to Agent Runtime, which contains LLM, Memory, RAG and Tools; Tools is the only exit toward external systems.">
         <defs><marker id="csarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker></defs>
         <rect x="10" y="8" width="70" height="26" rx="3" class="dbox"/><text x="45" y="25" text-anchor="middle" class="dtext">User</text>
         <line x1="80" y1="21" x2="98" y2="21" class="darrow" marker-end="url(#csarrow)"/>
@@ -130,32 +130,32 @@
     </figure>
     <div class="two-col">
       <div>
-        <div class="mini-h">Los 12 fundamentales</div>
+        <div class="mini-h">The 12 fundamentals</div>
         <ul class="dense">
-          <li><b>LLM</b> — predicción de tokens, stateless.</li>
+          <li><b>LLM</b> — token prediction, stateless.</li>
           <li><b>Prompting</b> — system = config, user = request.</li>
-          <li><b>Structured Outputs</b> — output validable por schema.</li>
-          <li><b>Function Calling</b> — LLM propone, backend ejecuta.</li>
-          <li><b>Agent</b> — loop pensar→actuar→observar.</li>
-          <li><b>Orchestration</b> — coordina tools/pasos/agentes.</li>
-          <li><b>RAG</b> — consulta en runtime, no fine-tuning.</li>
-          <li><b>Embeddings</b> — similitud semántica vectorial.</li>
-          <li><b>Context Window</b> — presupuesto de tokens.</li>
-          <li><b>Memory</b> — short (sesión) / long (store externo).</li>
-          <li><b>Hallucination</b> — falla con confianza, sin error.</li>
-          <li><b>Guardrails</b> — middleware de validación.</li>
+          <li><b>Structured Outputs</b> — schema-validatable output.</li>
+          <li><b>Function Calling</b> — LLM proposes, backend executes.</li>
+          <li><b>Agent</b> — think→act→observe loop.</li>
+          <li><b>Orchestration</b> — coordinates tools/steps/agents.</li>
+          <li><b>RAG</b> — query at runtime, not fine-tuning.</li>
+          <li><b>Embeddings</b> — vector semantic similarity.</li>
+          <li><b>Context Window</b> — token budget.</li>
+          <li><b>Memory</b> — short (session) / long (external store).</li>
+          <li><b>Hallucination</b> — fails with confidence, no error.</li>
+          <li><b>Guardrails</b> — validation middleware.</li>
         </ul>
       </div>
       <div>
         <div class="mini-h">Single vs Multi-agent</div>
         <table class="dense">
           <tr><th></th><th>Single</th><th>Multi</th></tr>
-          <tr><td>Complejidad</td><td>Baja</td><td>Alta</td></tr>
-          <tr><td>Seguridad</td><td>1 scope</td><td>Scopes por agente</td></tr>
-          <tr><td>Cuándo</td><td>Dominio acotado</td><td>Dominios heterogéneos</td></tr>
+          <tr><td>Complexity</td><td>Low</td><td>High</td></tr>
+          <tr><td>Security</td><td>1 scope</td><td>Scopes per agent</td></tr>
+          <tr><td>When</td><td>Bounded domain</td><td>Heterogeneous domains</td></tr>
         </table>
         <div class="mini-h">RAG vs Fine-tuning</div>
-        <p class="dense">RAG = read en runtime, fácil de actualizar. Fine-tuning = hornea el conocimiento en pesos, caro y difícil de mantener.</p>
+        <p class="dense">RAG = read at runtime, easy to update. Fine-tuning = bakes knowledge into weights, expensive and hard to maintain.</p>
       </div>
     </div>
   </div>
@@ -164,54 +164,54 @@
     <div class="sheet-head"><span class="sheet-title">System Design</span><span class="sheet-num">02 / 05</span></div>
     <div class="two-col">
       <div>
-        <div class="mini-h">Framework de 16 pasos</div>
+        <div class="mini-h">16-step framework</div>
         <ul class="dense">
-          <li>1. Clarificar</li><li>2. Usuarios</li><li>3. Objetivos</li>
-          <li>4. Req. funcionales</li><li>5. Req. no funcionales</li><li>6. Restricciones</li>
-          <li>7. Arquitectura alto nivel</li><li>8. Arquitectura del agente</li><li>9. Integraciones</li>
-          <li>10. Datos</li><li>11. Seguridad</li><li>12. Resiliencia</li>
-          <li>13. Observabilidad</li><li>14. Escalabilidad</li><li>15. Trade-offs</li><li>16. Rollout</li>
+          <li>1. Clarify</li><li>2. Users</li><li>3. Goals</li>
+          <li>4. Functional req.</li><li>5. Non-functional req.</li><li>6. Constraints</li>
+          <li>7. High-level architecture</li><li>8. Agent architecture</li><li>9. Integrations</li>
+          <li>10. Data</li><li>11. Security</li><li>12. Resilience</li>
+          <li>13. Observability</li><li>14. Scalability</li><li>15. Trade-offs</li><li>16. Rollout</li>
         </ul>
       </div>
       <div>
-        <div class="mini-h">Composition Case (9 pasos)</div>
+        <div class="mini-h">Composition Case (9 steps)</div>
         <ul class="dense">
           <li>Problem → Users → Pain Points</li>
           <li>Business Value → Processes</li>
           <li>Automation Opportunities → Risks</li>
-          <li>Architecture (recién aquí) → Implementation</li>
+          <li>Architecture (only here) → Implementation</li>
         </ul>
-        <div class="mini-h">Regla de oro</div>
-        <div class="principle-mini">3-5 min clarificando antes de dibujar una sola caja.</div>
+        <div class="mini-h">Golden rule</div>
+        <div class="principle-mini">3-5 min clarifying before drawing a single box.</div>
       </div>
     </div>
   </div>
 
   <div class="sheet" id="s3">
     <div class="sheet-head"><span class="sheet-title">Security</span><span class="sheet-num">03 / 05</span></div>
-    <div class="principle-mini">"Un agente enterprise no debe tener autonomía ilimitada."</div>
+    <div class="principle-mini">"An enterprise agent should not have unlimited autonomy."</div>
     <div class="two-col">
       <div>
         <div class="mini-h">Identity &amp; Data</div>
         <ul class="dense">
-          <li>OAuth2/OIDC/JWT — scope = exactamente el permiso del usuario.</li>
-          <li>Nunca secrets crudos en el contexto del LLM.</li>
-          <li>PII: minimizar lo que entra al contexto, no solo lo que se persiste.</li>
+          <li>OAuth2/OIDC/JWT — scope = exactly the user's permission.</li>
+          <li>Never raw secrets in the LLM's context.</li>
+          <li>PII: minimize what enters the context, not just what gets persisted.</li>
         </ul>
         <div class="mini-h">Governance</div>
         <ul class="dense">
-          <li>RBAC por tool, según rol del usuario.</li>
-          <li>Audit log: quién, qué tool, con qué args, resultado.</li>
-          <li>Human-in-the-loop para acciones irreversibles.</li>
+          <li>RBAC per tool, based on the user's role.</li>
+          <li>Audit log: who, which tool, with what args, result.</li>
+          <li>Human-in-the-loop for irreversible actions.</li>
         </ul>
       </div>
       <div>
         <div class="mini-h">AI Security (OWASP-style)</div>
         <ul class="dense">
-          <li><b>Prompt injection</b> — tratar contenido externo como dato, nunca instrucción.</li>
-          <li><b>Excessive agency</b> — se arregla con arquitectura (scope mínimo), no con el prompt.</li>
-          <li><b>Data exfiltration</b> — allowlist de destinos, no fetch arbitrario.</li>
-          <li><b>Insecure output handling</b> — output del LLM = input no confiable.</li>
+          <li><b>Prompt injection</b> — treat external content as data, never as instruction.</li>
+          <li><b>Excessive agency</b> — fixed with architecture (minimum scope), not with the prompt.</li>
+          <li><b>Data exfiltration</b> — allowlist of destinations, no arbitrary fetch.</li>
+          <li><b>Insecure output handling</b> — LLM output = untrusted input.</li>
         </ul>
       </div>
     </div>
@@ -221,26 +221,26 @@
     <div class="sheet-head"><span class="sheet-title">Distributed Systems &amp; Cloud</span><span class="sheet-num">04 / 05</span></div>
     <div class="two-col">
       <div>
-        <div class="mini-h">Conceptos clave</div>
+        <div class="mini-h">Key concepts</div>
         <ul class="dense">
-          <li><b>CAP</b> — durante partición: consistencia o disponibilidad.</li>
-          <li><b>Saga</b> — pasos con compensating actions, no ACID distribuido.</li>
-          <li><b>Outbox</b> — evento + cambio de estado en la misma tx local.</li>
-          <li><b>Idempotency</b> — key generada al iniciar, no en cada retry.</li>
-          <li><b>Exactly-once</b> — no existe; se simula con at-least-once + idempotency.</li>
+          <li><b>CAP</b> — during a partition: consistency or availability.</li>
+          <li><b>Saga</b> — steps with compensating actions, not distributed ACID.</li>
+          <li><b>Outbox</b> — event + state change in the same local tx.</li>
+          <li><b>Idempotency</b> — key generated at start, not on each retry.</li>
+          <li><b>Exactly-once</b> — doesn't exist; simulated with at-least-once + idempotency.</li>
         </ul>
       </div>
       <div>
-        <div class="mini-h">AWS — 5 comparaciones</div>
+        <div class="mini-h">AWS — 5 comparisons</div>
         <table class="dense">
-          <tr><td><b>Lambda</b></td><td>tools cortas/stateless</td></tr>
-          <tr><td><b>ECS/EKS</b></td><td>Agent Runtime, larga duración</td></tr>
-          <tr><td><b>SQS</b></td><td>trabajo punto a punto</td></tr>
-          <tr><td><b>Kafka/MSK</b></td><td>múltiples consumidores del mismo evento</td></tr>
-          <tr><td><b>Step Functions</b></td><td>orquestar Saga con retry/error por paso</td></tr>
-          <tr><td><b>DynamoDB</b></td><td>estado de conversación (clave-valor)</td></tr>
-          <tr><td><b>RDS</b></td><td>datos de negocio relacionales</td></tr>
-          <tr><td><b>API Gateway</b></td><td>muchos endpoints tipo tool</td></tr>
+          <tr><td><b>Lambda</b></td><td>short/stateless tools</td></tr>
+          <tr><td><b>ECS/EKS</b></td><td>Agent Runtime, long-running</td></tr>
+          <tr><td><b>SQS</b></td><td>point-to-point work</td></tr>
+          <tr><td><b>Kafka/MSK</b></td><td>multiple consumers of the same event</td></tr>
+          <tr><td><b>Step Functions</b></td><td>orchestrate a Saga with per-step retry/error</td></tr>
+          <tr><td><b>DynamoDB</b></td><td>conversation state (key-value)</td></tr>
+          <tr><td><b>RDS</b></td><td>relational business data</td></tr>
+          <tr><td><b>API Gateway</b></td><td>many tool-like endpoints</td></tr>
         </table>
       </div>
     </div>
@@ -250,12 +250,12 @@
     <div class="sheet-head"><span class="sheet-title">Communication</span><span class="sheet-num">05 / 05</span></div>
     <div class="two-col">
       <div>
-        <div class="mini-h">Framework CDRT-R</div>
-        <p class="dense"><b>Context</b> → <b>Decision</b> → <b>Reason</b> → <b>Trade-off</b> → <b>Result</b>. 60-90s por decisión técnica.</p>
+        <div class="mini-h">CDRT-R Framework</div>
+        <p class="dense"><b>Context</b> → <b>Decision</b> → <b>Reason</b> → <b>Trade-off</b> → <b>Result</b>. 60-90s per technical decision.</p>
         <div class="mini-h">STAR + Architecture Context</div>
-        <p class="dense">Situation, Task, Action, Result + el detalle técnico específico de la decisión.</p>
-        <div class="mini-h">Presentación ejecutiva</div>
-        <p class="dense">Conclusión primero, detalle técnico si preguntan.</p>
+        <p class="dense">Situation, Task, Action, Result + the specific technical detail of the decision.</p>
+        <div class="mini-h">Executive presentation</div>
+        <p class="dense">Conclusion first, technical detail if asked.</p>
       </div>
       <div>
         <div class="mini-h">Technical English</div>
@@ -273,7 +273,7 @@
   </div>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
+    <a href="../index.html">&larr; Hub</a>
     <span>Cheat Sheets · 5 tracks</span>
   </div>
 </div>

@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
-<title>Temas Complementarios</title>
+<title>Supplementary Topics</title>
 <style>
   :root{
     --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
@@ -90,12 +90,12 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/referencia-extra.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../referencia-extra.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Referencia · AI Agent Engineering Bootcamp</div>
-    <h1>Temas Complementarios</h1>
-    <p class="sub">Voice &amp; Multichannel, Software Engineering, Data Architecture y DevOps — prioridad 🟠 en el bootcamp acelerado porque tu background ya los cubre. Repaso, no aprendizaje desde cero.</p>
+    <div class="eyebrow">Reference · AI Agent Engineering Bootcamp</div>
+    <h1>Supplementary Topics</h1>
+    <p class="sub">Voice &amp; Multichannel, Software Engineering, Data Architecture, and DevOps — 🟠 priority in the accelerated bootcamp because your background already covers them. Review, not learning from scratch.</p>
     <div class="toc">
       <a href="#voice">Voice &amp; Multichannel</a>
       <a href="#swe">Software Engineering</a>
@@ -105,11 +105,11 @@
   </header>
 
   <section id="voice">
-    <div class="section-label">Track <span class="priority-tag">🟠 Media</span></div>
+    <div class="section-label">Track <span class="priority-tag">🟠 Medium</span></div>
     <h2>Voice &amp; Multichannel Agents</h2>
-    <p class="track-note">Ampliado desde el Día 10 (agente de voz enterprise) — aquí el detalle completo.</p>
+    <p class="track-note">Expanded from Day 10 (enterprise voice agent) — full detail here.</p>
     <figure class="diagram">
-      <svg viewBox="0 0 560 115" role="img" aria-label="Diagrama: el teléfono envía audio a Speech-to-Text, que pasa el texto al Agent, el cual consulta Tools y RAG y genera una respuesta que Text-to-Speech convierte de vuelta en audio hacia el teléfono.">
+      <svg viewBox="0 0 560 115" role="img" aria-label="Diagram: the phone sends audio to Speech-to-Text, which passes text to the Agent, which queries Tools and RAG and generates a response that Text-to-Speech converts back into audio toward the phone.">
         <defs><marker id="rexarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker></defs>
         <rect x="10" y="15" width="90" height="30" rx="3" class="dbox"/><text x="55" y="34" text-anchor="middle" class="dtext">Phone</text>
         <line x1="100" y1="30" x2="118" y2="30" class="darrow" marker-end="url(#rexarrow)"/>
@@ -120,42 +120,42 @@
         <rect x="380" y="15" width="110" height="30" rx="3" class="dbox"/><text x="435" y="34" text-anchor="middle" class="dtext">Text-to-Speech</text>
 
         <polyline points="435,45 435,70 55,70 55,45" class="darrow" marker-end="url(#rexarrow)" fill="none"/>
-        <text x="245" y="66" text-anchor="middle" class="dtext-muted">audio de respuesta</text>
+        <text x="245" y="66" text-anchor="middle" class="dtext-muted">response audio</text>
 
         <line x1="305" y1="45" x2="305" y2="78" class="darrow" marker-end="url(#rexarrow)"/>
         <rect x="250" y="80" width="110" height="28" rx="3" class="dbox"/><text x="305" y="98" text-anchor="middle" class="dtext">Tools + RAG</text>
       </svg>
     </figure>
     <div class="concept-grid">
-      <div class="concept"><div class="concept-term">Latencia percibida</div><p>Un silencio de 2s en voz se siente como falla; el mismo delay en chat pasa desapercibido. Presupuesta latencia por etapa del pipeline STT→LLM→TTS.</p></div>
-      <div class="concept"><div class="concept-term">Interrupciones (barge-in)</div><p>El usuario puede hablar mientras el agente responde — el sistema debe poder cortar el TTS y procesar la nueva entrada sin perder contexto.</p></div>
-      <div class="concept"><div class="concept-term">Conversation state</div><p>Sin UI visual, el estado de "dónde estamos en la conversación" vive completamente en el backend — el usuario no puede "scrollear hacia arriba" para recordar.</p></div>
-      <div class="concept"><div class="concept-term">Human handoff / call transfer</div><p>El humano que recibe la llamada necesita el contexto completo (transcript + intención detectada) para no hacer que el cliente repita todo.</p></div>
-      <div class="concept"><div class="concept-term">Autenticación por voz</div><p>Sin UI, se recurre a PIN verbal, verificación de 2 factores, o biometría de voz — más débil que autenticación visual, requiere diseño explícito.</p></div>
+      <div class="concept"><div class="concept-term">Perceived latency</div><p>A 2s silence in voice feels like a failure; the same delay in chat goes unnoticed. Budget latency per pipeline stage STT→LLM→TTS.</p></div>
+      <div class="concept"><div class="concept-term">Interruptions (barge-in)</div><p>The user can speak while the agent is responding — the system must be able to cut off TTS and process the new input without losing context.</p></div>
+      <div class="concept"><div class="concept-term">Conversation state</div><p>With no visual UI, the state of "where we are in the conversation" lives entirely in the backend — the user can't "scroll up" to remember.</p></div>
+      <div class="concept"><div class="concept-term">Human handoff / call transfer</div><p>The human who receives the call needs the full context (transcript + detected intent) so the customer doesn't have to repeat everything.</p></div>
+      <div class="concept"><div class="concept-term">Voice authentication</div><p>With no UI, you fall back on verbal PIN, two-factor verification, or voice biometrics — weaker than visual authentication, requires explicit design.</p></div>
     </div>
-    <p class="checkq">Autocheck: ¿puedo explicar por qué la latencia importa más en voz que en chat, sin dudar?</p>
+    <p class="checkq">Self-check: can I explain why latency matters more in voice than in chat, without hesitating?</p>
   </section>
 
   <section id="swe">
-    <div class="section-label">Track <span class="priority-tag">🔴 Alta (pero interview sharpening, no aprendizaje nuevo)</span></div>
+    <div class="section-label">Track <span class="priority-tag">🔴 High (but interview sharpening, not new learning)</span></div>
     <h2>Software Engineering Deep Dive</h2>
-    <p class="track-note">No es estudiar Java/Spring desde cero — es poder defender decisiones y bajar de arquitectura a implementación cuando te lo pidan.</p>
+    <p class="track-note">This isn't studying Java/Spring from scratch — it's being able to defend decisions and go from architecture down to implementation when asked.</p>
     <div class="concept-grid">
-      <div class="concept"><div class="concept-term">APIs &amp; Microservices</div><p>Puedes diseñar el contrato de una tool como lo harías con cualquier microservicio: versión, validación de input, manejo de errores explícito.</p></div>
-      <div class="concept"><div class="concept-term">Concurrency &amp; Async</div><p>El Agent Runtime probablemente maneja múltiples tool calls en paralelo cuando son independientes — sé capaz de explicar cómo evitarías condiciones de carrera ahí.</p></div>
-      <div class="concept"><div class="concept-term">Resilience Patterns</div><p>Retry, timeout, circuit breaker — ya los viste aplicados a agentes en el Día 05. Sé capaz de implementarlos en código, no solo describirlos.</p></div>
-      <div class="concept"><div class="concept-term">Clean Architecture &amp; SOLID</div><p>Si te piden diseñar un componente (ej. el adapter de una tool), demuestra separación de capas: la lógica de negocio no debería depender del SDK del LLM.</p></div>
-      <div class="concept"><div class="concept-term">Testing</div><p>Piensa en cómo testearías una tool con dependencias externas (mocks) y cómo testearías el comportamiento del agente mismo (evals, Día 05).</p></div>
+      <div class="concept"><div class="concept-term">APIs &amp; Microservices</div><p>You can design a tool's contract the same way you would for any microservice: versioning, input validation, explicit error handling.</p></div>
+      <div class="concept"><div class="concept-term">Concurrency &amp; Async</div><p>The Agent Runtime likely handles multiple tool calls in parallel when they're independent — be able to explain how you'd avoid race conditions there.</p></div>
+      <div class="concept"><div class="concept-term">Resilience Patterns</div><p>Retry, timeout, circuit breaker — you already saw these applied to agents on Day 05. Be able to implement them in code, not just describe them.</p></div>
+      <div class="concept"><div class="concept-term">Clean Architecture &amp; SOLID</div><p>If asked to design a component (e.g. a tool's adapter), demonstrate layer separation: business logic shouldn't depend on the LLM SDK.</p></div>
+      <div class="concept"><div class="concept-term">Testing</div><p>Think about how you'd test a tool with external dependencies (mocks) and how you'd test the agent's own behavior (evals, Day 05).</p></div>
     </div>
-    <p class="checkq">Autocheck: ¿podría implementar en código, no solo explicar, una de las tools que diseñé esta semana?</p>
+    <p class="checkq">Self-check: could I implement in code, not just explain, one of the tools I designed this week?</p>
   </section>
 
   <section id="data">
-    <div class="section-label">Track <span class="priority-tag">🟠 Media</span></div>
+    <div class="section-label">Track <span class="priority-tag">🟠 Medium</span></div>
     <h2>Data Architecture</h2>
-    <p class="track-note">Aprovecha tu experiencia existente en Data Engineering — la pregunta nueva es cómo se conecta con RAG.</p>
+    <p class="track-note">Leverage your existing Data Engineering experience — the new question is how it connects to RAG.</p>
     <figure class="diagram">
-      <svg viewBox="0 0 650 50" role="img" aria-label="Diagrama: los datos operacionales alimentan la plataforma de datos, que produce una capa de conocimiento curada, que alimenta RAG, que alimenta al agente.">
+      <svg viewBox="0 0 650 50" role="img" aria-label="Diagram: operational data feeds the data platform, which produces a curated knowledge layer, which feeds RAG, which feeds the agent.">
         <defs><marker id="rexarrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker></defs>
         <rect x="10" y="10" width="140" height="30" rx="3" class="dbox"/><text x="80" y="29" text-anchor="middle" class="dtext">Operational Data</text>
         <line x1="150" y1="25" x2="168" y2="25" class="darrow" marker-end="url(#rexarrow2)"/>
@@ -169,29 +169,29 @@
       </svg>
     </figure>
     <div class="concept-grid">
-      <div class="concept"><div class="concept-term">OLTP vs OLAP</div><p>Los sistemas transaccionales (OLTP) alimentan el Data Platform; el Knowledge Layer que consume RAG suele derivar de una capa más analítica/curada (OLAP-like), no de la tabla transaccional cruda.</p></div>
-      <div class="concept"><div class="concept-term">CDC &amp; Streaming</div><p>Change Data Capture permite mantener el Knowledge Layer actualizado casi en tiempo real, en vez de reindexar por batch completo cada vez.</p></div>
-      <div class="concept"><div class="concept-term">Data Governance &amp; Quality</div><p>Si el dato fuente está mal etiquetado o desactualizado, el RAG lo hereda directamente — la calidad del agente empieza en la calidad del pipeline de datos.</p></div>
+      <div class="concept"><div class="concept-term">OLTP vs OLAP</div><p>Transactional systems (OLTP) feed the Data Platform; the Knowledge Layer that RAG consumes usually derives from a more analytical/curated layer (OLAP-like), not from the raw transactional table.</p></div>
+      <div class="concept"><div class="concept-term">CDC &amp; Streaming</div><p>Change Data Capture keeps the Knowledge Layer updated near real-time, instead of reindexing a full batch every time.</p></div>
+      <div class="concept"><div class="concept-term">Data Governance &amp; Quality</div><p>If the source data is mislabeled or stale, RAG inherits it directly — the agent's quality starts with the data pipeline's quality.</p></div>
     </div>
-    <p class="checkq">Pregunta clave del track: ¿cómo mantenemos actualizado y confiable el conocimiento que usa el agente?</p>
+    <p class="checkq">Key track question: how do we keep the knowledge the agent uses current and trustworthy?</p>
   </section>
 
   <section id="devops">
-    <div class="section-label">Track <span class="priority-tag">🟠 Media</span></div>
+    <div class="section-label">Track <span class="priority-tag">🟠 Medium</span></div>
     <h2>DevOps / CI-CD</h2>
-    <p class="track-note">Cómo una solución de IA llega de código a producción de forma controlada — no distinto de cualquier otro sistema, con matices.</p>
+    <p class="track-note">How an AI solution goes from code to production in a controlled way — no different from any other system, with nuances.</p>
     <div class="concept-grid">
-      <div class="concept"><div class="concept-term">Docker &amp; Kubernetes</div><p>El Agent Runtime se empaqueta y despliega igual que cualquier servicio — nada específico de IA aquí, más allá de gestionar credenciales del proveedor de LLM como cualquier secret.</p></div>
-      <div class="concept"><div class="concept-term">Blue/Green &amp; Canary</div><p>Especialmente relevante para cambios de <b>prompt o de modelo</b> (Día 05) — un canary rollout permite medir calidad antes de exponer el cambio al 100% del tráfico.</p></div>
-      <div class="concept"><div class="concept-term">Feature Flags</div><p>Útiles para activar/desactivar capacidades del agente (ej. una tool nueva de alto riesgo) sin necesitar un nuevo deploy.</p></div>
-      <div class="concept"><div class="concept-term">Rollback Strategies</div><p>Si un cambio de prompt degrada la calidad, necesitas poder revertir tan rápido como revertirías un bug de código — el versionado de prompts (Día 05) es lo que lo hace posible.</p></div>
+      <div class="concept"><div class="concept-term">Docker &amp; Kubernetes</div><p>The Agent Runtime is packaged and deployed just like any other service — nothing AI-specific here, beyond managing the LLM provider's credentials like any secret.</p></div>
+      <div class="concept"><div class="concept-term">Blue/Green &amp; Canary</div><p>Especially relevant for <b>prompt or model</b> changes (Day 05) — a canary rollout lets you measure quality before exposing the change to 100% of traffic.</p></div>
+      <div class="concept"><div class="concept-term">Feature Flags</div><p>Useful for turning agent capabilities on/off (e.g. a risky new tool) without needing a new deploy.</p></div>
+      <div class="concept"><div class="concept-term">Rollback Strategies</div><p>If a prompt change degrades quality, you need to be able to revert as fast as you'd revert a code bug — prompt versioning (Day 05) is what makes that possible.</p></div>
     </div>
-    <p class="checkq">Autocheck: ¿cómo haría rollback de un cambio de prompt que degradó la calidad en producción?</p>
+    <p class="checkq">Self-check: how would I roll back a prompt change that degraded quality in production?</p>
   </section>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
-    <span>Temas complementarios · 4 tracks</span>
+    <a href="../index.html">&larr; Hub</a>
+    <span>Supplementary topics · 4 tracks</span>
   </div>
 </div>
 

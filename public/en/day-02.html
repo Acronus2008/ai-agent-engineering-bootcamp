@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
-<title>Arquitectura de AI Agents</title>
+<title>AI Agent Architecture</title>
 <style>
   :root{
     --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
@@ -165,31 +165,31 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/day-02.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../day-02.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Semana 1 · Día 02 · AI Agents &amp; Enterprise Architecture</div>
+    <div class="eyebrow">Week 1 · Day 02 · AI Agents &amp; Enterprise Architecture</div>
     <div class="title-row">
       <span class="day-numeral">02</span>
-      <h1>Arquitectura de AI Agents</h1>
+      <h1>AI Agent Architecture</h1>
     </div>
-    <p class="sub">Los mismos 12 conceptos de ayer, ahora como cajas en un diagrama: dónde vive cada componente y cómo se conecta con los sistemas de la empresa.</p>
+    <p class="sub">The same 12 concepts from yesterday, now as boxes in a diagram: where each component lives and how it connects to the company's systems.</p>
     <div class="meta-row">
       <span><b>~90 min</b></span>
-      <span>Prerrequisito: <b>Día 01</b></span>
-      <span>Conecta con: <b>Día 03 — Enterprise Integration</b></span>
+      <span>Prerequisite: <b>Day 01</b></span>
+      <span>Connects to: <b>Day 03 — Enterprise Integration</b></span>
     </div>
   </header>
 
   <section>
-    <div class="section-label">Objetivo del día</div>
-    <p>Pasar de "sé qué es RAG" a "sé dónde dibujar la caja de RAG en un diagrama de arquitectura, y qué hay a cada lado". Al terminar deberías poder dibujar de memoria el diagrama base de un agente enterprise.</p>
+    <div class="section-label">Today's objective</div>
+    <p>Go from "I know what RAG is" to "I know where to draw the RAG box in an architecture diagram, and what's on each side." By the end you should be able to draw an enterprise agent's base diagram from memory.</p>
   </section>
 
   <section>
-    <div class="section-label">Diagrama base</div>
+    <div class="section-label">Base diagram</div>
     <figure class="diagram">
-      <svg viewBox="0 0 680 390" role="img" aria-label="Diagrama de arquitectura: el usuario habla a través de un canal hacia el Agent Runtime, que contiene LLM, Memory, RAG y Tools; solo Tools se conecta hacia afuera, a CRM, ERP, Databases e Internal APIs — el agente nunca toca esos sistemas directamente.">
+      <svg viewBox="0 0 680 390" role="img" aria-label="Architecture diagram: the user talks through a channel to the Agent Runtime, which contains LLM, Memory, RAG, and Tools; only Tools connects outward, to CRM, ERP, Databases, and Internal APIs — the agent never touches those systems directly.">
         <defs>
           <marker id="d2arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
             <path d="M0,0 L10,5 L0,10 z" class="darrow-head"/>
@@ -202,7 +202,7 @@
 
         <rect x="260" y="66" width="160" height="30" rx="3" class="dbox"/>
         <text x="340" y="86" text-anchor="middle" class="dlabel">Channel</text>
-        <text x="340" y="112" text-anchor="middle" class="dtext-muted">web chat · voz · Slack · email</text>
+        <text x="340" y="112" text-anchor="middle" class="dtext-muted">web chat · voice · Slack · email</text>
         <line x1="340" y1="96" x2="340" y2="118" class="darrow" marker-end="url(#d2arrow)"/>
 
         <rect x="30" y="120" width="620" height="140" rx="4" class="dbox"/>
@@ -210,7 +210,7 @@
 
         <rect x="50" y="155" width="130" height="70" rx="3" class="dbox-accent2"/>
         <text x="115" y="185" text-anchor="middle" class="dtext-accent">LLM</text>
-        <text x="115" y="200" text-anchor="middle" class="dtext-muted">razonamiento</text>
+        <text x="115" y="200" text-anchor="middle" class="dtext-muted">reasoning</text>
 
         <rect x="200" y="155" width="130" height="70" rx="3" class="dbox"/>
         <text x="265" y="185" text-anchor="middle" class="dtext">Memory</text>
@@ -218,7 +218,7 @@
 
         <rect x="350" y="155" width="130" height="70" rx="3" class="dbox"/>
         <text x="415" y="185" text-anchor="middle" class="dtext">RAG</text>
-        <text x="415" y="200" text-anchor="middle" class="dtext-muted">solo lectura</text>
+        <text x="415" y="200" text-anchor="middle" class="dtext-muted">read-only</text>
 
         <rect x="500" y="155" width="130" height="70" rx="3" class="dbox-accent"/>
         <text x="565" y="185" text-anchor="middle" class="dtext-accent">Tools</text>
@@ -228,7 +228,7 @@
         <line x1="565" y1="225" x2="265" y2="336" class="darrow" marker-end="url(#d2arrow)"/>
         <line x1="565" y1="225" x2="415" y2="336" class="darrow" marker-end="url(#d2arrow)"/>
         <line x1="565" y1="225" x2="565" y2="336" class="darrow" marker-end="url(#d2arrow)"/>
-        <text x="450" y="290" text-anchor="middle" class="dtext-muted">única puerta de salida — nunca acceso directo</text>
+        <text x="450" y="290" text-anchor="middle" class="dtext-muted">the only exit door — never direct access</text>
 
         <rect x="50" y="340" width="130" height="34" rx="3" class="dbox"/>
         <text x="115" y="361" text-anchor="middle" class="dtext">CRM</text>
@@ -239,79 +239,79 @@
         <rect x="500" y="340" width="130" height="34" rx="3" class="dbox"/>
         <text x="565" y="361" text-anchor="middle" class="dtext">Internal APIs</text>
       </svg>
-      <figcaption>El agente nunca toca CRM/ERP/DB directamente — siempre a través de una tool con contrato y autorización explícita.</figcaption>
+      <figcaption>The agent never touches CRM/ERP/DB directly — always through a tool with an explicit contract and authorization.</figcaption>
     </figure>
   </section>
 
   <section>
-    <div class="section-label">Contenido</div>
+    <div class="section-label">Content</div>
 
     <div class="concept-grid">
       <div class="concept">
         <div class="concept-term">Agent Runtime</div>
-        <h3>El loop que orquesta todo lo demás</h3>
-        <p>Es el proceso que recibe el mensaje del usuario, arma el contexto (system prompt + memory + resultados de RAG), llama al LLM, interpreta su decisión, ejecuta tools si corresponde, y repite hasta tener una respuesta final.</p>
-        <div class="analogy"><b>Analogía backend</b>Es tu application server orquestando una transacción de negocio que toca varios sistemas — salvo que el "controlador" de cada paso es una decisión del modelo, no una rama de código fija.</div>
+        <h3>The loop that orchestrates everything else</h3>
+        <p>It's the process that receives the user's message, assembles context (system prompt + memory + RAG results), calls the LLM, interprets its decision, executes tools if needed, and repeats until it has a final answer.</p>
+        <div class="analogy"><b>Backend analogy</b>It's your application server orchestrating a business transaction that touches several systems — except the "controller" for each step is a model decision, not a fixed code branch.</div>
       </div>
 
       <div class="concept">
         <div class="concept-term">Tools</div>
-        <h3>La única puerta hacia los sistemas reales</h3>
-        <p>Cada capacidad de negocio (consultar CRM, crear un ticket, actualizar un pedido) se expone como una tool con schema de entrada/salida y su propio scope de autorización. El agente ve una lista de tools disponibles — nunca credenciales ni acceso directo.</p>
-        <div class="analogy"><b>Analogía backend</b>Es exactamente un Backend-for-Frontend: envuelve sistemas legacy/internos detrás de un contrato limpio, con autorización por endpoint.</div>
+        <h3>The only door to real systems</h3>
+        <p>Every business capability (query CRM, create a ticket, update an order) is exposed as a tool with an input/output schema and its own authorization scope. The agent sees a list of available tools — never credentials or direct access.</p>
+        <div class="analogy"><b>Backend analogy</b>It's exactly a Backend-for-Frontend: it wraps legacy/internal systems behind a clean contract, with per-endpoint authorization.</div>
       </div>
 
       <div class="concept">
-        <div class="concept-term">Memory (en arquitectura)</div>
-        <h3>Dos tiers, dos lugares físicos distintos</h3>
-        <p>Short-term vive en el contexto de la sesión activa (cache/proceso). Long-term vive en un store persistente (DB relacional, documento o vector store) y se recupera explícitamente al iniciar una sesión nueva.</p>
-        <div class="analogy"><b>Analogía backend</b>Short-term ≈ session cache (Redis). Long-term ≈ tabla de perfil/historial que consultas al autenticar al usuario.</div>
+        <div class="concept-term">Memory (architecturally)</div>
+        <h3>Two tiers, two distinct physical places</h3>
+        <p>Short-term lives in the active session's context (cache/process). Long-term lives in a persistent store (relational DB, document store, or vector store) and is explicitly retrieved when a new session starts.</p>
+        <div class="analogy"><b>Backend analogy</b>Short-term ≈ session cache (Redis). Long-term ≈ a profile/history table you query when authenticating the user.</div>
       </div>
 
       <div class="concept">
-        <div class="concept-term">RAG (en arquitectura)</div>
-        <h3>Dos pipelines separados: ingesta y consulta</h3>
-        <p><b>Ingesta</b> (offline/batch): documentos → chunking → embeddings → vector store. <b>Consulta</b> (online, por request): pregunta → embedding → búsqueda por similitud → inyección en el prompt.</p>
-        <div class="analogy"><b>Analogía backend</b>Ingesta ≈ tu pipeline ETL que alimenta un índice de búsqueda. Consulta ≈ el query en caliente contra ese índice en cada request — misma separación read/write que ya conoces.</div>
+        <div class="concept-term">RAG (architecturally)</div>
+        <h3>Two separate pipelines: ingestion and query</h3>
+        <p><b>Ingestion</b> (offline/batch): documents → chunking → embeddings → vector store. <b>Query</b> (online, per request): question → embedding → similarity search → injection into the prompt.</p>
+        <div class="analogy"><b>Backend analogy</b>Ingestion ≈ your ETL pipeline that feeds a search index. Query ≈ the hot-path query against that index on every request — the same read/write separation you already know.</div>
       </div>
 
       <div class="concept">
         <div class="concept-term">State</div>
-        <h3>Qué se está ejecutando, y en qué paso</h3>
-        <p>Incluye: historial de la conversación, qué tools se llamaron y con qué resultado, y si hay una acción pendiente de aprobación humana. Es lo que necesitas persistir para poder pausar y reanudar un flujo largo.</p>
-        <div class="analogy"><b>Analogía backend</b>Es el execution history de un workflow engine (piensa Step Functions): cada paso, su input, su output, y el puntero de "dónde estamos ahora".</div>
+        <h3>What's currently running, and at which step</h3>
+        <p>Includes: conversation history, which tools were called and with what result, and whether there's an action pending human approval. It's what you need to persist to be able to pause and resume a long flow.</p>
+        <div class="analogy"><b>Backend analogy</b>It's the execution history of a workflow engine (think Step Functions): each step, its input, its output, and the pointer to "where we are now."</div>
       </div>
 
       <div class="concept">
         <div class="concept-term">Agent Orchestration</div>
         <h3>Single-agent vs multi-agent</h3>
-        <p>Un <b>single agent</b> con varias tools es más simple de operar y depurar. Un <b>multi-agent</b> (ej. planner + specialists) tiene sentido cuando necesitas separar dominios de conocimiento, límites de seguridad distintos por tool-set, o paralelismo real entre subtareas.</p>
+        <p>A <b>single agent</b> with several tools is simpler to operate and debug. A <b>multi-agent</b> setup (e.g., planner + specialists) makes sense when you need to separate knowledge domains, apply different security limits per tool-set, or achieve real parallelism between subtasks.</p>
       </div>
     </div>
 
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Criterio</th><th>Single-agent</th><th>Multi-agent</th></tr></thead>
+        <thead><tr><th>Criterion</th><th>Single-agent</th><th>Multi-agent</th></tr></thead>
         <tbody>
-          <tr><td>Complejidad operativa</td><td>Baja</td><td>Alta (routing, handoffs, debugging distribuido)</td></tr>
-          <tr><td>Aislamiento de seguridad</td><td>Un solo scope de tools</td><td>Scopes distintos por agente/dominio</td></tr>
-          <tr><td>Cuándo conviene</td><td>Dominio acotado, pocas tools</td><td>Dominios heterogéneos, necesidad de especialización</td></tr>
-          <tr><td>Riesgo típico</td><td>Prompt sobrecargado</td><td>Coordinación frágil entre agentes</td></tr>
+          <tr><td>Operational complexity</td><td>Low</td><td>High (routing, handoffs, distributed debugging)</td></tr>
+          <tr><td>Security isolation</td><td>Single tool scope</td><td>Distinct scopes per agent/domain</td></tr>
+          <tr><td>When it fits</td><td>Bounded domain, few tools</td><td>Heterogeneous domains, need for specialization</td></tr>
+          <tr><td>Typical risk</td><td>Overloaded prompt</td><td>Fragile coordination between agents</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Ejemplo de implementación</div>
-    <h2>El loop del Agent Runtime, en código</h2>
-    <p>El esqueleto real detrás de las cajas del diagrama: arma contexto, llama al modelo, ejecuta tools, repite hasta tener respuesta final.</p>
+    <div class="section-label">Implementation example</div>
+    <h2>The Agent Runtime loop, in code</h2>
+    <p>The real skeleton behind the diagram's boxes: build context, call the model, execute tools, repeat until there's a final response.</p>
     <div class="code-block">
       <div class="code-head"><span>agent_runtime.py</span><span class="lang">python</span></div>
       <pre><span class="code-kw">class</span> AgentRuntime:
     <span class="code-kw">def</span> __init__(self, llm_client, tools: dict, memory_store, rag_index):
         self.llm = llm_client
-        self.tools = tools            <span class="code-comment"># {nombre: función ejecutable}</span>
+        self.tools = tools            <span class="code-comment"># {name: callable function}</span>
         self.memory = memory_store    <span class="code-comment"># short-term + long-term</span>
         self.rag = rag_index
 
@@ -320,130 +320,130 @@
         relevant_docs = self.rag.search(user_message, top_k=3)
         context = build_context(history, relevant_docs)
 
-        <span class="code-kw">while</span> <span class="code-kw">True</span>:  <span class="code-comment"># el loop: pensar → actuar → observar</span>
+        <span class="code-kw">while</span> <span class="code-kw">True</span>:  <span class="code-comment"># the loop: think → act → observe</span>
             response = self.llm.call(context, tools=self.tools_schema())
 
             <span class="code-kw">if</span> response.stop_reason == <span class="code-str">"tool_use"</span>:
                 tool_fn = self.tools.get(response.tool_name)
-                result = tool_fn(**response.tool_args)  <span class="code-comment"># validado dentro de tool_fn</span>
+                result = tool_fn(**response.tool_args)  <span class="code-comment"># validated inside tool_fn</span>
                 context.append_tool_result(response.tool_name, result)
-                <span class="code-kw">continue</span>  <span class="code-comment"># vuelve a llamar al LLM con el resultado</span>
+                <span class="code-kw">continue</span>  <span class="code-comment"># call the LLM again with the result</span>
 
-            <span class="code-comment"># stop_reason == "end_turn" → respuesta final</span>
+            <span class="code-comment"># stop_reason == "end_turn" → final response</span>
             self.memory.save_turn(session_id, user_message, response.text)
             <span class="code-kw">return</span> response.text</pre>
     </div>
-    <p style="font-size:13px; color:var(--muted); margin-top:8px;">El <code>while True</code> es el mecanismo real detrás de "el agente decide el siguiente paso" — no hay nada más místico que un loop con una condición de salida clara.</p>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">The <code>while True</code> is the real mechanism behind "the agent decides the next step" — there's nothing more mystical than a loop with a clear exit condition.</p>
   </section>
 
   <section>
-    <div class="section-label">Ejercicio práctico</div>
+    <div class="section-label">Practical exercise</div>
     <div class="exercise-box">
-      <h2>Caso: agente de soporte al cliente</h2>
-      <p>Debe: (a) responder preguntas frecuentes con RAG, (b) consultar estado de pedidos en el ERP, (c) escalar a un humano cuando no tenga certeza. Dibuja las cajas del diagrama para este caso y responde:</p>
+      <h2>Case: customer support agent</h2>
+      <p>It must: (a) answer FAQs with RAG, (b) look up order status in the ERP, (c) escalate to a human when unsure. Draw the diagram's boxes for this case and answer:</p>
       <ol>
-        <li>¿Este caso justifica multi-agent, o un single agent con 2 tools + RAG es suficiente? ¿Por qué?</li>
-        <li>¿Dónde está el límite de confianza — qué puede decidir el agente solo y qué requiere aprobación humana?</li>
-        <li>¿Qué pasa con el state si la conversación se corta a mitad de una consulta al ERP?</li>
+        <li>Does this case justify multi-agent, or is a single agent with 2 tools + RAG enough? Why?</li>
+        <li>Where's the trust boundary — what can the agent decide alone, and what needs human approval?</li>
+        <li>What happens to the state if the conversation drops mid-way through an ERP lookup?</li>
       </ol>
       <details>
-        <summary>Ver enfoque sugerido</summary>
+        <summary>See suggested approach</summary>
         <div class="solution">
-          <p><b>1.</b> Single agent alcanza: son dos dominios relacionados (soporte) y pocas tools. Multi-agent aquí sería sobre-ingeniería — añade coordinación sin beneficio real.</p>
-          <p><b>2.</b> El agente puede responder FAQ y consultar estado libremente (son operaciones de solo lectura). Cualquier acción que modifique estado del pedido (cancelar, reembolsar) debería requerir handoff a humano o approval workflow explícito — no autonomía directa.</p>
-          <p><b>3.</b> El state debe persistir el resultado parcial de la tool call (o su ausencia) para que, al reanudar, el agente sepa si ya consultó el ERP o debe reintentar — evita duplicar la consulta o perder el contexto de la conversación.</p>
+          <p><b>1.</b> A single agent is enough: it's two related domains (support) and few tools. Multi-agent here would be over-engineering — it adds coordination without real benefit.</p>
+          <p><b>2.</b> The agent can answer FAQs and check status freely (they're read-only operations). Any action that modifies order state (cancel, refund) should require human handoff or an explicit approval workflow — not direct autonomy.</p>
+          <p><b>3.</b> The state must persist the tool call's partial result (or its absence) so that, on resume, the agent knows whether it already queried the ERP or needs to retry — avoiding a duplicate lookup or losing conversation context.</p>
         </div>
       </details>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <div class="section-label">Related interview questions</div>
     <ul class="iq-list">
-      <li>¿Cuándo justificarías dividir un agente en varios agentes especializados?</li>
-      <li>¿Dónde vive el state de un agente, y por qué importa para escalar a múltiples usuarios concurrentes?</li>
-      <li>¿Cómo diseñarías los límites de una tool para que el agente no pueda hacer más de lo que debería?</li>
-      <li>¿Qué falla si metes toda la lógica de negocio en el prompt en vez de en las tools?</li>
-      <li>¿Cómo se ve el pipeline de ingesta de RAG comparado con el de consulta?</li>
+      <li>When would you justify splitting an agent into several specialized agents?</li>
+      <li>Where does an agent's state live, and why does that matter for scaling to multiple concurrent users?</li>
+      <li>How would you design a tool's limits so the agent can't do more than it should?</li>
+      <li>What breaks if you put all the business logic in the prompt instead of in tools?</li>
+      <li>What does RAG's ingestion pipeline look like compared to the query pipeline?</li>
     </ul>
   </section>
 
   <section>
-    <div class="section-label">Quiz de autoevaluación</div>
+    <div class="section-label">Self-check quiz</div>
     <div id="quiz"></div>
-    <div class="quiz-score" id="quizScore">0 / 6 respondidas correctamente</div>
+    <div class="quiz-score" id="quizScore">0 / 6 answered correctly</div>
   </section>
 
   <section>
-    <div class="section-label">Checklist de cierre</div>
+    <div class="section-label">Closing checklist</div>
     <div class="checklist" id="checklist">
-      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Puedo dibujar de memoria el diagrama base (Agent Runtime + LLM + Memory + RAG + Tools).</label></div>
-      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Sé justificar single-agent vs multi-agent con al menos 2 criterios.</label></div>
-      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Distingo el pipeline de ingesta del de consulta en RAG.</label></div>
-      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Resolví el ejercicio del agente de soporte sin ver la solución primero.</label></div>
-      <div class="check-row"><input type="checkbox" id="c5"><label for="c5">Completé el quiz con 6/6.</label></div>
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">I can draw the base diagram from memory (Agent Runtime + LLM + Memory + RAG + Tools).</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">I can justify single-agent vs multi-agent with at least 2 criteria.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">I can distinguish the ingestion pipeline from the query pipeline in RAG.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">I solved the support-agent exercise before looking at the solution.</label></div>
+      <div class="check-row"><input type="checkbox" id="c5"><label for="c5">I completed the quiz with 6/6.</label></div>
     </div>
   </section>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
-    <span>Día 02 de 14</span>
-    <a href="day-03.html">Día 03 &rarr;</a>
+    <a href="../index.html">&larr; Hub</a>
+    <span>Day 02 of 14</span>
+    <a href="day-03.html">Day 03 &rarr;</a>
   </div>
 </div>
 
 <script>
   const QUIZ = [
     {
-      q: "¿Por qué el agente no debería tocar el CRM o el ERP directamente?",
-      opts: ["Por límites de latencia únicamente", "Porque las tools son el único punto donde aplicar autorización y validación", "Porque los LLMs no soportan HTTP", "No hay ninguna razón técnica, es solo convención"],
+      q: "Why shouldn't the agent touch the CRM or ERP directly?",
+      opts: ["Only because of latency limits", "Because tools are the only point where you can apply authorization and validation", "Because LLMs don't support HTTP", "There's no technical reason, it's just convention"],
       correct: 1,
-      explain: "Las tools son el perímetro de control: ahí es donde validas argumentos, aplicas scopes de autorización y puedes auditar cada acción."
+      explain: "Tools are the control perimeter: that's where you validate arguments, apply authorization scopes, and can audit every action."
     },
     {
-      q: "En el pipeline de RAG, la ingesta (chunking + embeddings + store) ocurre...",
-      opts: ["En cada request del usuario", "Offline/batch, antes de que llegue cualquier consulta", "Dentro del LLM automáticamente", "Solo si el usuario lo pide explícitamente"],
+      q: "In the RAG pipeline, ingestion (chunking + embeddings + store) happens...",
+      opts: ["On every user request", "Offline/batch, before any query arrives", "Automatically inside the LLM", "Only if the user explicitly asks for it"],
       correct: 1,
-      explain: "Es un proceso separado, tipo ETL, que prepara el índice. La consulta (retrieval) sí ocurre en caliente, por request."
+      explain: "It's a separate, ETL-like process that prepares the index. Retrieval does happen on the hot path, per request."
     },
     {
-      q: "¿Qué escenario justifica más claramente pasar a multi-agent?",
+      q: "Which scenario most clearly justifies moving to multi-agent?",
       opts: [
-        "Tienes 2 tools y un dominio simple",
-        "Necesitas dominios de conocimiento heterogéneos con distintos scopes de seguridad",
-        "Quieres reducir la complejidad operativa",
-        "El prompt del agente es corto y simple"
+        "You have 2 tools and a simple domain",
+        "You need heterogeneous knowledge domains with different security scopes",
+        "You want to reduce operational complexity",
+        "The agent's prompt is short and simple"
       ],
       correct: 1,
-      explain: "Multi-agent tiene sentido cuando hay separación real de dominios o de seguridad — no como default por complejidad percibida."
+      explain: "Multi-agent makes sense when there's real domain or security separation — not as a default because of perceived complexity."
     },
     {
-      q: "El 'state' de un agente incluye principalmente...",
+      q: "An agent's 'state' mainly includes...",
       opts: [
-        "Solo los pesos del modelo",
-        "Historial de conversación, tool calls ejecutadas y su resultado, y acciones pendientes de aprobación",
-        "Únicamente el system prompt",
-        "El contenido del vector store"
+        "Only the model's weights",
+        "Conversation history, executed tool calls and their results, and pending approval actions",
+        "Only the system prompt",
+        "The vector store's contents"
       ],
       correct: 1,
-      explain: "State es lo que necesitas para pausar y reanudar el flujo: qué pasó, en qué paso está, y qué falta decidir."
+      explain: "State is what you need to pause and resume the flow: what happened, which step it's on, and what's left to decide."
     },
     {
-      q: "Short-term memory típicamente vive en...",
-      opts: ["Un vector database permanente", "Cache/proceso de la sesión activa", "El código fuente del agente", "Los logs de auditoría"],
+      q: "Short-term memory typically lives in...",
+      opts: ["A permanent vector database", "The active session's cache/process", "The agent's source code", "Audit logs"],
       correct: 1,
-      explain: "Short-term memory es el historial de la conversación actual — vive en el contexto de la sesión, no persiste más allá salvo que se promueva a long-term explícitamente."
+      explain: "Short-term memory is the current conversation's history — it lives in the session context, and doesn't persist beyond it unless explicitly promoted to long-term."
     },
     {
-      q: "¿Cuál es el riesgo típico de meter toda la lógica de negocio en el prompt en vez de en tools?",
+      q: "What's the typical risk of putting all business logic in the prompt instead of in tools?",
       opts: [
-        "Ninguno, el prompt es el lugar correcto para lógica de negocio",
-        "El modelo puede alucinar o saltarse reglas que deberían ser hard constraints en código",
-        "Hace el sistema más rápido",
-        "Reduce el uso de tokens"
+        "None, the prompt is the right place for business logic",
+        "The model can hallucinate or skip rules that should be hard constraints in code",
+        "It makes the system faster",
+        "It reduces token usage"
       ],
       correct: 1,
-      explain: "Reglas de negocio críticas deben vivir en código determinístico (dentro de la tool), no depender de que el modelo las 'recuerde' y las siga siempre."
+      explain: "Critical business rules must live in deterministic code (inside the tool), not depend on the model 'remembering' and always following them."
     }
   ];
 
@@ -477,7 +477,7 @@
           box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct');
         }
         document.getElementById(`explain-${i}`).classList.add('show');
-        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} answered correctly (${answered}/${QUIZ.length} seen)`;
       });
     });
   });

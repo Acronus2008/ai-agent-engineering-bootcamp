@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -126,36 +126,36 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/day-08.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../day-08.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Semana 2 · Día 08 · Systems &amp; Cloud</div>
+    <div class="eyebrow">Week 2 · Day 08 · Systems &amp; Cloud</div>
     <div class="title-row">
       <span class="day-numeral">08</span>
       <h1>Cloud Architecture (AWS)</h1>
     </div>
-    <p class="sub">Ya conoces los servicios. Hoy el objetivo es defender la elección, no listar características — practicando las cinco comparaciones que más aparecen en entrevista.</p>
+    <p class="sub">You already know the services. Today's goal is to defend the choice, not list features — practicing the five comparisons that come up most in interviews.</p>
     <div class="meta-row">
       <span><b>~90 min</b></span>
-      <span>Prerrequisito: <b>Día 07</b></span>
-      <span>Conecta con: <b>Día 09 — Composition Case</b></span>
+      <span>Prerequisite: <b>Day 07</b></span>
+      <span>Connects to: <b>Day 09 — Composition Case</b></span>
     </div>
   </header>
 
   <section>
-    <div class="section-label">Objetivo del día</div>
-    <p>El objetivo no es memorizar servicios — es <b>justificar decisiones y trade-offs</b>. Recorre las cinco comparaciones aplicadas al mismo caso: un agente de soporte que necesita ejecutar tools, orquestar un flujo con pasos, y guardar estado de conversación.</p>
+    <div class="section-label">Today's objective</div>
+    <p>The goal isn't to memorize services — it's to <b>justify decisions and trade-offs</b>. Walk through the five comparisons applied to the same case: a support agent that needs to execute tools, orchestrate a multi-step flow, and store conversation state.</p>
   </section>
 
   <section>
-    <div class="section-label">Las cinco comparaciones</div>
+    <div class="section-label">The five comparisons</div>
 
     <div class="group-title">Lambda vs ECS / EKS</div>
     <div class="table-wrap">
       <table>
         <tbody>
-          <tr><th>Lambda</th><td>Ejecución de tools individuales: corta duración, stateless, tráfico impredecible. Pagas por invocación, cold start aceptable si la tool no es latency-crítica.</td></tr>
-          <tr><th>ECS / EKS</th><td>El Agent Runtime en sí: proceso de larga duración, mantiene conexiones (streaming al usuario), necesita warm start garantizado y más control sobre recursos.</td></tr>
+          <tr><th>Lambda</th><td>Individual tool execution: short-lived, stateless, unpredictable traffic. You pay per invocation, cold start is acceptable if the tool isn't latency-critical.</td></tr>
+          <tr><th>ECS / EKS</th><td>The Agent Runtime itself: a long-running process, holds connections (streaming to the user), needs guaranteed warm start and more control over resources.</td></tr>
         </tbody>
       </table>
     </div>
@@ -164,8 +164,8 @@
     <div class="table-wrap">
       <table>
         <tbody>
-          <tr><th>API Gateway</th><td>La capa de tool calls del agente: auth por ruta, throttling, validación de request/schema por endpoint — encaja con muchos endpoints pequeños y bien definidos (una tool = una ruta).</td></tr>
-          <tr><th>ALB</th><td>Routing a un número menor de servicios/contenedores de larga duración, más barato a alto throughput, menos "inteligencia" por request.</td></tr>
+          <tr><th>API Gateway</th><td>The agent's tool-call layer: per-route auth, throttling, request/schema validation per endpoint — fits many small, well-defined endpoints (one tool = one route).</td></tr>
+          <tr><th>ALB</th><td>Routing to a smaller number of long-running services/containers, cheaper at high throughput, less "intelligence" per request.</td></tr>
         </tbody>
       </table>
     </div>
@@ -174,8 +174,8 @@
     <div class="table-wrap">
       <table>
         <tbody>
-          <tr><th>SQS</th><td>Distribución de trabajo punto a punto: una cola de "acciones pendientes de aprobación humana", un solo consumidor procesa cada mensaje una vez.</td></tr>
-          <tr><th>Kafka / MSK</th><td>Un evento del agente ("conversación completada") que <b>varios</b> sistemas independientes necesitan consumir (analytics, CRM sync, billing) — cada consumidor mantiene su propio offset.</td></tr>
+          <tr><th>SQS</th><td>Point-to-point work distribution: a queue of "actions pending human approval," a single consumer processes each message once.</td></tr>
+          <tr><th>Kafka / MSK</th><td>An agent event ("conversation completed") that <b>several</b> independent systems need to consume (analytics, CRM sync, billing) — each consumer keeps its own offset.</td></tr>
         </tbody>
       </table>
     </div>
@@ -184,8 +184,8 @@
     <div class="table-wrap">
       <table>
         <tbody>
-          <tr><th>Step Functions</th><td>Orquestar una secuencia definida con retry y manejo de error built-in — el ajuste natural para implementar la Saga del Día 07 (reembolso: verificar → cobrar → actualizar → notificar).</td></tr>
-          <tr><th>Kafka</th><td>Reacciones desacopladas donde nadie necesita "poseer" la secuencia completa — cada sistema reacciona al evento a su propio ritmo, sin un orquestador central.</td></tr>
+          <tr><th>Step Functions</th><td>Orchestrate a defined sequence with built-in retry and error handling — the natural fit to implement the Day 07 Saga (refund: verify → charge → update → notify).</td></tr>
+          <tr><th>Kafka</th><td>Decoupled reactions where no one needs to "own" the full sequence — each system reacts to the event at its own pace, without a central orchestrator.</td></tr>
         </tbody>
       </table>
     </div>
@@ -194,30 +194,30 @@
     <div class="table-wrap">
       <table>
         <tbody>
-          <tr><th>DynamoDB</th><td>Estado de conversación: patrón de acceso por clave (session_id), necesita escalar con conversaciones concurrentes, lecturas de baja latencia, poca necesidad de joins.</td></tr>
-          <tr><th>RDS / PostgreSQL</th><td>Datos de negocio relacionales (pedidos, clientes) donde necesitas joins, consistencia fuerte y queries complejas — no el lugar para el historial de chat.</td></tr>
+          <tr><th>DynamoDB</th><td>Conversation state: key-based access pattern (session_id), needs to scale with concurrent conversations, low-latency reads, little need for joins.</td></tr>
+          <tr><th>RDS / PostgreSQL</th><td>Relational business data (orders, customers) where you need joins, strong consistency, and complex queries — not the place for chat history.</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
   <section>
-    <div class="section-label">El resto del stack, en una línea cada uno</div>
+    <div class="section-label">The rest of the stack, one line each</div>
     <div class="concept-grid">
-      <div class="concept"><div class="concept-term">EventBridge</div><h3>Bus de eventos con schema, para rutear eventos del agente a múltiples targets según reglas — sin construir tu propio router.</h3></div>
-      <div class="concept"><div class="concept-term">S3</div><h3>Donde aterrizan los documentos crudos antes de que el pipeline de ingesta de RAG (Día 02) los chunkee y embeba.</h3></div>
-      <div class="concept"><div class="concept-term">Secrets Manager</div><h3>Las tools nunca tienen credenciales en código o env vars planas — las obtienen en runtime, con rotación automática.</h3></div>
-      <div class="concept"><div class="concept-term">CloudWatch (+ X-Ray)</div><h3>El punto de agregación de logs/métricas, y la forma AWS-nativa de construir el trace distribuido del Día 05.</h3></div>
-      <div class="concept"><div class="concept-term">IAM</div><h3>Cada Lambda de tool tiene su propio role con el permiso mínimo — la versión concreta del least privilege del Día 04.</h3></div>
+      <div class="concept"><div class="concept-term">EventBridge</div><h3>A schema-aware event bus, for routing agent events to multiple targets by rule — without building your own router.</h3></div>
+      <div class="concept"><div class="concept-term">S3</div><h3>Where raw documents land before the Day 02 RAG ingestion pipeline chunks and embeds them.</h3></div>
+      <div class="concept"><div class="concept-term">Secrets Manager</div><h3>Tools never have credentials in code or plain env vars — they fetch them at runtime, with automatic rotation.</h3></div>
+      <div class="concept"><div class="concept-term">CloudWatch (+ X-Ray)</div><h3>The aggregation point for logs/metrics, and the AWS-native way to build the Day 05 distributed trace.</h3></div>
+      <div class="concept"><div class="concept-term">IAM</div><h3>Every tool's Lambda has its own role with minimum permission — the concrete version of Day 04's least privilege.</h3></div>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Diagrama de implementación</div>
-    <h2>La arquitectura AWS completa</h2>
-    <p>Cómo aterrizan las cinco comparaciones de arriba en una sola arquitectura real.</p>
+    <div class="section-label">Implementation diagram</div>
+    <h2>The full AWS architecture</h2>
+    <p>How the five comparisons above land in a single real architecture.</p>
     <figure class="diagram">
-      <svg viewBox="0 0 640 240" role="img" aria-label="Diagrama: API Gateway enruta al Agent Runtime en ECS, que lee y escribe estado de conversación en DynamoDB y dispara ejecuciones de Step Functions; Step Functions invoca Lambdas de tools que actualizan RDS, y en caso de fallo enruta a una cola SQS de revisión humana.">
+      <svg viewBox="0 0 640 240" role="img" aria-label="Diagram: API Gateway routes to the Agent Runtime on ECS, which reads and writes conversation state in DynamoDB and triggers Step Functions executions; Step Functions invokes tool Lambdas that update RDS, and on failure routes to an SQS human-review queue.">
         <defs>
           <marker id="d8arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker>
         </defs>
@@ -240,28 +240,28 @@
         <text x="425" y="44" text-anchor="middle" class="dtext">Step Functions</text>
 
         <line x1="425" y1="60" x2="425" y2="98" class="darrow" marker-end="url(#d8arrow)"/>
-        <text x="440" y="82" class="dtext-muted">invoca pasos</text>
+        <text x="440" y="82" class="dtext-muted">invokes steps</text>
         <rect x="350" y="100" width="150" height="40" rx="3" class="dbox"/>
         <text x="425" y="124" text-anchor="middle" class="dtext">Lambda (tools)</text>
 
         <line x1="425" y1="140" x2="425" y2="178" class="darrow" marker-end="url(#d8arrow)"/>
-        <text x="440" y="162" class="dtext-muted">update pedido</text>
+        <text x="440" y="162" class="dtext-muted">update order</text>
         <rect x="350" y="180" width="150" height="40" rx="3" class="dbox"/>
         <text x="425" y="204" text-anchor="middle" class="dtext">RDS</text>
 
         <line x1="500" y1="50" x2="538" y2="98" class="darrow" marker-end="url(#d8arrow)"/>
-        <text x="550" y="80" class="dtext-muted">si falla</text>
+        <text x="550" y="80" class="dtext-muted">on failure</text>
         <rect x="510" y="100" width="120" height="40" rx="3" class="dbox"/>
-        <text x="570" y="124" text-anchor="middle" class="dtext">SQS revisión</text>
+        <text x="570" y="124" text-anchor="middle" class="dtext">SQS review</text>
       </svg>
-      <figcaption>El mismo Saga del Día 07, ahora con nombres de servicio reales en cada caja.</figcaption>
+      <figcaption>The same Day 07 Saga, now with real service names in each box.</figcaption>
     </figure>
   </section>
 
   <section>
-    <div class="section-label">Ejemplo de implementación</div>
-    <h2>Disparar el Saga desde el Agent Runtime</h2>
-    <p>El ECS Runtime no ejecuta el Saga directamente — dispara una ejecución de Step Functions y sigue con la conversación.</p>
+    <div class="section-label">Implementation example</div>
+    <h2>Triggering the Saga from the Agent Runtime</h2>
+    <p>The ECS Runtime doesn't run the Saga directly — it triggers a Step Functions execution and moves on with the conversation.</p>
     <div class="code-block">
       <div class="code-head"><span>trigger_refund_saga.py</span><span class="lang">python</span></div>
       <pre><span class="code-kw">import</span> boto3, json, uuid
@@ -273,110 +273,110 @@ sfn = boto3.client(<span class="code-str">"stepfunctions"</span>)
 
     response = sfn.start_execution(
         stateMachineArn=REFUND_SAGA_ARN,
-        name=execution_name,        <span class="code-comment"># Step Functions rechaza nombres duplicados</span>
-        input=json.dumps({                  <span class="code-comment"># → idempotency gratis a nivel de ejecución</span>
+        name=execution_name,        <span class="code-comment"># Step Functions rejects duplicate names</span>
+        input=json.dumps({                  <span class="code-comment"># → free idempotency at the execution level</span>
             <span class="code-str">"order_id"</span>: order_id,
             <span class="code-str">"amount"</span>: amount,
             <span class="code-str">"idempotency_key"</span>: execution_name,
         }),
     )
-    <span class="code-kw">return</span> response[<span class="code-str">"executionArn"</span>]  <span class="code-comment"># el agente puede consultar el estado luego</span></pre>
+    <span class="code-kw">return</span> response[<span class="code-str">"executionArn"</span>]  <span class="code-comment"># the agent can poll its status later</span></pre>
     </div>
-    <p style="font-size:13px; color:var(--muted); margin-top:8px;">El nombre de la ejecución hace doble función: identifica el run y actúa como idempotency key — Step Functions rechaza un <code>start_execution</code> con un nombre ya usado.</p>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">The execution name does double duty: it identifies the run and acts as an idempotency key — Step Functions rejects a <code>start_execution</code> with a name already in use.</p>
   </section>
 
   <section>
-    <div class="section-label">Ejercicio práctico</div>
+    <div class="section-label">Practical exercise</div>
     <div class="exercise-box">
-      <h2>Caso: llevar el agente de soporte (Día 02) a AWS</h2>
-      <p>Decide, con justificación de una frase cada una:</p>
+      <h2>Case: taking the support agent (Day 02) to AWS</h2>
+      <p>Decide, with a one-sentence justification each:</p>
       <ol>
-        <li>¿Dónde vive el Agent Runtime — Lambda o ECS?</li>
-        <li>¿Dónde vive el estado de la conversación?</li>
-        <li>¿Cómo implementas el Saga de "procesar reembolso" del Día 07 con servicios AWS concretos?</li>
+        <li>Where does the Agent Runtime live — Lambda or ECS?</li>
+        <li>Where does the conversation state live?</li>
+        <li>How do you implement the Day 07 "process refund" Saga with concrete AWS services?</li>
       </ol>
       <details>
-        <summary>Ver enfoque sugerido</summary>
+        <summary>See suggested approach</summary>
         <div class="solution">
-          <p><b>1.</b> ECS (o similar), porque el runtime necesita mantener el streaming de la respuesta al usuario y hacer múltiples llamadas al LLM/tools dentro del mismo request — un cold start de Lambda en cada turno de conversación sería una mala experiencia. Las tools individuales sí pueden ser Lambdas.</p>
-          <p><b>2.</b> DynamoDB, indexado por <code>session_id</code> — acceso de baja latencia por clave, y escala naturalmente con conversaciones concurrentes sin necesidad de joins.</p>
-          <p><b>3.</b> Step Functions orquesta los 4 pasos (verificar → cobrar → actualizar pedido en RDS → notificar), con retry configurado por paso y una rama de error explícita hacia una cola SQS de "revisión humana" si el paso de actualización falla después de que el cobro ya se emitió.</p>
+          <p><b>1.</b> ECS (or similar), because the runtime needs to keep streaming the response to the user and make multiple LLM/tool calls within the same request — a Lambda cold start on every conversation turn would be a bad experience. The individual tools can still be Lambdas.</p>
+          <p><b>2.</b> DynamoDB, indexed by <code>session_id</code> — low-latency key access, and it scales naturally with concurrent conversations without needing joins.</p>
+          <p><b>3.</b> Step Functions orchestrates the 4 steps (verify → charge → update order in RDS → notify), with per-step retry configured and an explicit error branch to a "human review" SQS queue if the update step fails after the charge was already issued.</p>
         </div>
       </details>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <div class="section-label">Related interview questions</div>
     <ul class="iq-list">
-      <li>¿Cuándo elegirías Lambda sobre ECS para implementar una tool, y viceversa?</li>
-      <li>¿Cómo implementarías el patrón Saga del día anterior usando Step Functions?</li>
-      <li>SQS vs Kafka/MSK para un evento de agente dado — ¿cuál es tu criterio de decisión?</li>
-      <li>¿Por qué DynamoDB podría ser mejor que RDS para el estado de conversación, y cuándo cambiaría eso?</li>
-      <li>¿Cómo le das a una tool basada en Lambda acceso seguro a una API key de terceros?</li>
+      <li>When would you choose Lambda over ECS to implement a tool, and vice versa?</li>
+      <li>How would you implement yesterday's Saga pattern using Step Functions?</li>
+      <li>SQS vs Kafka/MSK for a given agent event — what's your decision criterion?</li>
+      <li>Why might DynamoDB be better than RDS for conversation state, and when would that flip?</li>
+      <li>How do you give a Lambda-based tool secure access to a third-party API key?</li>
     </ul>
   </section>
 
   <section>
-    <div class="section-label">Quiz de autoevaluación</div>
+    <div class="section-label">Self-check quiz</div>
     <div id="quiz"></div>
-    <div class="quiz-score" id="quizScore">0 / 6 respondidas correctamente</div>
+    <div class="quiz-score" id="quizScore">0 / 6 answered correctly</div>
   </section>
 
   <section>
-    <div class="section-label">Checklist de cierre</div>
+    <div class="section-label">Closing checklist</div>
     <div class="checklist" id="checklist">
-      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Puedo justificar las 5 comparaciones en una frase cada una, sin dudar.</label></div>
-      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Diseñé la versión AWS del agente de soporte sin ver la solución primero.</label></div>
-      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Sé mapear el Saga del Día 07 a Step Functions concretamente.</label></div>
-      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Completé el quiz con 6/6.</label></div>
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">I can justify all 5 comparisons in one sentence each, without hesitating.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">I designed the AWS version of the support agent before looking at the solution.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">I can map the Day 07 Saga to Step Functions concretely.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">I completed the quiz with 6/6.</label></div>
     </div>
   </section>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
-    <span>Día 08 de 14</span>
-    <a href="day-09.html">Día 09 &rarr;</a>
+    <a href="../index.html">&larr; Hub</a>
+    <span>Day 08 of 14</span>
+    <a href="day-09.html">Day 09 &rarr;</a>
   </div>
 </div>
 
 <script>
   const QUIZ = [
     {
-      q: "Para el Agent Runtime que mantiene streaming de respuesta y múltiples llamadas por conversación, ¿qué es preferible?",
-      opts: ["Lambda, siempre", "ECS/EKS, por el manejo de conexiones persistentes y warm start", "S3, porque es más barato", "No importa la elección"],
+      q: "For an Agent Runtime that keeps streaming a response and makes multiple calls per conversation, what's preferable?",
+      opts: ["Lambda, always", "ECS/EKS, for persistent connection handling and warm start", "S3, because it's cheaper", "The choice doesn't matter"],
       correct: 1,
-      explain: "Lambda encaja mejor para tools individuales de corta duración; el runtime en sí se beneficia de un proceso de larga duración."
+      explain: "Lambda fits better for short-lived individual tools; the runtime itself benefits from a long-running process."
     },
     {
-      q: "¿Cuál es el criterio principal para elegir Kafka/MSK sobre SQS?",
-      opts: ["Kafka es siempre más barato", "Múltiples consumidores independientes necesitan reaccionar al mismo evento", "SQS no soporta JSON", "Kafka es exclusivo para logs"],
+      q: "What's the main criterion for choosing Kafka/MSK over SQS?",
+      opts: ["Kafka is always cheaper", "Multiple independent consumers need to react to the same event", "SQS doesn't support JSON", "Kafka is exclusively for logs"],
       correct: 1,
-      explain: "SQS es ideal para distribución de trabajo punto a punto; Kafka brilla cuando varios sistemas distintos consumen el mismo stream de eventos."
+      explain: "SQS is ideal for point-to-point work distribution; Kafka shines when several distinct systems consume the same event stream."
     },
     {
-      q: "Step Functions encaja naturalmente con el patrón Saga porque...",
-      opts: ["Es más barato que Lambda", "Orquesta una secuencia definida de pasos con retry y manejo de error built-in por paso", "Reemplaza la necesidad de bases de datos", "Solo funciona con DynamoDB"],
+      q: "Step Functions naturally fits the Saga pattern because...",
+      opts: ["It's cheaper than Lambda", "It orchestrates a defined sequence of steps with built-in per-step retry and error handling", "It replaces the need for databases", "It only works with DynamoDB"],
       correct: 1,
-      explain: "Le da a la Saga un lugar explícito para definir cada paso, su retry y su rama de compensación/error."
+      explain: "It gives the Saga an explicit place to define each step, its retry, and its compensation/error branch."
     },
     {
-      q: "El estado de conversación de un agente (por session_id) encaja mejor en...",
-      opts: ["RDS, porque necesita joins complejos", "DynamoDB, por el patrón de acceso por clave y la necesidad de baja latencia a escala", "S3, como almacenamiento de objetos", "No debería persistirse nunca"],
+      q: "An agent's conversation state (by session_id) fits best in...",
+      opts: ["RDS, because it needs complex joins", "DynamoDB, for the key-based access pattern and the need for low latency at scale", "S3, as object storage", "It should never be persisted"],
       correct: 1,
-      explain: "Es un patrón de acceso clave-valor de alta concurrencia — el punto fuerte de DynamoDB, no de una base relacional."
+      explain: "It's a high-concurrency key-value access pattern — DynamoDB's strength, not a relational database's."
     },
     {
-      q: "¿Por qué una tool nunca debería tener una API key de terceros hardcodeada en el código?",
-      opts: ["No hay ningún riesgo real", "Porque Secrets Manager permite obtenerla en runtime con rotación, reduciendo el riesgo de exposición", "Porque Lambda no soporta variables de entorno", "Es solo una preferencia de estilo"],
+      q: "Why should a tool never have a third-party API key hardcoded in code?",
+      opts: ["There's no real risk", "Because Secrets Manager lets you fetch it at runtime with rotation, reducing exposure risk", "Because Lambda doesn't support environment variables", "It's just a style preference"],
       correct: 1,
-      explain: "Secrets Manager (o equivalente) es el mecanismo para que las credenciales no vivan en código ni en configuración estática."
+      explain: "Secrets Manager (or equivalent) is the mechanism that keeps credentials out of code and static config."
     },
     {
-      q: "API Gateway es preferible sobre ALB cuando...",
-      opts: ["Necesitas el menor costo posible a cualquier escala", "Tienes muchos endpoints pequeños tipo tool, cada uno con su propia auth y validación de schema", "Solo tienes un servicio backend", "Nunca — ALB siempre es superior"],
+      q: "API Gateway is preferable over ALB when...",
+      opts: ["You need the lowest possible cost at any scale", "You have many small tool-type endpoints, each with its own auth and schema validation", "You only have one backend service", "Never — ALB is always superior"],
       correct: 1,
-      explain: "API Gateway aporta control granular por ruta (auth, throttling, validación) — justo lo que necesitas cuando cada tool es un endpoint distinto."
+      explain: "API Gateway provides granular per-route control (auth, throttling, validation) — exactly what you need when each tool is a distinct endpoint."
     }
   ];
   const quizEl = document.getElementById('quiz');
@@ -396,7 +396,7 @@ sfn = boto3.client(<span class="code-str">"stepfunctions"</span>)
         if (idx === item.correct) { btn.classList.add('correct'); correctCount++; }
         else { btn.classList.add('incorrect'); box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct'); }
         document.getElementById(`explain-${i}`).classList.add('show');
-        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} answered correctly (${answered}/${QUIZ.length} seen)`;
       });
     });
   });

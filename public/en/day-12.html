@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -107,29 +107,29 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/day-12.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../day-12.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Semana 3 · Día 12 · FDE, Cliente &amp; Mocks</div>
+    <div class="eyebrow">Week 3 · Day 12 · FDE, Customer &amp; Mocks</div>
     <div class="title-row">
       <span class="day-numeral">12</span>
       <h1>Communication &amp; Executive Presence</h1>
     </div>
-    <p class="sub">Un framework para estructurar cualquier respuesta técnica, y el inglés específico para sostenerla en una entrevista de arquitectura.</p>
+    <p class="sub">A framework for structuring any technical answer, and the exact phrasing to carry it through an architecture interview.</p>
     <div class="meta-row">
       <span><b>~90 min</b></span>
-      <span>Prerrequisito: <b>Día 11</b></span>
-      <span>Conecta con: <b>Día 13 — Behavioral</b></span>
+      <span>Prerequisite: <b>Day 11</b></span>
+      <span>Connects to: <b>Day 13 — Behavioral</b></span>
     </div>
   </header>
 
   <section>
-    <div class="section-label">Objetivo del día</div>
-    <p>Tener un molde reutilizable para cualquier respuesta técnica — para no improvisar la estructura cada vez, solo el contenido.</p>
+    <div class="section-label">Today's objective</div>
+    <p>Have a reusable mold for any technical answer — so you don't have to improvise the structure every time, only the content.</p>
   </section>
 
   <section>
-    <div class="section-label">El framework: Context → Decision → Reason → Trade-off → Result</div>
+    <div class="section-label">The framework: Context → Decision → Reason → Trade-off → Result</div>
     <div class="framework-flow">
       <span class="node">Context</span><span class="arrow">→</span>
       <span class="node">Decision</span><span class="arrow">→</span>
@@ -137,33 +137,33 @@
       <span class="node">Trade-off</span><span class="arrow">→</span>
       <span class="node">Result</span>
     </div>
-    <p>Úsalo para explicar cualquier decisión técnica en 60-90 segundos: sitúa el contexto, di qué decidiste, por qué, qué sacrificaste al elegirlo, y qué pasó.</p>
-    <div class="analogy"><b>Ejemplo aplicado (Día 08)</b><b>Context:</b> "Necesitábamos orquestar un flujo de reembolso con 4 pasos y compensaciones." <b>Decision:</b> "Elegí Step Functions en vez de coordinar la Saga manualmente con Kafka." <b>Reason:</b> "Porque necesitábamos retry y manejo de error por paso, con visibilidad clara del estado." <b>Trade-off:</b> "Sacrificamos algo de flexibilidad frente a un enfoque basado en eventos puro, a cambio de menos código de orquestación propio." <b>Result:</b> "El flujo quedó auditable paso a paso y el tiempo de implementación bajó."</div>
+    <p>Use it to explain any technical decision in 60-90 seconds: set the context, say what you decided, why, what you sacrificed by choosing it, and what happened.</p>
+    <div class="analogy"><b>Applied example (Day 08)</b><b>Context:</b> "We needed to orchestrate a 4-step refund flow with compensations." <b>Decision:</b> "I chose Step Functions instead of coordinating the Saga manually with Kafka." <b>Reason:</b> "Because we needed per-step retry and error handling, with clear state visibility." <b>Trade-off:</b> "We gave up some flexibility compared to a pure event-based approach, in exchange for less custom orchestration code." <b>Result:</b> "The flow ended up auditable step by step, and implementation time went down."</div>
   </section>
 
   <section>
-    <div class="section-label">Las otras piezas de comunicación</div>
+    <div class="section-label">The other communication pieces</div>
     <div class="concept-grid">
       <div class="concept">
         <div class="concept-term">Elevator Pitch</div>
-        <h3>30-60 segundos, sin relleno</h3>
-        <p>Tu respuesta a "why this role, why this company, why now" debe caber en menos de un minuto, con una estructura: quién eres técnicamente, qué te conecta con el rol, y qué aportas específicamente que no es genérico.</p>
+        <h3>30-60 seconds, no filler</h3>
+        <p>Your answer to "why this role, why this company, why now" should fit in under a minute, with a structure: who you are technically, what connects you to the role, and what you specifically bring that isn't generic.</p>
       </div>
       <div class="concept">
-        <div class="concept-term">Explicar un diagrama</div>
-        <h3>De afuera hacia adentro, nombrando el fallo que anticipaste</h3>
-        <p>Empieza por el usuario, sigue el flujo en el orden en que ocurre, y en cada caja menciona brevemente qué pasa si esa pieza falla — demuestra que diseñaste pensando en fallos, no solo en el camino feliz.</p>
+        <div class="concept-term">Explaining a diagram</div>
+        <h3>From the outside in, naming the failure you anticipated</h3>
+        <p>Start with the user, follow the flow in the order it happens, and at each box briefly mention what happens if that piece fails — it shows you designed with failure in mind, not just the happy path.</p>
       </div>
       <div class="concept">
-        <div class="concept-term">Presentaciones ejecutivas</div>
-        <h3>La conclusión primero, el detalle después</h3>
-        <p>A un ejecutivo no le interesa cómo llegaste a la conclusión antes de saber cuál es. Empieza con el resultado/recomendación, y ten el detalle técnico listo si preguntan "¿por qué?".</p>
+        <div class="concept-term">Executive presentations</div>
+        <h3>The conclusion first, the detail after</h3>
+        <p>An executive isn't interested in how you got to the conclusion before knowing what it is. Start with the result/recommendation, and have the technical detail ready if they ask "why?".</p>
       </div>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Technical English — frases para entrevistas de arquitectura</div>
+    <div class="section-label">Key phrases for architecture interviews</div>
     <ul class="phrase-list">
       <li>"Let me clarify the requirements first."</li>
       <li>"There are two main trade-offs here."</li>
@@ -179,12 +179,12 @@
   </section>
 
   <section>
-    <div class="section-label">Ejercicio práctico</div>
+    <div class="section-label">Practical exercise</div>
     <div class="exercise-box">
-      <h2>Explica el diagrama del Día 10 completamente en inglés</h2>
-      <p>Toma el diagrama del agente de voz (Día 10) y explícalo en voz alta, en inglés, usando el framework Context→Decision→Reason→Trade-off→Result para <b>al menos dos</b> de las decisiones que tomaste (ej. la elección de latencia sobre "inteligencia" del modelo).</p>
+      <h2>Explain the Day 10 diagram out loud</h2>
+      <p>Take the voice agent diagram (Day 10) and explain it out loud, using the Context→Decision→Reason→Trade-off→Result framework for <b>at least two</b> of the decisions you made (e.g., choosing latency over model "intelligence").</p>
       <details>
-        <summary>Ver ejemplo de apertura en inglés</summary>
+        <summary>See an example opening</summary>
         <div class="solution">
           <p>"Let me walk you through the architecture. <b>Context:</b> the company needed a voice agent handling both inquiries and actions, with human handoff for high-risk cases. <b>Decision:</b> I chose a faster, smaller model with tightly-scoped RAG over a larger, more capable one. <b>Reason:</b> in voice, perceived latency matters more than in chat — a two-second silence feels like a failure. <b>Trade-off:</b> we accept slightly less nuanced answers in exchange for responsiveness. <b>Result:</b> average response time stayed under 1.5 seconds, which was the hard requirement."</p>
         </div>
@@ -193,7 +193,7 @@
   </section>
 
   <section>
-    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <div class="section-label">Related interview questions</div>
     <ul class="iq-list">
       <li>Walk me through a technical decision you made recently, and why.</li>
       <li>How do you adjust your communication style between a developer and an executive audience?</li>
@@ -204,59 +204,59 @@
   </section>
 
   <section>
-    <div class="section-label">Quiz de autoevaluación</div>
+    <div class="section-label">Self-check quiz</div>
     <div id="quiz"></div>
-    <div class="quiz-score" id="quizScore">0 / 5 respondidas correctamente</div>
+    <div class="quiz-score" id="quizScore">0 / 5 answered correctly</div>
   </section>
 
   <section>
-    <div class="section-label">Checklist de cierre</div>
+    <div class="section-label">Closing checklist</div>
     <div class="checklist" id="checklist">
-      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Practiqué el framework CDRT con al menos 2 decisiones reales mías, no inventadas.</label></div>
-      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Tengo mi elevator pitch de "why this role, why this company" cronometrado en menos de 60s.</label></div>
-      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Expliqué el diagrama del Día 10 en inglés, en voz alta, sin leer un guion.</label></div>
-      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Completé el quiz con 5/5.</label></div>
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">I practiced the CDRT framework with at least 2 real decisions of my own, not made up.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">I have my "why this role, why this company" elevator pitch timed under 60s.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">I explained the Day 10 diagram out loud, without reading from a script.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">I completed the quiz with 5/5.</label></div>
     </div>
   </section>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
-    <span>Día 12 de 14</span>
-    <a href="day-13.html">Día 13 &rarr;</a>
+    <a href="../index.html">&larr; Hub</a>
+    <span>Day 12 of 14</span>
+    <a href="day-13.html">Day 13 &rarr;</a>
   </div>
 </div>
 
 <script>
   const QUIZ = [
     {
-      q: "En el framework Context→Decision→Reason→Trade-off→Result, ¿qué va en 'Trade-off'?",
-      opts: ["Una repetición del contexto", "Qué sacrificaste al tomar esa decisión frente a las alternativas", "El resultado final medido", "Una lista de tecnologías descartadas sin justificación"],
+      q: "In the Context→Decision→Reason→Trade-off→Result framework, what goes in 'Trade-off'?",
+      opts: ["A repetition of the context", "What you sacrificed by making that decision compared to the alternatives", "The final measured result", "A list of discarded technologies with no justification"],
       correct: 1,
-      explain: "Trade-off es explícitamente nombrar el costo de la decisión — sin esto, la respuesta suena a que no hubo alternativas consideradas."
+      explain: "Trade-off means explicitly naming the cost of the decision — without this, the answer sounds like no alternatives were considered."
     },
     {
-      q: "Al presentar a una audiencia ejecutiva, la estructura recomendada es...",
-      opts: ["Explicar todo el proceso técnico antes de dar la conclusión", "Dar la conclusión/recomendación primero, con el detalle técnico disponible si preguntan", "Usar exclusivamente jerga técnica para demostrar profundidad", "Evitar mencionar riesgos para no generar dudas"],
+      q: "When presenting to an executive audience, the recommended structure is to...",
+      opts: ["Explain the entire technical process before giving the conclusion", "Give the conclusion/recommendation first, with technical detail available if asked", "Use exclusively technical jargon to show depth", "Avoid mentioning risks so as not to raise doubts"],
       correct: 1,
-      explain: "Los ejecutivos priorizan la conclusión; el detalle técnico es un respaldo, no el punto de entrada."
+      explain: "Executives prioritize the conclusion; the technical detail is backup, not the entry point."
     },
     {
-      q: "Al explicar un diagrama de arquitectura en una entrevista, una buena práctica es...",
-      opts: ["Empezar por el componente técnicamente más complejo", "Seguir el flujo desde el usuario y mencionar qué pasa si cada pieza falla", "Omitir los casos de fallo para no sonar negativo", "Explicar todos los componentes en orden alfabético"],
+      q: "When explaining an architecture diagram in an interview, good practice is to...",
+      opts: ["Start with the technically most complex component", "Follow the flow from the user and mention what happens if each piece fails", "Omit failure cases so as not to sound negative", "Explain all components in alphabetical order"],
       correct: 1,
-      explain: "Seguir el flujo real y nombrar los fallos anticipados demuestra que el diseño consideró resiliencia, no solo el camino feliz."
+      explain: "Following the real flow and naming anticipated failures shows the design considered resilience, not just the happy path."
     },
     {
-      q: "Un elevator pitch efectivo para 'why this role' debería...",
-      opts: ["Durar 5 minutos para cubrir todo el detalle", "Caber en 30-60 segundos, conectando tu experiencia con algo específico del rol", "Ser genérico para servir en cualquier entrevista", "Evitar mencionar por qué la empresa específicamente"],
+      q: "An effective 'why this role' elevator pitch should...",
+      opts: ["Last 5 minutes to cover all the detail", "Fit in 30-60 seconds, connecting your experience to something specific about the role", "Be generic enough to work in any interview", "Avoid mentioning why this specific company"],
       correct: 1,
-      explain: "La brevedad y la especificidad (por qué esta empresa, este rol) son lo que lo distingue de una respuesta genérica."
+      explain: "Brevity and specificity (why this company, this role) are what set it apart from a generic answer."
     },
     {
-      q: "La frase 'I would introduce asynchronous processing if the volume grows beyond X' es útil porque...",
-      opts: ["Suena más formal sin aportar contenido", "Comunica una decisión condicionada a un criterio concreto, no una afirmación absoluta", "Evita comprometerse con cualquier decisión", "Solo aplica a sistemas sin IA"],
+      q: "The phrase 'I would introduce asynchronous processing if the volume grows beyond X' is useful because...",
+      opts: ["It sounds more formal without adding content", "It communicates a decision conditioned on a concrete criterion, not an absolute statement", "It avoids committing to any decision", "It only applies to non-AI systems"],
       correct: 1,
-      explain: "Mostrar que la decisión depende de un umbral medible demuestra pensamiento de trade-offs, no una regla fija memorizada."
+      explain: "Showing that the decision depends on a measurable threshold demonstrates trade-off thinking, not a memorized fixed rule."
     }
   ];
   const quizEl = document.getElementById('quiz');
@@ -276,7 +276,7 @@
         if (idx === item.correct) { btn.classList.add('correct'); correctCount++; }
         else { btn.classList.add('incorrect'); box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct'); }
         document.getElementById(`explain-${i}`).classList.add('show');
-        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} answered correctly (${answered}/${QUIZ.length} seen)`;
       });
     });
   });

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -121,82 +121,82 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/day-10.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../day-10.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Semana 2 · Día 10 · Systems &amp; Cloud <span class="week-done">Cierra semana 2</span></div>
+    <div class="eyebrow">Week 2 · Day 10 · Systems &amp; Cloud <span class="week-done">Closes week 2</span></div>
     <div class="title-row">
       <span class="day-numeral">10</span>
-      <h1>Mock System Design completo</h1>
+      <h1>Full Mock System Design</h1>
     </div>
-    <p class="sub">Todo lo de la Semana 2, en un solo caso, bajo tiempo. Esta es la simulación más cercana a la entrevista técnica real.</p>
+    <p class="sub">Everything from Week 2, in a single timed case. This is the closest simulation to the real technical interview.</p>
     <div class="meta-row">
-      <span><b>~90 min (60 resolviendo + 30 revisando)</b></span>
-      <span>Prerrequisito: <b>Días 06-09</b></span>
-      <span>Conecta con: <b>Día 11 — Product Thinking</b></span>
+      <span><b>~90 min (60 solving + 30 reviewing)</b></span>
+      <span>Prerequisite: <b>Days 06-09</b></span>
+      <span>Connects to: <b>Day 11 — Product Thinking</b></span>
     </div>
   </header>
 
   <section>
-    <div class="section-label">El caso</div>
+    <div class="section-label">The case</div>
     <div class="case-box">
-      <span class="tag">Enunciado</span>
-      <p>"Una empresa quiere implementar un agente de IA que atienda clientes por voz, consulte sistemas internos, ejecute operaciones y transfiera la conversación a un humano cuando sea necesario."</p>
+      <span class="tag">Prompt</span>
+      <p>"A company wants to implement an AI agent that handles customers by voice, queries internal systems, executes operations, and transfers the conversation to a human when necessary."</p>
     </div>
     <div class="timer-row">
-      <span>⏱ 60 min para resolver</span>
-      <span>🎙 Ideal: grabarte hablando, no solo escribir</span>
-      <span>📋 Usa el framework de 16 pasos del Día 06</span>
+      <span>⏱ 60 min to solve</span>
+      <span>🎙 Ideally: record yourself talking, not just writing</span>
+      <span>📋 Use the Day 06 16-step framework</span>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Instrucciones</div>
-    <p>No leas la solución todavía. Pon un timer de 60 minutos y recorre los 16 pasos del Día 06 en voz alta, como si el entrevistador estuviera frente a ti. Dibuja el diagrama en papel. Solo después de terminar (o de que se acabe el tiempo), compara con el enfoque sugerido abajo.</p>
+    <div class="section-label">Instructions</div>
+    <p>Don't read the solution yet. Set a 60-minute timer and walk through Day 06's 16 steps out loud, as if the interviewer were in front of you. Draw the diagram on paper. Only after you finish (or time runs out), compare with the suggested approach below.</p>
   </section>
 
   <section>
-    <div class="section-label">Enfoque sugerido</div>
+    <div class="section-label">Suggested approach</div>
     <details>
-      <summary>Ver la solución completa (los 16 pasos)</summary>
+      <summary>See the full solution (all 16 steps)</summary>
       <ol class="steps" style="margin-top:14px;">
-        <li><b>1. Clarificar</b> "¿Qué tipo de operaciones ejecuta — solo consultas, o también acciones que modifican estado (ej. cancelar un servicio)? ¿Qué canal de voz — call center tradicional o WhatsApp/app?" Asumimos: call center entrante, consultas + acciones de bajo-medio riesgo, con reembolsos/cambios de alto impacto escalando a humano.</li>
-        <li><b>2. Usuarios</b> Clientes finales (llaman por teléfono), agentes humanos de soporte (reciben el handoff), supervisores (auditan calidad de las llamadas).</li>
-        <li><b>3. Objetivos</b> Reducir tiempo de espera y costo por llamada, manteniendo NPS y una tasa de escalamiento a humano &lt;20% (patrón de Product Thinking del Día 19 del plan).</li>
-        <li><b>4. Funcionales</b> Autenticar al llamante, consultar cuenta/pedidos, ejecutar acciones simples (reprogramar, actualizar dato), transferir con contexto a un humano.</li>
-        <li><b>5. No funcionales</b> Latencia de respuesta &lt;1.5s percibida (crítico en voz — silencios largos se sienten como falla), alta disponibilidad 24/7, picos de tráfico en horario comercial.</li>
-        <li><b>6. Restricciones</b> Sistemas legacy de CRM, regulación de grabación de llamadas, el equipo de soporte humano ya opera con un dialer existente.</li>
-        <li><b>7. Arquitectura de alto nivel</b> Teléfono → STT → Agent Runtime → (Tools/RAG) → TTS → Teléfono, con handoff a un humano vía el dialer existente.</li>
-        <li><b>8. Arquitectura del agente</b> El diagrama base del Día 02: Agent Runtime + LLM + Memory (estado de la llamada) + RAG (FAQ/políticas) + Tools (CRM, sistema de reprogramación).</li>
-        <li><b>9. Integraciones</b> CRM vía REST + OAuth2 (Día 03), acciones que modifican estado con idempotency key, transferencia de llamada vía API del proveedor de telefonía.</li>
-        <li><b>10. Datos</b> Estado de la llamada en DynamoDB (Día 08), historial de cliente vía RAG sobre la base de conocimiento, nunca persistir el audio crudo más de lo estrictamente necesario por compliance.</li>
-        <li><b>11. Seguridad</b> Autenticación por voz es más débil que en chat (sin UI visual) — PIN verbal o verificación de 2 factores antes de cualquier acción sensible. Tools de solo lectura sin restricción; tools de escritura con scope mínimo (Día 04).</li>
-        <li><b>12. Resiliencia</b> Si el STT falla o hay ruido excesivo, fallback a "no te escuché bien, ¿puedes repetir?" antes de escalar. Si el LLM está lento, un mensaje de espera evita silencio incómodo (percibido como falla en voz).</li>
-        <li><b>13. Observabilidad</b> Trace por llamada completo (Día 05): transcript, tool calls, decisión de escalar o no, y tiempo en cada etapa del pipeline STT→LLM→TTS.</li>
-        <li><b>14. Escalabilidad</b> El cuello de botella más probable es el proveedor de STT/TTS bajo picos de tráfico — diseñar con múltiples proveedores o colas de espera con estimación de tiempo, no caída del servicio.</li>
-        <li><b>15. Trade-offs</b> Un modelo más grande da mejores respuestas pero más latencia — en voz, la latencia percibida pesa más que en chat, así que se prioriza un modelo más rápido con RAG bien acotado sobre uno más "inteligente" pero lento.</li>
-        <li><b>16. Rollout</b> Piloto con un subconjunto de tipos de llamada de bajo riesgo (consultas de estado), medir tasa de resolución y NPS antes de habilitar acciones que modifican estado.</li>
+        <li><b>1. Clarify</b> "What kind of operations does it execute — queries only, or also state-changing actions (e.g., canceling a service)? What voice channel — a traditional call center or WhatsApp/app?" We assume: inbound call center, queries + low-to-medium-risk actions, with high-impact refunds/changes escalating to a human.</li>
+        <li><b>2. Users</b> End customers (calling in), human support agents (receive the handoff), supervisors (audit call quality).</li>
+        <li><b>3. Objectives</b> Reduce wait time and cost per call, while keeping NPS steady and human escalation under 20% — a concrete KPI, not "use AI."</li>
+        <li><b>4. Functional</b> Authenticate the caller, look up account/orders, execute simple actions (reschedule, update a field), transfer with context to a human.</li>
+        <li><b>5. Non-functional</b> Perceived response latency &lt;1.5s (critical in voice — long silences feel like a failure), high availability 24/7, traffic spikes during business hours.</li>
+        <li><b>6. Constraints</b> Legacy CRM systems, call-recording regulation, the human support team already runs on an existing dialer.</li>
+        <li><b>7. High-level architecture</b> Phone → STT → Agent Runtime → (Tools/RAG) → TTS → Phone, with handoff to a human via the existing dialer.</li>
+        <li><b>8. Agent architecture</b> The Day 02 base diagram: Agent Runtime + LLM + Memory (call state) + RAG (FAQ/policies) + Tools (CRM, rescheduling system).</li>
+        <li><b>9. Integrations</b> CRM via REST + OAuth2 (Day 03), state-changing actions with an idempotency key, call transfer via the telephony provider's API.</li>
+        <li><b>10. Data</b> Call state in DynamoDB (Day 08), customer history via RAG over the knowledge base, never persist raw audio longer than strictly necessary for compliance.</li>
+        <li><b>11. Security</b> Voice authentication is weaker than chat (no visual UI) — a verbal PIN or 2-factor verification before any sensitive action. Unrestricted read-only tools; write tools with minimum scope (Day 04).</li>
+        <li><b>12. Resilience</b> If STT fails or there's excessive noise, fall back to "I didn't quite catch that, can you repeat?" before escalating. If the LLM is slow, a holding message avoids awkward silence (perceived as a failure in voice).</li>
+        <li><b>13. Observability</b> A full per-call trace (Day 05): transcript, tool calls, the escalate-or-not decision, and timing at each stage of the STT→LLM→TTS pipeline.</li>
+        <li><b>14. Scalability</b> The most likely bottleneck is the STT/TTS provider under traffic spikes — design with multiple providers or wait queues with time estimates, not a service outage.</li>
+        <li><b>15. Trade-offs</b> A bigger model gives better answers but more latency — in voice, perceived latency outweighs "smarter but slow," so a faster model with tightly-scoped RAG is prioritized.</li>
+        <li><b>16. Rollout</b> Pilot with a subset of low-risk call types (status queries), measure resolution rate and NPS before enabling state-changing actions.</li>
       </ol>
     </details>
   </section>
 
   <section>
-    <div class="section-label">Consideraciones específicas de voz</div>
-    <div class="analogy"><b>Lo que cambia frente a un canal de chat</b>Latencia percibida (un silencio de 2s se siente como falla, un delay de 2s en chat no), manejo de interrupciones (barge-in: el usuario habla mientras el agente responde), y autenticación sin UI visual. Voice &amp; Multichannel se cubre en profundidad en la página de referencia rápida de temas complementarios del bootcamp.</div>
+    <div class="section-label">Voice-specific considerations</div>
+    <div class="analogy"><b>What's different from a chat channel</b>Perceived latency (a 2s silence feels like a failure, a 2s delay in chat doesn't), handling interruptions (barge-in: the user speaks while the agent is responding), and authentication without a visual UI. Voice &amp; Multichannel is covered in depth in the bootcamp's quick-reference page for complementary topics.</div>
   </section>
 
   <section>
-    <div class="section-label">Diagrama de implementación</div>
-    <h2>El pipeline de voz completo</h2>
-    <p>Componentes reales detrás del diagrama conceptual del enunciado — con la rama de escalamiento a humano.</p>
+    <div class="section-label">Implementation diagram</div>
+    <h2>The full voice pipeline</h2>
+    <p>The real components behind the prompt's conceptual diagram — with the human-escalation branch.</p>
     <figure class="diagram">
-      <svg viewBox="0 0 660 210" role="img" aria-label="Diagrama: el teléfono envía audio a Speech-to-Text, que pasa el texto al Agent Runtime; el Agent Runtime consulta CRM y FAQ, genera una respuesta que Text-to-Speech convierte de vuelta en audio hacia el teléfono, o escala a un humano si es necesario.">
+      <svg viewBox="0 0 660 210" role="img" aria-label="Diagram: the phone sends audio to Speech-to-Text, which passes the text to the Agent Runtime; the Agent Runtime queries CRM and FAQ, generates a response that Text-to-Speech converts back into audio for the phone, or escalates to a human if needed.">
         <defs>
           <marker id="d10arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker>
         </defs>
 
         <rect x="10" y="20" width="110" height="40" rx="3" class="dbox"/>
-        <text x="65" y="44" text-anchor="middle" class="dtext">Teléfono</text>
+        <text x="65" y="44" text-anchor="middle" class="dtext">Phone</text>
         <line x1="120" y1="40" x2="148" y2="40" class="darrow" marker-end="url(#d10arrow)"/>
 
         <rect x="150" y="20" width="110" height="40" rx="3" class="dbox"/>
@@ -211,26 +211,26 @@
         <text x="525" y="44" text-anchor="middle" class="dtext">Text-to-Speech</text>
 
         <polyline points="525,60 525,95 65,95 65,60" class="darrow" marker-end="url(#d10arrow)"/>
-        <text x="295" y="90" text-anchor="middle" class="dtext-muted">audio de respuesta</text>
+        <text x="295" y="90" text-anchor="middle" class="dtext-muted">response audio</text>
 
         <line x1="365" y1="60" x2="365" y2="128" class="darrow" marker-end="url(#d10arrow)"/>
-        <text x="380" y="112" class="dtext-muted">consulta CRM/FAQ</text>
+        <text x="380" y="112" class="dtext-muted">queries CRM/FAQ</text>
         <rect x="290" y="130" width="150" height="40" rx="3" class="dbox"/>
         <text x="365" y="154" text-anchor="middle" class="dtext">RAG + Tools</text>
 
         <line x1="410" y1="60" x2="500" y2="128" class="darrow-dashed" marker-end="url(#d10arrow)"/>
-        <text x="470" y="112" class="dtext-muted">si escala</text>
+        <text x="470" y="112" class="dtext-muted">if escalated</text>
         <rect x="470" y="130" width="150" height="40" rx="3" class="dbox"/>
-        <text x="545" y="154" text-anchor="middle" class="dtext">Handoff humano</text>
+        <text x="545" y="154" text-anchor="middle" class="dtext">Human handoff</text>
       </svg>
-      <figcaption>El handoff lleva transcript + intención detectada — el humano nunca arranca desde cero.</figcaption>
+      <figcaption>The handoff carries the transcript + detected intent — the human never starts from zero.</figcaption>
     </figure>
   </section>
 
   <section>
-    <div class="section-label">Ejemplo de implementación</div>
-    <h2>Manejo de barge-in, en código</h2>
-    <p>El caso específico de voz que no existe en chat: cancelar el audio que se está reproduciendo en cuanto el usuario empieza a hablar encima.</p>
+    <div class="section-label">Implementation example</div>
+    <h2>Handling barge-in, in code</h2>
+    <p>The voice-specific case that doesn't exist in chat: canceling the audio currently playing the moment the user starts talking over it.</p>
     <div class="code-block">
       <div class="code-head"><span>voice_session.py</span><span class="lang">python</span></div>
       <pre><span class="code-kw">class</span> VoiceSession:
@@ -239,8 +239,8 @@
         self.tts_task: asyncio.Task | <span class="code-kw">None</span> = <span class="code-kw">None</span>
 
     <span class="code-kw">async def</span> on_audio_chunk(self, chunk: bytes):
-        <span class="code-comment"># Si el agente está hablando y llega audio nuevo del usuario,</span>
-        <span class="code-comment"># es barge-in: corta la reproducción YA, no esperes a que termine.</span>
+        <span class="code-comment"># If the agent is speaking and new user audio arrives,</span>
+        <span class="code-comment"># it's barge-in: stop playback NOW, don't wait for it to finish.</span>
         <span class="code-kw">if</span> self.tts_task <span class="code-kw">and not</span> self.tts_task.done():
             self.tts_task.cancel()
             <span class="code-kw">await</span> self.telephony.stop_playback(self.call_id)
@@ -255,25 +255,25 @@
         audio_stream = <span class="code-kw">await</span> self.tts.synthesize(text)
         <span class="code-kw">await</span> self.telephony.play(self.call_id, audio_stream)</pre>
     </div>
-    <p style="font-size:13px; color:var(--muted); margin-top:8px;">La cancelación explícita del <code>tts_task</code> es lo que evita que el agente "siga hablando" sobre el usuario — el error de UX más notorio en agentes de voz mal implementados.</p>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">Explicitly canceling <code>tts_task</code> is what keeps the agent from "talking over" the user — the most noticeable UX bug in poorly implemented voice agents.</p>
   </section>
 
   <section>
-    <div class="section-label">Rúbrica de autoevaluación</div>
-    <p style="color:var(--muted); font-size:13px; margin-top:-6px;">Califícate del 1 (no lo hice) al 5 (lo hice con solidez) en cada criterio — honestidad, no autocomplacencia.</p>
+    <div class="section-label">Self-assessment rubric</div>
+    <p style="color:var(--muted); font-size:13px; margin-top:-6px;">Rate yourself 1 (didn't do it) to 5 (did it solidly) on each criterion — be honest, not self-congratulatory.</p>
     <div class="table-wrap">
       <table id="rubricTable">
-        <thead><tr><th>Criterio</th><th>1-5</th></tr></thead>
+        <thead><tr><th>Criterion</th><th>1-5</th></tr></thead>
         <tbody>
-          <tr><td>Clarifiqué el problema antes de diseñar</td><td class="score-cell"><select data-crit="c1"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
-          <tr><td>Cubrí requisitos funcionales Y no funcionales explícitamente</td><td class="score-cell"><select data-crit="c2"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
-          <tr><td>Dibujé la arquitectura del agente (Runtime/LLM/Memory/RAG/Tools)</td><td class="score-cell"><select data-crit="c3"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
-          <tr><td>Diseñé integraciones concretas con protocolo y autorización</td><td class="score-cell"><select data-crit="c4"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
-          <tr><td>Aborde seguridad específica del canal (voz)</td><td class="score-cell"><select data-crit="c5"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
-          <tr><td>Cubrí resiliencia y qué pasa cuando algo falla</td><td class="score-cell"><select data-crit="c6"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
-          <tr><td>Mencioné observabilidad concreta, no genérica</td><td class="score-cell"><select data-crit="c7"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
-          <tr><td>Nombré al menos un trade-off real y lo justifiqué</td><td class="score-cell"><select data-crit="c8"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
-          <tr><td>Propuse un rollout por fases, no todo de una vez</td><td class="score-cell"><select data-crit="c9"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>I clarified the problem before designing</td><td class="score-cell"><select data-crit="c1"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>I explicitly covered functional AND non-functional requirements</td><td class="score-cell"><select data-crit="c2"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>I drew the agent's architecture (Runtime/LLM/Memory/RAG/Tools)</td><td class="score-cell"><select data-crit="c3"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>I designed concrete integrations with protocol and authorization</td><td class="score-cell"><select data-crit="c4"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>I addressed channel-specific (voice) security</td><td class="score-cell"><select data-crit="c5"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>I covered resilience and what happens when something fails</td><td class="score-cell"><select data-crit="c6"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>I mentioned concrete, not generic, observability</td><td class="score-cell"><select data-crit="c7"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>I named at least one real trade-off and justified it</td><td class="score-cell"><select data-crit="c8"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>I proposed a phased rollout, not all at once</td><td class="score-cell"><select data-crit="c9"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
         </tbody>
       </table>
     </div>
@@ -281,30 +281,30 @@
   </section>
 
   <section>
-    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <div class="section-label">Related interview questions</div>
     <ul class="iq-list">
-      <li>¿Por qué la latencia importa más en un canal de voz que en uno de chat?</li>
-      <li>¿Cómo autenticarías a un usuario por teléfono sin depender de una UI visual?</li>
-      <li>¿Qué pasa si el sistema de Speech-to-Text falla a mitad de la llamada?</li>
-      <li>¿Cómo diseñarías el handoff a un humano para que no pierda el contexto de la conversación?</li>
-      <li>¿Qué mides para decidir si el piloto está listo para habilitar acciones de mayor riesgo?</li>
+      <li>Why does latency matter more on a voice channel than a chat one?</li>
+      <li>How would you authenticate a user over the phone without relying on a visual UI?</li>
+      <li>What happens if the Speech-to-Text system fails mid-call?</li>
+      <li>How would you design the handoff to a human so it doesn't lose the conversation's context?</li>
+      <li>What do you measure to decide the pilot is ready to enable higher-risk actions?</li>
     </ul>
   </section>
 
   <section>
-    <div class="section-label">Checklist de cierre — Semana 2</div>
+    <div class="section-label">Closing checklist — Week 2</div>
     <div class="checklist" id="checklist">
-      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Resolví el caso completo bajo tiempo (60 min) antes de ver la solución.</label></div>
-      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Completé la rúbrica con honestidad, no autocomplacencia.</label></div>
-      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Identifiqué al menos 2 criterios donde necesito repasar (Días 06-09).</label></div>
-      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Completé la Semana 2 completa (Días 06-10).</label></div>
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">I solved the full case under time (60 min) before looking at the solution.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">I filled out the rubric honestly, not self-congratulatingly.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">I identified at least 2 criteria where I need to review (Days 06-09).</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">I completed all of Week 2 (Days 06-10).</label></div>
     </div>
   </section>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
-    <span>Día 10 de 14 · fin Semana 2</span>
-    <a href="day-11.html">Día 11 &rarr;</a>
+    <a href="../index.html">&larr; Hub</a>
+    <span>Day 10 of 14 · end of Week 2</span>
+    <a href="day-11.html">Day 11 &rarr;</a>
   </div>
 </div>
 
@@ -316,7 +316,7 @@
   function updateTotal(){
     let total = 0, answered = 0;
     selects.forEach(s => { const v = parseInt(s.value); if(!isNaN(v)){ total += v; answered++; } });
-    document.getElementById('rubricTotal').textContent = `Total: ${total} / 45  (${answered}/9 criterios calificados)`;
+    document.getElementById('rubricTotal').textContent = `Total: ${total} / 45  (${answered}/9 criteria scored)`;
   }
   const rState = loadRubric();
   selects.forEach(s => {

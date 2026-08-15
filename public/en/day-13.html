@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,42 +91,42 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/day-13.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../day-13.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Semana 3 · Día 13 · FDE, Cliente &amp; Mocks</div>
+    <div class="eyebrow">Week 3 · Day 13 · FDE, Customer &amp; Mocks</div>
     <div class="title-row">
       <span class="day-numeral">13</span>
       <h1>Behavioral Interview</h1>
     </div>
-    <p class="sub">Construye hoy tu banco de 8 historias reales — este es el único día donde el "contenido" lo escribes tú. Todo se guarda en este navegador.</p>
+    <p class="sub">Build your bank of 8 real stories today — this is the one day where you write the "content." Everything is saved in this browser.</p>
     <div class="meta-row">
       <span><b>~120 min</b></span>
-      <span>Prerrequisito: <b>Día 12</b></span>
-      <span>Conecta con: <b>Día 14 — Mocks</b></span>
+      <span>Prerequisite: <b>Day 12</b></span>
+      <span>Connects to: <b>Day 14 — Mocks</b></span>
     </div>
   </header>
 
   <section>
-    <div class="section-label">Objetivo del día</div>
-    <p>Nunca improvises una historia de comportamiento en el momento — reconstruyes peor bajo presión. Hoy escribes las 8 historias que vas a reutilizar (adaptándolas) para casi cualquier pregunta behavioral que te hagan.</p>
+    <div class="section-label">Today's objective</div>
+    <p>Never improvise a behavioral story on the spot — you reconstruct it worse under pressure. Today you write the 8 stories you'll reuse (adapting them) for almost any behavioral question you get asked.</p>
   </section>
 
   <section>
-    <div class="section-label">Formato: STAR + Architecture Context</div>
+    <div class="section-label">Format: STAR + Architecture Context</div>
     <div class="star-legend">
       <span>Situation</span><span>Task</span><span>Action</span><span>Result</span><span>+ Architecture Context</span>
     </div>
-    <p>El "+" es lo que diferencia una historia FDE de una historia genérica: además del STAR clásico, incluye el detalle técnico/arquitectónico específico — qué decisión tomaste, con qué trade-off. Sin eso, la historia suena a cualquier candidato; con eso, suena a ti.</p>
+    <p>The "+" is what sets an FDE story apart from a generic one: on top of classic STAR, it includes the specific technical/architectural detail — what decision you made, with what trade-off. Without that, the story sounds like any candidate's; with it, it sounds like yours.</p>
   </section>
 
   <section>
-    <div class="section-label">Tu banco de historias <span id="progressLabel">0/8 con contenido</span></div>
+    <div class="section-label">Your story bank <span id="progressLabel">0/8 with content</span></div>
     <div id="storyContainer"></div>
   </section>
 
   <section>
-    <div class="section-label">Preguntas de entrevista que estas historias cubren</div>
+    <div class="section-label">Interview questions these stories cover</div>
     <ul class="iq-list">
       <li>Why this company? Why this role? Why AI? Why now?</li>
       <li>How do you work with customers?</li>
@@ -137,32 +137,32 @@
   </section>
 
   <section>
-    <div class="section-label">Checklist de cierre</div>
+    <div class="section-label">Closing checklist</div>
     <div class="checklist" id="checklist">
-      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Escribí las 8 historias con detalle real (no genérico).</label></div>
-      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Cada historia incluye el "Architecture Context" — la decisión técnica específica.</label></div>
-      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Practiqué contar al menos 3 historias en voz alta, en menos de 2 minutos cada una.</label></div>
-      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Puedo adaptar cada historia a más de una pregunta posible.</label></div>
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">I wrote all 8 stories with real (not generic) detail.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Each story includes the "Architecture Context" — the specific technical decision.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">I practiced telling at least 3 stories out loud, in under 2 minutes each.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">I can adapt each story to more than one possible question.</label></div>
     </div>
   </section>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
-    <span>Día 13 de 14</span>
-    <a href="day-14.html">Día 14 &rarr;</a>
+    <a href="../index.html">&larr; Hub</a>
+    <span>Day 13 of 14</span>
+    <a href="day-14.html">Day 14 &rarr;</a>
   </div>
 </div>
 
 <script>
   const STORIES = [
-    {id:'arch', title:'Decisión arquitectónica difícil', hint:'Un momento donde tuviste que elegir entre dos enfoques válidos, bajo presión de tiempo o de recursos.'},
-    {id:'wrong', title:'Decisión que salió mal', hint:'No la busques perfecta — el punto es mostrar cómo lo detectaste y corregiste, no que nunca te equivocas.'},
-    {id:'lead', title:'Liderazgo sin autoridad formal', hint:'Cuando influiste en una decisión o dirección de equipo sin ser el responsable jerárquico.'},
-    {id:'conflict', title:'Conflicto técnico', hint:'Un desacuerdo real con un colega o stakeholder sobre un enfoque técnico, y cómo se resolvió.'},
-    {id:'incident', title:'Incidente de producción', hint:'Qué pasó, cómo lo comunicaste mientras ocurría, y qué cambió después para que no se repitiera.'},
-    {id:'ambiguous', title:'Problema ambiguo', hint:'Un caso donde el problema no venía definido y tuviste que estructurarlo tú (piensa en el framework del Día 09).'},
-    {id:'learn', title:'Aprendizaje rápido', hint:'Algo que tuviste que aprender en poco tiempo para poder avanzar en un proyecto.'},
-    {id:'customer', title:'Manejo de expectativas de clientes', hint:'Un momento donde tuviste que alinear lo que un cliente/stakeholder esperaba con lo que era realista entregar.'},
+    {id:'arch', title:'Difficult architecture decision', hint:'A moment where you had to choose between two valid approaches, under time or resource pressure.'},
+    {id:'wrong', title:'A decision that went wrong', hint:"Don't look for a perfect one — the point is showing how you caught and fixed it, not that you never make mistakes."},
+    {id:'lead', title:'Leadership without formal authority', hint:'When you influenced a decision or a team direction without being the person in charge.'},
+    {id:'conflict', title:'Technical conflict', hint:'A real disagreement with a colleague or stakeholder over a technical approach, and how it was resolved.'},
+    {id:'incident', title:'Production incident', hint:'What happened, how you communicated it while it was happening, and what changed afterward so it wouldn’t repeat.'},
+    {id:'ambiguous', title:'Ambiguous problem', hint:'A case where the problem wasn’t defined and you had to structure it yourself (think of the Day 09 framework).'},
+    {id:'learn', title:'Fast learning', hint:'Something you had to learn in a short time to move a project forward.'},
+    {id:'customer', title:'Managing customer expectations', hint:'A moment where you had to align what a customer/stakeholder expected with what was realistic to deliver.'},
   ];
 
   const FIELDS = [
@@ -186,7 +186,7 @@
     const fieldsHtml = FIELDS.map(f => `
       <div class="star-field">
         <label for="${story.id}-${f.key}">${f.label}</label>
-        <textarea id="${story.id}-${f.key}" data-story="${story.id}" data-field="${f.key}" placeholder="Escribe aquí..."></textarea>
+        <textarea id="${story.id}-${f.key}" data-story="${story.id}" data-field="${f.key}" placeholder="Write here..."></textarea>
       </div>
     `).join('');
     card.innerHTML = `
@@ -195,7 +195,7 @@
       </div>
       <p class="story-hint">${story.hint}</p>
       <div class="star-fields">${fieldsHtml}</div>
-      <div class="save-status" id="status-${story.id}">Guardado ✓</div>
+      <div class="save-status" id="status-${story.id}">Saved ✓</div>
     `;
     container.appendChild(card);
   });
@@ -207,7 +207,7 @@
       const entry = data[s.id];
       if (entry && Object.values(entry).some(v => v && v.trim().length > 0)) withContent++;
     });
-    document.getElementById('progressLabel').textContent = `${withContent}/8 con contenido`;
+    document.getElementById('progressLabel').textContent = `${withContent}/8 with content`;
   }
 
   document.querySelectorAll('textarea[data-story]').forEach(ta => {

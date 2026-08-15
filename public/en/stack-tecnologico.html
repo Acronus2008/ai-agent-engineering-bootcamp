@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
-<title>Stack Tecnológico</title>
+<title>Technology Stack</title>
 <style>
   :root{
     --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
@@ -103,33 +103,33 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/stack-tecnologico.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../stack-tecnologico.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Referencia · AI Agent Engineering Bootcamp</div>
-    <h1>Stack Tecnológico</h1>
-    <p class="sub">Python, Go, Rust, C++ y Java no compiten entre sí — cada uno gana en una capa distinta de la arquitectura de un agente enterprise. Esta es la guía de decisión.</p>
+    <div class="eyebrow">Reference · AI Agent Engineering Bootcamp</div>
+    <h1>Technology Stack</h1>
+    <p class="sub">Python, Go, Rust, C++, and Java don't compete with each other — each one wins at a different layer of an enterprise agent's architecture. This is the decision guide.</p>
     <div class="toc">
-      <a href="#mapa">Mapa por capa</a>
-      <a href="#tabla">Tabla de decisión</a>
-      <a href="#perfiles">Perfiles de lenguaje</a>
-      <a href="#comparacion">Comparación de código</a>
-      <a href="#reglas">Reglas rápidas</a>
+      <a href="#mapa">Layer map</a>
+      <a href="#tabla">Decision table</a>
+      <a href="#perfiles">Language profiles</a>
+      <a href="#comparacion">Code comparison</a>
+      <a href="#reglas">Quick rules</a>
     </div>
   </header>
 
   <section id="mapa">
-    <div class="section-label">Mapa por capa</div>
-    <h2>Dónde encaja cada lenguaje en el diagrama del Día 02</h2>
+    <div class="section-label">Layer map</div>
+    <h2>Where each language fits in the Day 02 diagram</h2>
     <figure class="diagram">
-      <svg viewBox="0 0 640 300" role="img" aria-label="Diagrama de capas de la arquitectura de un agente, de arriba a abajo: canal de voz en Rust o C++, Agent Runtime en Python con Go como alternativa, capa de tools/API en Go o Java, ingesta de RAG en Java o Go, e integración enterprise legacy en Java.">
+      <svg viewBox="0 0 640 300" role="img" aria-label="Layer diagram of an agent's architecture, top to bottom: voice channel in Rust or C++, Agent Runtime in Python with Go as an alternative, tool/API layer in Go or Java, RAG ingestion in Java or Go, and legacy enterprise integration in Java.">
         <rect x="10" y="20" width="620" height="40" rx="3" class="dbox"/>
-        <text x="24" y="45" class="dtext">Canal de voz (audio real-time)</text>
+        <text x="24" y="45" class="dtext">Voice channel (real-time audio)</text>
         <rect x="470" y="28" width="150" height="24" rx="12" class="dpill"/>
         <text x="545" y="44" text-anchor="middle" class="dtext-pill">Rust / C++</text>
 
         <rect x="10" y="72" width="620" height="40" rx="3" class="dbox"/>
-        <text x="24" y="97" class="dtext">Agent Runtime (orquestación)</text>
+        <text x="24" y="97" class="dtext">Agent Runtime (orchestration)</text>
         <rect x="440" y="80" width="180" height="24" rx="12" class="dpill"/>
         <text x="530" y="96" text-anchor="middle" class="dtext-pill">Python (Go alt.)</text>
 
@@ -139,83 +139,83 @@
         <text x="545" y="148" text-anchor="middle" class="dtext-pill">Go / Java</text>
 
         <rect x="10" y="176" width="620" height="40" rx="3" class="dbox"/>
-        <text x="24" y="201" class="dtext">Ingesta RAG (streaming/CDC)</text>
+        <text x="24" y="201" class="dtext">RAG ingestion (streaming/CDC)</text>
         <rect x="470" y="184" width="150" height="24" rx="12" class="dpill"/>
         <text x="545" y="200" text-anchor="middle" class="dtext-pill">Java / Go</text>
 
         <rect x="10" y="228" width="620" height="40" rx="3" class="dbox"/>
-        <text x="24" y="253" class="dtext">Integración enterprise (legacy)</text>
+        <text x="24" y="253" class="dtext">Enterprise integration (legacy)</text>
         <rect x="470" y="236" width="150" height="24" rx="12" class="dpill"/>
         <text x="545" y="252" text-anchor="middle" class="dtext-pill">Java</text>
       </svg>
-      <figcaption>No es "el equipo elige un lenguaje" — es "cada capa elige el suyo", y el agente cruza varias.</figcaption>
+      <figcaption>It's not "the team picks one language" — it's "each layer picks its own," and the agent crosses several.</figcaption>
     </figure>
   </section>
 
   <section id="tabla">
-    <div class="section-label">Tabla de decisión</div>
-    <h2>Cuándo cambiar del default</h2>
+    <div class="section-label">Decision table</div>
+    <h2>When to switch from the default</h2>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Capa</th><th>Default</th><th>Alternativa</th><th>Cuándo cambia</th></tr></thead>
+        <thead><tr><th>Layer</th><th>Default</th><th>Alternative</th><th>When it changes</th></tr></thead>
         <tbody>
-          <tr><td>Agent Runtime</td><td>Python</td><td>Go</td><td>Simplicidad operativa y throughput de sesiones concurrentes pesan más que velocidad de iteración</td></tr>
-          <tr><td>Tool / API layer</td><td>Python (FastAPI)</td><td>Go / Java</td><td>Alto volumen de tool calls, o el sistema wrapeado ya vive en el ecosistema Java</td></tr>
-          <tr><td>Ingesta RAG (streaming)</td><td>Java / Scala</td><td>Go</td><td>Equipo sin experiencia JVM y consumers relativamente simples</td></tr>
-          <tr><td>Voice / audio real-time</td><td>Rust</td><td>C++</td><td>Ya existe infraestructura de codecs/DSP nativa en C++ para integrar</td></tr>
-          <tr><td>Integración legacy (SOAP/mainframe)</td><td>Java</td><td>Python (zeep)</td><td>El sistema ya expone REST/SOAP simple, sin necesidad de conectores enterprise</td></tr>
-          <tr><td>Seguridad crítica / cripto</td><td>Rust</td><td>Go / Java</td><td>El ecosistema crypto ya maduro del lenguaje existente cubre el caso de uso</td></tr>
+          <tr><td>Agent Runtime</td><td>Python</td><td>Go</td><td>Operational simplicity and concurrent-session throughput matter more than iteration speed</td></tr>
+          <tr><td>Tool / API layer</td><td>Python (FastAPI)</td><td>Go / Java</td><td>High volume of tool calls, or the wrapped system already lives in the Java ecosystem</td></tr>
+          <tr><td>RAG ingestion (streaming)</td><td>Java / Scala</td><td>Go</td><td>Team without JVM experience and relatively simple consumers</td></tr>
+          <tr><td>Voice / real-time audio</td><td>Rust</td><td>C++</td><td>Native codec/DSP infrastructure already exists in C++ to integrate with</td></tr>
+          <tr><td>Legacy integration (SOAP/mainframe)</td><td>Java</td><td>Python (zeep)</td><td>The system already exposes simple REST/SOAP, no need for enterprise connectors</td></tr>
+          <tr><td>Security-critical / crypto</td><td>Rust</td><td>Go / Java</td><td>The existing language's mature crypto ecosystem already covers the use case</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
   <section id="perfiles">
-    <div class="section-label">Perfiles de lenguaje</div>
-    <h2>Fortalezas, debilidades, mejor uso</h2>
+    <div class="section-label">Language profiles</div>
+    <h2>Strengths, weaknesses, best use</h2>
     <div class="lang-grid">
       <div class="lang-card">
         <h3>Python <span class="lang-tag">Agent Runtime · RAG</span></h3>
-        <div class="lang-field"><b>Fortalezas</b>Ecosistema de IA sin rival (SDKs, LangChain, faiss/numpy), velocidad de iteración máxima.</div>
-        <div class="lang-field"><b>Debilidades</b>GIL limita paralelismo real CPU-bound; latencia menos predecible (GC); mayor footprint de memoria por request.</div>
-        <div class="lang-field"><b>Mejor para</b>Agent Runtime, pipelines de RAG, prototipado, glue code.</div>
-        <div class="lang-field"><b>Ramp-up</b>Bajo — es el default razonable si no hay una razón específica para otra cosa.</div>
+        <div class="lang-field"><b>Strengths</b>Unrivaled AI ecosystem (SDKs, LangChain, faiss/numpy), maximum iteration speed.</div>
+        <div class="lang-field"><b>Weaknesses</b>GIL limits real CPU-bound parallelism; less predictable latency (GC); larger memory footprint per request.</div>
+        <div class="lang-field"><b>Best for</b>Agent Runtime, RAG pipelines, prototyping, glue code.</div>
+        <div class="lang-field"><b>Ramp-up</b>Low — it's the reasonable default if there's no specific reason for something else.</div>
       </div>
       <div class="lang-card">
         <h3>Go <span class="lang-tag">API layer · Control plane</span></h3>
-        <div class="lang-field"><b>Fortalezas</b>Goroutines baratas (miles de sesiones concurrentes sin esfuerzo), binario único fácil de desplegar, GC de pausas cortas.</div>
-        <div class="lang-field"><b>Debilidades</b>Ecosistema de IA/ML mucho más débil que Python; menos expresivo para lógica de negocio compleja.</div>
-        <div class="lang-field"><b>Mejor para</b>API Gateway custom, control plane de alto tráfico, sidecars, consumers simples.</div>
-        <div class="lang-field"><b>Ramp-up</b>Medio — sintaxis simple, pero el modelo de concurrencia toma tiempo en internalizarse bien.</div>
+        <div class="lang-field"><b>Strengths</b>Cheap goroutines (thousands of concurrent sessions with no effort), single binary easy to deploy, short-pause GC.</div>
+        <div class="lang-field"><b>Weaknesses</b>Much weaker AI/ML ecosystem than Python; less expressive for complex business logic.</div>
+        <div class="lang-field"><b>Best for</b>Custom API Gateway, high-traffic control plane, sidecars, simple consumers.</div>
+        <div class="lang-field"><b>Ramp-up</b>Medium — simple syntax, but the concurrency model takes time to internalize well.</div>
       </div>
       <div class="lang-card">
         <h3>Rust <span class="lang-tag">Voice · Real-time</span></h3>
-        <div class="lang-field"><b>Fortalezas</b>Sin GC (latencia predecible), memory-safety sin overhead de runtime — ideal para el hot path de audio.</div>
-        <div class="lang-field"><b>Debilidades</b>Curva de aprendizaje alta (borrow checker), ciclos de desarrollo más lentos, ecosistema enterprise aún creciendo.</div>
-        <div class="lang-field"><b>Mejor para</b>Pipelines de audio real-time, componentes de seguridad/cripto, cualquier hot path con latencia dura.</div>
-        <div class="lang-field"><b>Ramp-up</b>Alto — inviértelo solo donde la latencia predecible es un requisito real, no un "nice to have".</div>
+        <div class="lang-field"><b>Strengths</b>No GC (predictable latency), memory-safety with no runtime overhead — ideal for the audio hot path.</div>
+        <div class="lang-field"><b>Weaknesses</b>Steep learning curve (borrow checker), slower development cycles, enterprise ecosystem still growing.</div>
+        <div class="lang-field"><b>Best for</b>Real-time audio pipelines, security/crypto components, any hot path with hard latency requirements.</div>
+        <div class="lang-field"><b>Ramp-up</b>High — invest in it only where predictable latency is a real requirement, not a "nice to have."</div>
       </div>
       <div class="lang-card">
-        <h3>C++ <span class="lang-tag">Infra nativa existente</span></h3>
-        <div class="lang-field"><b>Fortalezas</b>Control total de memoria/hardware, décadas de librerías maduras de codecs/DSP/motores de inferencia optimizados.</div>
-        <div class="lang-field"><b>Debilidades</b>Gestión manual de memoria = superficie de bugs de seguridad; tooling y builds más pesados; menor productividad.</div>
-        <div class="lang-field"><b>Mejor para</b>Integrar con infraestructura nativa ya existente. Para código nuevo, Rust suele ganar la comparación.</div>
-        <div class="lang-field"><b>Ramp-up</b>Alto — y el riesgo de bugs de memoria es real incluso con experiencia.</div>
+        <h3>C++ <span class="lang-tag">Existing native infra</span></h3>
+        <div class="lang-field"><b>Strengths</b>Full control of memory/hardware, decades of mature codec/DSP/inference-engine libraries, already optimized.</div>
+        <div class="lang-field"><b>Weaknesses</b>Manual memory management = security bug surface; heavier tooling and builds; lower productivity.</div>
+        <div class="lang-field"><b>Best for</b>Integrating with already-existing native infrastructure. For new code, Rust usually wins the comparison.</div>
+        <div class="lang-field"><b>Ramp-up</b>High — and the risk of memory bugs is real even with experience.</div>
       </div>
     </div>
     <div class="lang-card" style="margin-top:16px;">
-      <h3>Java / Spring Boot <span class="lang-tag">Integración enterprise</span></h3>
-      <div class="lang-field"><b>Fortalezas</b>Ecosistema enterprise maduro (conectores SAP, Oracle, mainframes, colas), throughput sólido en JVM, tooling de observabilidad de primer nivel.</div>
-      <div class="lang-field"><b>Debilidades</b>Más verboso; cold start lento si se usa en Lambda; footprint de memoria mayor que Go para cargas equivalentes.</div>
-      <div class="lang-field"><b>Mejor para</b>Capa de integración con sistemas legacy, y en general cuando el equipo ya vive en el ecosistema JVM — coincide con tu background existente de backend.</div>
-      <div class="lang-field"><b>Ramp-up</b>Bajo para ti específicamente, dado tu stack de Java/Spring Boot ya consolidado.</div>
+      <h3>Java / Spring Boot <span class="lang-tag">Enterprise integration</span></h3>
+      <div class="lang-field"><b>Strengths</b>Mature enterprise ecosystem (SAP, Oracle, mainframe, queue connectors), solid JVM throughput, first-class observability tooling.</div>
+      <div class="lang-field"><b>Weaknesses</b>More verbose; slow cold start if used on Lambda; larger memory footprint than Go for equivalent loads.</div>
+      <div class="lang-field"><b>Best for</b>Legacy-system integration layer, and generally when the team already lives in the JVM ecosystem — matches your existing backend background.</div>
+      <div class="lang-field"><b>Ramp-up</b>Low for you specifically, given your already-solid Java/Spring Boot stack.</div>
     </div>
   </section>
 
   <section id="comparacion">
-    <div class="section-label">Comparación de código</div>
-    <h2>El mismo rate limiter, dos modelos de concurrencia</h2>
-    <p>No es que uno esté "mal escrito" — es que Go expresa naturalmente lo que en Python necesitarías <code>asyncio</code> o un proceso aparte para lograr a la misma escala.</p>
+    <div class="section-label">Code comparison</div>
+    <h2>The same rate limiter, two concurrency models</h2>
+    <p>It's not that one is "badly written" — it's that Go naturally expresses what in Python you'd need <code>asyncio</code> or a separate process to achieve at the same scale.</p>
     <div class="code-compare">
       <div class="code-block">
         <div class="code-head"><span>rate_limiter.py</span><span class="lang">python</span></div>
@@ -227,8 +227,8 @@
         self.tokens = capacity
         self.refill_rate = refill_rate
         self.last = time.monotonic()
-        self.lock = threading.Lock()  <span class="code-comment"># necesario: GIL no</span>
-                                       <span class="code-comment"># protege secciones compuestas</span>
+        self.lock = threading.Lock()  <span class="code-comment"># needed: the GIL doesn't</span>
+                                       <span class="code-comment"># protect compound sections</span>
 
     <span class="code-kw">def</span> allow(self) -> bool:
         <span class="code-kw">with</span> self.lock:
@@ -276,29 +276,29 @@
 	}
 	<span class="code-kw">return</span> <span class="code-kw">false</span>
 }
-<span class="code-comment">// miles de goroutines pueden llamar Allow()</span>
-<span class="code-comment">// concurrentemente con overhead mínimo</span></pre>
+<span class="code-comment">// thousands of goroutines can call Allow()</span>
+<span class="code-comment">// concurrently with minimal overhead</span></pre>
       </div>
     </div>
-    <p style="font-size:13px; color:var(--muted); margin-top:10px;">La lógica es idéntica — la diferencia real aparece cuando este limiter atiende miles de llamadas concurrentes: las goroutines de Go cuestan ~2KB cada una; los threads de Python (o el event loop de asyncio) tienen más overhead o más complejidad de coordinación.</p>
+    <p style="font-size:13px; color:var(--muted); margin-top:10px;">The logic is identical — the real difference shows up when this limiter serves thousands of concurrent calls: Go's goroutines cost ~2KB each; Python's threads (or the asyncio event loop) carry more overhead or more coordination complexity.</p>
   </section>
 
   <section id="reglas">
-    <div class="section-label">Reglas rápidas</div>
+    <div class="section-label">Quick rules</div>
     <div class="rule-box">
       <ul>
-        <li><b>Python</b> por defecto en todo lo que sea orquestación, RAG o glue — donde la velocidad de iteración y el ecosistema de IA importan más que la latencia de milisegundos.</li>
-        <li><b>Go</b> cuando la capa necesita manejar mucha concurrencia con operación simple — API layer, control plane, sidecars.</li>
-        <li><b>Rust</b> solo donde la latencia predecible es un requisito real y duro — audio real-time, criptografía, hot paths.</li>
-        <li><b>C++</b> cuando ya existe infraestructura nativa que integrar — no como primera opción para código nuevo.</li>
-        <li><b>Java</b> para integración enterprise y en cualquier capa donde tu equipo ya vive en el ecosistema JVM.</li>
+        <li><b>Python</b> by default for anything that's orchestration, RAG, or glue — where iteration speed and the AI ecosystem matter more than millisecond latency.</li>
+        <li><b>Go</b> when the layer needs to handle heavy concurrency with simple operations — API layer, control plane, sidecars.</li>
+        <li><b>Rust</b> only where predictable latency is a real, hard requirement — real-time audio, cryptography, hot paths.</li>
+        <li><b>C++</b> when native infrastructure already exists to integrate with — not the first choice for new code.</li>
+        <li><b>Java</b> for enterprise integration and any layer where your team already lives in the JVM ecosystem.</li>
       </ul>
     </div>
   </section>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
-    <span>Stack Tecnológico</span>
+    <a href="../index.html">&larr; Hub</a>
+    <span>Technology Stack</span>
   </div>
 </div>
 

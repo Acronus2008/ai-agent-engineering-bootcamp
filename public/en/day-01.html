@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -157,123 +157,123 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/day-01.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../day-01.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Semana 1 · Día 01 · AI Agents &amp; Enterprise Architecture</div>
+    <div class="eyebrow">Week 1 · Day 01 · AI Agents &amp; Enterprise Architecture</div>
     <div class="title-row">
       <span class="day-numeral">01</span>
       <h1>Enterprise AI Fundamentals</h1>
     </div>
-    <p class="sub">Qué diferencia a un agente enterprise de un chatbot: los bloques que vas a reconocer en cada arquitectura que veas de aquí en adelante.</p>
+    <p class="sub">What separates an enterprise agent from a chatbot: the building blocks you'll recognize in every architecture from here on.</p>
     <div class="meta-row">
       <span><b>~90 min</b></span>
-      <span>Prerrequisito: <b>ninguno</b></span>
-      <span>Conecta con: <b>Día 02 — Arquitectura de Agents</b></span>
+      <span>Prerequisite: <b>none</b></span>
+      <span>Connects to: <b>Day 02 — Agent Architecture</b></span>
     </div>
   </header>
 
   <section>
-    <div class="section-label">Objetivo del día</div>
-    <p>Al terminar hoy deberías poder explicar, sin apoyo, <b>los 12 conceptos base</b> de un sistema de IA enterprise — y sobre todo, poder traducir cada uno a un concepto que ya conoces de backend, APIs o cloud. No es contenido nuevo: es vocabulario nuevo para patrones que ya operaste.</p>
+    <div class="section-label">Today's objective</div>
+    <p>By the end of today you should be able to explain, unaided, <b>the 12 base concepts</b> of an enterprise AI system — and above all, translate each one into something you already know from backend, APIs, or cloud. This isn't new content: it's new vocabulary for patterns you've already operated.</p>
   </section>
 
   <section>
-    <div class="section-label">Contenido</div>
+    <div class="section-label">Content</div>
 
     <div class="concept-grid">
       <div class="concept">
         <div class="concept-term">01 · LLM</div>
-        <h3>Un servicio de predicción de tokens, no un cerebro</h3>
-        <p>Un LLM recibe texto (tokens) y predice, uno a la vez, el token más probable que sigue — condicionado por todo lo que está en su ventana de contexto. No "recuerda" nada entre llamadas: cada invocación es independiente.</p>
-        <div class="analogy"><b>Analogía backend</b>Es una función <code>stateless</code>: <code>predict(context) → next_token</code>. El estado (historial de conversación) lo maneja el caller, exactamente como un servicio REST sin sesión donde el cliente reenvía el contexto en cada request.</div>
+        <h3>A token-prediction service, not a brain</h3>
+        <p>An LLM receives text (tokens) and predicts, one at a time, the most likely next token — conditioned on everything in its context window. It doesn't "remember" anything between calls: every invocation is independent.</p>
+        <div class="analogy"><b>Backend analogy</b>It's a <code>stateless</code> function: <code>predict(context) → next_token</code>. State (conversation history) is managed by the caller, exactly like a sessionless REST service where the client resends context on every request.</div>
       </div>
 
       <div class="concept">
         <div class="concept-term">02 · Prompting</div>
-        <h3>El contrato de comportamiento</h3>
-        <p>El <b>system prompt</b> define reglas, tono, límites y formato — es la configuración del servicio. El <b>user prompt</b> es el request puntual. Un mal system prompt es como un servicio mal configurado: funciona, pero de forma impredecible.</p>
-        <div class="analogy"><b>Analogía backend</b>System prompt ≈ variables de entorno / config que determinan el comportamiento del servicio antes de que llegue tráfico real.</div>
+        <h3>The behavior contract</h3>
+        <p>The <b>system prompt</b> defines rules, tone, limits, and format — it's the service configuration. The <b>user prompt</b> is the specific request. A bad system prompt is like a misconfigured service: it works, but unpredictably.</p>
+        <div class="analogy"><b>Backend analogy</b>System prompt ≈ environment variables / config that shape service behavior before real traffic arrives.</div>
       </div>
 
       <div class="concept">
         <div class="concept-term">03 · Structured Outputs</div>
-        <h3>Forzar el output a un contrato validable</h3>
-        <p>En vez de confiar en que el modelo devuelva texto libre parseable, se le fuerza (vía schema/grammar) a devolver JSON que cumple una estructura específica.</p>
-        <div class="analogy"><b>Analogía backend</b>Es un DTO con validación de schema en el borde del sistema — igual que validar un payload contra OpenAPI/JSON Schema antes de aceptarlo.</div>
+        <h3>Forcing the output into a validatable contract</h3>
+        <p>Instead of trusting the model to return parseable free text, you force it (via schema/grammar) to return JSON matching a specific structure.</p>
+        <div class="analogy"><b>Backend analogy</b>It's a DTO with schema validation at the system boundary — same as validating a payload against OpenAPI/JSON Schema before accepting it.</div>
       </div>
 
       <div class="concept">
         <div class="concept-term">04 · Function / Tool Calling</div>
-        <h3>El modelo propone, tu backend decide y ejecuta</h3>
-        <p>El LLM nunca ejecuta código. Cuando "llama una tool", en realidad devuelve un JSON con <code>{name, arguments}</code>. <b>Tu backend</b> valida esos argumentos y decide si ejecutar la función real. Este es el punto de control más importante de toda la arquitectura.</p>
-        <div class="analogy"><b>Analogía backend</b>Como un webhook que el modelo "dispara": el payload lo genera el LLM, pero quien lo recibe, valida y ejecuta es tu código — con las mismas reglas de autorización que aplicarías a cualquier llamada externa no confiable.</div>
+        <h3>The model proposes, your backend decides and executes</h3>
+        <p>The LLM never executes code. When it "calls a tool," it actually returns a JSON payload with <code>{name, arguments}</code>. <b>Your backend</b> validates those arguments and decides whether to run the real function. This is the single most important control point in the whole architecture.</p>
+        <div class="analogy"><b>Backend analogy</b>Like a webhook the model "fires": the LLM generates the payload, but your code receives, validates, and executes it — with the same authorization rules you'd apply to any untrusted external call.</div>
       </div>
 
       <div class="concept">
         <div class="concept-term">05 · Agents</div>
-        <h3>Un loop: pensar → actuar → observar → repetir</h3>
-        <p>Un agente es un LLM dentro de un <b>bucle de control</b>: decide una acción (responder o llamar una tool), la ejecuta (o la ejecuta el sistema), observa el resultado, y decide el siguiente paso — hasta llegar a una respuesta final.</p>
-        <div class="analogy"><b>Analogía backend</b>Es una máquina de estados / event loop con un paso de decisión no determinístico en cada iteración, en vez de transiciones fijas por código.</div>
+        <h3>A loop: think → act → observe → repeat</h3>
+        <p>An agent is an LLM inside a <b>control loop</b>: it decides on an action (reply or call a tool), executes it (or the system executes it), observes the result, and decides the next step — until it reaches a final answer.</p>
+        <div class="analogy"><b>Backend analogy</b>It's a state machine / event loop with a non-deterministic decision step on each iteration, instead of fixed code-driven transitions.</div>
       </div>
 
       <div class="concept">
         <div class="concept-term">06 · Agent Orchestration</div>
-        <h3>Coordinar pasos, tools y (a veces) otros agentes</h3>
-        <p>Define cómo se secuencian las acciones: ¿un solo agente con muchas tools, o varios agentes especializados que se delegan trabajo entre sí? Determina también routing, reintentos y cuándo pedir intervención humana.</p>
-        <div class="analogy"><b>Analogía backend</b>Es tu capa de orquestación de workflows (piensa Step Functions o un saga orchestrator), salvo que el "siguiente paso" lo decide el modelo, no un grafo fijo.</div>
+        <h3>Coordinating steps, tools, and (sometimes) other agents</h3>
+        <p>Defines how actions are sequenced: a single agent with many tools, or several specialized agents delegating work to each other? It also determines routing, retries, and when to ask for human intervention.</p>
+        <div class="analogy"><b>Backend analogy</b>It's your workflow orchestration layer (think Step Functions or a saga orchestrator), except the "next step" is decided by the model, not a fixed graph.</div>
       </div>
 
       <div class="concept">
         <div class="concept-term">07 · RAG</div>
-        <h3>Consultar el conocimiento en vez de entrenarlo</h3>
-        <p>Retrieval-Augmented Generation: en el momento de responder, se buscan los documentos relevantes y se inyectan en el prompt. El modelo no "sabe" tu data privada — la consulta en tiempo real, igual que una app consulta su base de datos.</p>
-        <div class="analogy"><b>Analogía backend</b>RAG es un <code>read</code> antes de responder — como resolver una vista con un join/lookup en vez de hardcodear el dato en el código. Fine-tuning, en cambio, sería "hornear" el dato en el modelo — caro y difícil de mantener actualizado.</div>
+        <h3>Looking up knowledge instead of training it in</h3>
+        <p>Retrieval-Augmented Generation: at answer time, relevant documents are looked up and injected into the prompt. The model doesn't "know" your private data — it queries it in real time, just like an app queries its database.</p>
+        <div class="analogy"><b>Backend analogy</b>RAG is a <code>read</code> before responding — like resolving a view with a join/lookup instead of hardcoding the value in code. Fine-tuning, by contrast, would be "baking" the data into the model — expensive and hard to keep current.</div>
       </div>
 
       <div class="concept">
         <div class="concept-term">08 · Embeddings &amp; Vector DBs</div>
-        <h3>Buscar por significado, no por coincidencia exacta</h3>
-        <p>Un embedding convierte texto en un vector numérico donde la <b>distancia</b> refleja similitud semántica. Un vector DB es un índice optimizado para búsqueda por vecino más cercano sobre esos vectores.</p>
-        <div class="analogy"><b>Analogía backend</b>Como un índice invertido de un motor de búsqueda full-text, pero en vez de matchear tokens exactos, matchea "cercanía de significado" en un espacio de alta dimensión.</div>
+        <h3>Searching by meaning, not exact match</h3>
+        <p>An embedding turns text into a numeric vector where <b>distance</b> reflects semantic similarity. A vector DB is an index optimized for nearest-neighbor search over those vectors.</p>
+        <div class="analogy"><b>Backend analogy</b>Like an inverted index in a full-text search engine, except instead of matching exact tokens, it matches "closeness of meaning" in a high-dimensional space.</div>
       </div>
 
       <div class="concept">
         <div class="concept-term">09 · Context Window</div>
-        <h3>El presupuesto de memoria de cada request</h3>
-        <p>Todo compite por el mismo espacio limitado: system prompt, historial, documentos recuperados por RAG y resultados de tools. Se mide en tokens y tiene techo — cuando se llena, algo se trunca o descarta.</p>
-        <div class="analogy"><b>Analogía backend</b>Es el heap/memory limit de un proceso por request: si no gestionas qué entra, tienes el equivalente a un OOM — salvo que aquí el "crash" es degradación silenciosa de calidad, no una excepción.</div>
+        <h3>The memory budget of every request</h3>
+        <p>Everything competes for the same limited space: system prompt, history, documents retrieved by RAG, and tool results. It's measured in tokens and has a ceiling — once full, something gets truncated or dropped.</p>
+        <div class="analogy"><b>Backend analogy</b>It's the heap/memory limit of a per-request process: if you don't manage what goes in, you get the equivalent of an OOM — except here the "crash" is silent quality degradation, not an exception.</div>
       </div>
 
       <div class="concept">
         <div class="concept-term">10 · Memory</div>
-        <h3>Qué persiste, dónde y por cuánto tiempo</h3>
-        <p><b>Short-term:</b> el historial de la conversación actual, vive en el contexto. <b>Long-term:</b> hechos, preferencias o resúmenes que persisten entre sesiones, normalmente en una base de datos externa al modelo.</p>
-        <div class="analogy"><b>Analogía backend</b>Short-term memory ≈ estado de sesión en memoria. Long-term memory ≈ persistencia en una tabla/store, con las mismas preguntas de siempre: qué se guarda, con qué TTL, y quién tiene acceso.</div>
+        <h3>What persists, where, and for how long</h3>
+        <p><b>Short-term:</b> the current conversation's history, lives in the context. <b>Long-term:</b> facts, preferences, or summaries that persist across sessions, usually in a database external to the model.</p>
+        <div class="analogy"><b>Backend analogy</b>Short-term memory ≈ in-memory session state. Long-term memory ≈ persistence in a table/store, with the same usual questions: what gets saved, with what TTL, and who has access.</div>
       </div>
 
       <div class="concept">
         <div class="concept-term">11 · Hallucinations</div>
-        <h3>El modo de falla más peligroso: falla con confianza</h3>
-        <p>El modelo genera texto plausible pero falso — no hay excepción, no hay stack trace. En un contexto enterprise (saldo de cuenta, estado de un pedido), esto es inaceptable sin mitigación.</p>
-        <div class="analogy"><b>Analogía backend</b>Es el equivalente a un servicio que devuelve <code>200 OK</code> con datos incorrectos en vez de fallar explícitamente. Por eso todo dato factual crítico debe venir de una tool/RAG verificable, nunca de la "memoria" del modelo.</div>
+        <h3>The most dangerous failure mode: failing with confidence</h3>
+        <p>The model generates plausible but false text — no exception, no stack trace. In an enterprise context (account balance, order status), this is unacceptable without mitigation.</p>
+        <div class="analogy"><b>Backend analogy</b>It's the equivalent of a service returning <code>200 OK</code> with incorrect data instead of failing explicitly. That's why every critical factual answer must come from a verifiable tool/RAG result, never from the model's "memory."</div>
       </div>
 
       <div class="concept">
         <div class="concept-term">12 · Guardrails</div>
-        <h3>Middleware de validación alrededor del modelo</h3>
-        <p>Capas de control sobre input y output: filtros de contenido, validación de schema, un segundo modelo como "juez", límites de qué tools se pueden llamar y con qué permisos.</p>
-        <div class="analogy"><b>Analogía backend</b>Es tu capa de middleware/API gateway: sanitiza el input, valida el output, aplica rate limiting y políticas — el modelo nunca es el único punto de control.</div>
+        <h3>Validation middleware around the model</h3>
+        <p>Control layers over input and output: content filters, schema validation, a second model as a "judge," limits on which tools can be called and with what permissions.</p>
+        <div class="analogy"><b>Backend analogy</b>It's your middleware/API gateway layer: sanitizes input, validates output, applies rate limiting and policy — the model is never the only control point.</div>
       </div>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Diagrama de implementación</div>
-    <h2>El recorrido completo de una tool call</h2>
-    <p>Esto es lo que pasa realmente cuando un agente "usa una herramienta" — cuatro participantes, ningún paso mágico.</p>
+    <div class="section-label">Implementation diagram</div>
+    <h2>The full journey of a tool call</h2>
+    <p>This is what actually happens when an agent "uses a tool" — four participants, no magic step.</p>
     <figure class="diagram">
-      <svg viewBox="0 0 680 300" role="img" aria-label="Diagrama de secuencia: el usuario envía un mensaje, el Agent Runtime arma el contexto y llama al LLM, el LLM devuelve una tool_call, el Agent Runtime valida y ejecuta contra el backend, y el resultado vuelve al LLM para producir la respuesta final al usuario.">
+      <svg viewBox="0 0 680 300" role="img" aria-label="Sequence diagram: the user sends a message, the Agent Runtime builds context and calls the LLM, the LLM returns a tool_call, the Agent Runtime validates and executes against the backend, and the result goes back to the LLM to produce the final response to the user.">
         <defs>
           <marker id="d1arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
             <path d="M0,0 L10,5 L0,10 z" class="darrow-head"/>
@@ -327,22 +327,22 @@
         <line x1="420" y1="256" x2="246" y2="256" class="darrow" marker-end="url(#d1arrow)"/>
         <text x="330" y="250" text-anchor="middle" class="dtext-muted">7. final response</text>
         <line x1="240" y1="276" x2="66" y2="276" class="darrow" marker-end="url(#d1arrow)"/>
-        <text x="150" y="270" text-anchor="middle" class="dtext-muted">8. respuesta al usuario</text>
+        <text x="150" y="270" text-anchor="middle" class="dtext-muted">8. response to user</text>
       </svg>
-      <figcaption>El paso 3 es el único que decide el modelo — todo lo demás (validación, ejecución, autorización) es código determinístico tuyo.</figcaption>
+      <figcaption>Step 3 is the only one the model decides — everything else (validation, execution, authorization) is your own deterministic code.</figcaption>
     </figure>
   </section>
 
   <section>
-    <div class="section-label">Ejemplo de implementación</div>
-    <h2>Tool schema + validación, en código</h2>
-    <p>El esqueleto del ejercicio de abajo: el schema que ve el modelo, y la validación que corre <b>antes</b> de tocar el ERP real — nunca al revés.</p>
+    <div class="section-label">Implementation example</div>
+    <h2>Tool schema + validation, in code</h2>
+    <p>The skeleton behind the exercise below: the schema the model sees, and the validation that runs <b>before</b> touching the real ERP — never the other way around.</p>
     <div class="code-block">
       <div class="code-head"><span>order_agent.py</span><span class="lang">python</span></div>
-      <pre><span class="code-comment"># El schema que el modelo ve — define la forma, no la confianza</span>
+      <pre><span class="code-comment"># The schema the model sees — it defines shape, not trust</span>
 GET_ORDER_STATUS_SCHEMA = {
     <span class="code-str">"name"</span>: <span class="code-str">"get_order_status"</span>,
-    <span class="code-str">"description"</span>: <span class="code-str">"Consulta el estado de un pedido por su ID"</span>,
+    <span class="code-str">"description"</span>: <span class="code-str">"Looks up an order's status by its ID"</span>,
     <span class="code-str">"input_schema"</span>: {
         <span class="code-str">"type"</span>: <span class="code-str">"object"</span>,
         <span class="code-str">"properties"</span>: {
@@ -353,134 +353,134 @@ GET_ORDER_STATUS_SCHEMA = {
 }
 
 <span class="code-kw">def</span> execute_tool_call(name: str, args: dict) -> dict:
-    <span class="code-comment"># 1. Validar ANTES de tocar el sistema real — nunca confiar</span>
-    <span class="code-comment">#    solo en el schema que "vio" el modelo.</span>
+    <span class="code-comment"># 1. Validate BEFORE touching the real system — never trust</span>
+    <span class="code-comment">#    only the schema the model "saw".</span>
     <span class="code-kw">if</span> name == <span class="code-str">"get_order_status"</span>:
         order_id = args.get(<span class="code-str">"order_id"</span>, <span class="code-str">""</span>)
         <span class="code-kw">if not</span> UUID_PATTERN.match(order_id):
-            <span class="code-comment"># Error estructurado, no una excepción cruda —</span>
-            <span class="code-comment"># el agente lo recibe como observación y puede reaccionar.</span>
+            <span class="code-comment"># Structured error, not a raw exception —</span>
+            <span class="code-comment"># the agent receives it as an observation and can react.</span>
             <span class="code-kw">return</span> {<span class="code-str">"error"</span>: <span class="code-str">"invalid_order_id"</span>, <span class="code-str">"detail"</span>: <span class="code-str">"expected UUID format"</span>}
 
         <span class="code-kw">try</span>:
-            status = erp_client.get_status(order_id)  <span class="code-comment"># única fuente de verdad</span>
+            status = erp_client.get_status(order_id)  <span class="code-comment"># single source of truth</span>
             <span class="code-kw">return</span> {<span class="code-str">"status"</span>: status}
         <span class="code-kw">except</span> ERPTimeoutError:
             <span class="code-kw">return</span> {<span class="code-str">"error"</span>: <span class="code-str">"upstream_timeout"</span>}
 
     <span class="code-kw">return</span> {<span class="code-str">"error"</span>: <span class="code-str">"unknown_tool"</span>}</pre>
     </div>
-    <p style="font-size:13px; color:var(--muted); margin-top:8px;">Nota lo que <b>no</b> hace este código: nunca deja que el agente afirme un estado sin pasar por <code>erp_client.get_status</code> — es la barrera anti-alucinación del Día 01 hecha código.</p>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">Notice what this code <b>doesn't</b> do: it never lets the agent assert a status without going through <code>erp_client.get_status</code> — that's Day 01's anti-hallucination barrier turned into code.</p>
   </section>
 
   <section>
-    <div class="section-label">Ejercicio práctico</div>
+    <div class="section-label">Practical exercise</div>
     <div class="exercise-box">
-      <h2>Caso: agente de estado de pedidos</h2>
-      <p>Una empresa quiere un agente que responda "¿dónde está mi pedido?" consultando el ERP interno. Diseña el flujo de <b>function calling</b> respondiendo:</p>
+      <h2>Case: order status agent</h2>
+      <p>A company wants an agent that answers "where's my order?" by querying the internal ERP. Design the <b>function calling</b> flow by answering:</p>
       <ol>
-        <li>¿Qué forma tiene el schema de la tool <code>get_order_status</code>? ¿Qué parámetros son obligatorios?</li>
-        <li>El LLM llama la tool con <code>order_id: "ABC"</code> pero el sistema real espera un UUID numérico. ¿Qué pasa?</li>
-        <li>¿Cómo evitas que el modelo <b>alucine</b> un <code>order_id</code> o invente un estado de envío si la tool falla?</li>
+        <li>What does the schema for the <code>get_order_status</code> tool look like? Which parameters are required?</li>
+        <li>The LLM calls the tool with <code>order_id: "ABC"</code>, but the real system expects a numeric UUID. What happens?</li>
+        <li>How do you keep the model from <b>hallucinating</b> an <code>order_id</code> or inventing a shipping status if the tool fails?</li>
       </ol>
       <details>
-        <summary>Ver enfoque sugerido</summary>
+        <summary>See suggested approach</summary>
         <div class="solution">
-          <p><b>1. Schema:</b> <code>{order_id: string, required, pattern: UUID}</code> — describe el schema en la definición de la tool para que el modelo sepa el formato esperado, pero nunca confíes solo en eso.</p>
-          <p><b>2. Validación:</b> tu backend valida el <code>order_id</code> <i>antes</i> de tocar el ERP. Si no matchea el patrón, devuelves un error estructurado a la tool (no una excepción cruda) — el agente lo recibe como observación y puede pedir aclaración al usuario o reintentar con el formato correcto.</p>
-          <p><b>3. Anti-alucinación:</b> el prompt del agente debe dejar explícito que <i>solo</i> puede afirmar un estado de pedido si viene de un resultado de tool exitoso — nunca "recordado" o "inferido". Si la tool falla, la respuesta correcta es admitir que no se pudo consultar, no inventar un estado plausible.</p>
+          <p><b>1. Schema:</b> <code>{order_id: string, required, pattern: UUID}</code> — describe the schema in the tool definition so the model knows the expected format, but never trust that alone.</p>
+          <p><b>2. Validation:</b> your backend validates <code>order_id</code> <i>before</i> touching the ERP. If it doesn't match the pattern, return a structured error to the tool (not a raw exception) — the agent receives it as an observation and can ask the user for clarification or retry with the correct format.</p>
+          <p><b>3. Anti-hallucination:</b> the agent's prompt must state explicitly that it can <i>only</i> assert an order status if it comes from a successful tool result — never "remembered" or "inferred." If the tool fails, the correct response is to admit the lookup failed, not invent a plausible status.</p>
         </div>
       </details>
     </div>
   </section>
 
   <section>
-    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <div class="section-label">Related interview questions</div>
     <ul class="iq-list">
-      <li>¿Cuándo elegirías RAG sobre fine-tuning, y viceversa?</li>
-      <li>¿Quién decide si una tool se ejecuta: el modelo o tu sistema? ¿Por qué importa esa distinción?</li>
-      <li>¿Qué pasa cuando falla una tool call en medio de un flujo de agente?</li>
-      <li>¿Cómo reduces la tasa de alucinaciones en un agente que da información factual sensible?</li>
-      <li>¿Por qué el tamaño del context window es también una decisión de costo y latencia, no solo de capacidad?</li>
+      <li>When would you choose RAG over fine-tuning, and vice versa?</li>
+      <li>Who decides whether a tool executes: the model or your system? Why does that distinction matter?</li>
+      <li>What happens when a tool call fails mid-way through an agent flow?</li>
+      <li>How do you reduce the hallucination rate in an agent that provides sensitive factual information?</li>
+      <li>Why is context window size also a cost and latency decision, not just a capacity one?</li>
     </ul>
   </section>
 
   <section>
-    <div class="section-label">Quiz de autoevaluación</div>
+    <div class="section-label">Self-check quiz</div>
     <div id="quiz"></div>
-    <div class="quiz-score" id="quizScore">0 / 6 respondidas correctamente</div>
+    <div class="quiz-score" id="quizScore">0 / 6 answered correctly</div>
   </section>
 
   <section>
-    <div class="section-label">Checklist de cierre</div>
+    <div class="section-label">Closing checklist</div>
     <div class="checklist" id="checklist">
-      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Puedo explicar function calling sin decir la palabra "magia".</label></div>
-      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Sé la diferencia entre memoria short-term y long-term, y dónde vive cada una.</label></div>
-      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Puedo justificar por qué RAG y no fine-tuning para conocimiento que cambia seguido.</label></div>
-      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Resolví el ejercicio del agente de pedidos sin ver la solución primero.</label></div>
-      <div class="check-row"><input type="checkbox" id="c5"><label for="c5">Completé el quiz con 6/6.</label></div>
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">I can explain function calling without saying the word "magic".</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">I know the difference between short-term and long-term memory, and where each lives.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">I can justify why RAG over fine-tuning for knowledge that changes often.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">I solved the order-agent exercise before looking at the solution.</label></div>
+      <div class="check-row"><input type="checkbox" id="c5"><label for="c5">I completed the quiz with 6/6.</label></div>
     </div>
   </section>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
-    <span>Día 01 de 14</span>
-    <a href="day-02.html">Día 02 &rarr;</a>
+    <a href="../index.html">&larr; Hub</a>
+    <span>Day 01 of 14</span>
+    <a href="day-02.html">Day 02 &rarr;</a>
   </div>
 </div>
 
 <script>
   const QUIZ = [
     {
-      q: "¿Quién ejecuta realmente el código cuando un LLM hace una 'tool call'?",
-      opts: ["El LLM, dentro de un sandbox interno", "Tu backend, después de validar los argumentos que propuso el LLM", "El vector database", "Nadie: la tool call es solo texto decorativo"],
+      q: "Who actually runs the code when an LLM makes a 'tool call'?",
+      opts: ["The LLM, inside an internal sandbox", "Your backend, after validating the arguments the LLM proposed", "The vector database", "No one: the tool call is just decorative text"],
       correct: 1,
-      explain: "El LLM solo propone {name, arguments}. La ejecución real, y todo el control de autorización, vive en tu código."
+      explain: "The LLM only proposes {name, arguments}. The real execution, and all authorization control, lives in your code."
     },
     {
-      q: "¿Cuál es la diferencia clave entre RAG y fine-tuning?",
+      q: "What's the key difference between RAG and fine-tuning?",
       opts: [
-        "RAG es más barato de correr por token, fine-tuning es gratis",
-        "RAG consulta conocimiento en runtime; fine-tuning lo 'hornea' en los pesos del modelo",
-        "Son exactamente lo mismo con distinto nombre",
-        "Fine-tuning es solo para modelos open source"
+        "RAG is cheaper per token to run, fine-tuning is free",
+        "RAG looks up knowledge at runtime; fine-tuning 'bakes' it into the model's weights",
+        "They're exactly the same thing with a different name",
+        "Fine-tuning is only for open source models"
       ],
       correct: 1,
-      explain: "RAG = read en tiempo real (fácil de mantener actualizado). Fine-tuning = el conocimiento queda fijo en el modelo hasta el próximo entrenamiento."
+      explain: "RAG = a real-time read (easy to keep current). Fine-tuning = the knowledge stays fixed in the model until the next training run."
     },
     {
-      q: "Un vector database resuelve principalmente...",
-      opts: ["Búsqueda exacta por clave primaria", "Búsqueda por similitud semántica entre embeddings", "Transacciones ACID distribuidas", "Almacenamiento de logs estructurados"],
+      q: "A vector database mainly solves...",
+      opts: ["Exact lookup by primary key", "Search by semantic similarity between embeddings", "Distributed ACID transactions", "Structured log storage"],
       correct: 1,
-      explain: "Está optimizado para nearest-neighbor search sobre vectores — similitud de significado, no igualdad exacta."
+      explain: "It's optimized for nearest-neighbor search over vectors — similarity of meaning, not exact equality."
     },
     {
-      q: "¿Por qué el context window es una preocupación de producción y no solo técnica?",
+      q: "Why is the context window a production concern and not just a technical one?",
       opts: [
-        "No lo es, es un detalle irrelevante",
-        "Porque más contexto siempre implica mejor calidad sin costo",
-        "Porque cada token en el contexto afecta costo y latencia, y hay un límite duro",
-        "Porque el context window solo importa para modelos de voz"
-      ],
-      correct: 2,
-      explain: "Todo lo que metes en el contexto (historial, RAG, tool outputs) suma costo y latencia — y tiene un techo. Gestionarlo es una decisión de arquitectura."
-    },
-    {
-      q: "Un agente responde con seguridad un dato factual incorrecto sobre un pedido que no pudo consultar. Esto es un caso de...",
-      opts: ["Guardrail funcionando correctamente", "Hallucination", "Function calling exitoso", "Memory de largo plazo"],
-      correct: 1,
-      explain: "Falla con confianza y sin señal de error explícita — el patrón clásico de alucinación. Se mitiga forzando que los datos factuales vengan solo de tools/RAG verificados."
-    },
-    {
-      q: "¿Qué rol cumplen los guardrails en la arquitectura de un agente?",
-      opts: [
-        "Reemplazan la necesidad de autenticación",
-        "Son opcionales, solo para casos de contenido ofensivo",
-        "Actúan como middleware de validación de input/output alrededor del modelo",
-        "Sirven únicamente para reducir la latencia"
+        "It isn't, it's an irrelevant detail",
+        "Because more context always means better quality at no cost",
+        "Because every token in the context adds cost and latency, and there's a hard limit",
+        "Because context window only matters for voice models"
       ],
       correct: 2,
-      explain: "Guardrails = capa de control (validación, políticas, límites de acción) que rodea al modelo — igual que un API gateway rodea a un servicio."
+      explain: "Everything you put in the context (history, RAG, tool outputs) adds up in cost and latency — and it has a ceiling. Managing it is an architecture decision."
+    },
+    {
+      q: "An agent confidently answers with an incorrect fact about an order it couldn't look up. This is a case of...",
+      opts: ["A guardrail working correctly", "Hallucination", "Successful function calling", "Long-term memory"],
+      correct: 1,
+      explain: "It fails with confidence and no explicit error signal — the classic hallucination pattern. It's mitigated by forcing factual data to come only from verified tools/RAG."
+    },
+    {
+      q: "What role do guardrails play in an agent's architecture?",
+      opts: [
+        "They replace the need for authentication",
+        "They're optional, only for offensive content cases",
+        "They act as input/output validation middleware around the model",
+        "They exist only to reduce latency"
+      ],
+      correct: 2,
+      explain: "Guardrails = a control layer (validation, policy, action limits) around the model — same as an API gateway wraps a service."
     }
   ];
 
@@ -514,7 +514,7 @@ GET_ORDER_STATUS_SCHEMA = {
           box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct');
         }
         document.getElementById(`explain-${i}`).classList.add('show');
-        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} answered correctly (${answered}/${QUIZ.length} seen)`;
       });
     });
   });

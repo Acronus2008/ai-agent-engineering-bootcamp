@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
-<title>Algoritmos por Etapa</title>
+<title>Algorithms by Stage</title>
 <style>
   :root{
     --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
@@ -95,12 +95,12 @@
 
 
 <div class="wrap">
-  <div class="top-bar"><a class="backlink" href="index.html">&larr; Volver al hub</a><div class="lang-switch"><span class="lang-current">ES</span><a href="en/algoritmos.html">EN</a></div></div>
+  <div class="top-bar"><a class="backlink" href="../index.html">&larr; Back to hub</a><div class="lang-switch"><a href="../algoritmos.html">ES</a><span class="lang-current">EN</span></div></div>
 
   <header class="masthead">
-    <div class="eyebrow">Referencia · AI Agent Engineering Bootcamp</div>
-    <h1>Algoritmos por Etapa</h1>
-    <p class="sub">Cada patrón de arquitectura que viste en los días 1-10 se apoya en un algoritmo concreto con complejidad medible. Esto es lo que hay detrás de cada caja del diagrama.</p>
+    <div class="eyebrow">Reference · AI Agent Engineering Bootcamp</div>
+    <h1>Algorithms by Stage</h1>
+    <p class="sub">Every architecture pattern you saw on days 1-10 rests on a concrete algorithm with measurable complexity. This is what's behind each box in the diagram.</p>
     <div class="toc">
       <a href="#ann">ANN / RAG</a>
       <a href="#ratelimit">Rate Limiting</a>
@@ -117,22 +117,22 @@
   <div class="algo-card" id="ann">
     <div class="algo-head">
       <span class="algo-name">Approximate Nearest Neighbor (HNSW)</span>
-      <span class="algo-day">Días 01-02 · RAG</span>
+      <span class="algo-day">Days 01-02 · RAG</span>
     </div>
     <div class="meta-grid">
-      <div class="meta-item"><div class="k">Uso</div><div class="v">Encontrar los k documentos más similares semánticamente a una query, dentro de un índice de embeddings.</div></div>
-      <div class="meta-item"><div class="k">Cuándo</div><div class="v">Cualquier RAG a escala real — miles a millones de vectores. Con &lt;10k documentos, brute-force alcanza.</div></div>
-      <div class="meta-item"><div class="k">Por qué</div><div class="v">Comparar la query contra <i>todos</i> los vectores no escala. HNSW construye un grafo en capas que permite saltar directo a la vecindad correcta.</div></div>
-      <div class="meta-item"><div class="k">Qué sentido tiene</div><div class="v">Sacrifica exactitud perfecta (es <i>aproximado</i>) por velocidad — en RAG, el top-5 "casi perfecto" en 10ms vale más que el top-5 exacto en 2s.</div></div>
+      <div class="meta-item"><div class="k">Use</div><div class="v">Find the k most semantically similar documents to a query, within an embedding index.</div></div>
+      <div class="meta-item"><div class="k">When</div><div class="v">Any real-scale RAG — thousands to millions of vectors. With &lt;10k documents, brute-force is enough.</div></div>
+      <div class="meta-item"><div class="k">Why</div><div class="v">Comparing the query against <i>every</i> vector doesn't scale. HNSW builds a layered graph that lets you jump straight to the right neighborhood.</div></div>
+      <div class="meta-item"><div class="k">What it actually means</div><div class="v">It trades perfect accuracy (it's <i>approximate</i>) for speed — in RAG, an "almost perfect" top-5 in 10ms beats the exact top-5 in 2s.</div></div>
     </div>
     <div class="complexity-row">
-      <span>Brute-force: <b>O(n·d)</b> por query</span>
-      <span>HNSW: <b>~O(log n)</b> por query (aproximado)</span>
-      <span>Espacio HNSW: <b>O(n·M)</b></span>
+      <span>Brute-force: <b>O(n·d)</b> per query</span>
+      <span>HNSW: <b>~O(log n)</b> per query (approximate)</span>
+      <span>HNSW space: <b>O(n·M)</b></span>
     </div>
     <div class="code-block">
       <div class="code-head"><span>similarity_search.py</span><span class="lang">python</span></div>
-      <pre><span class="code-comment"># Brute-force — correcto, pero O(n·d). Sirve como baseline / n pequeño.</span>
+      <pre><span class="code-comment"># Brute-force — correct, but O(n·d). Serves as a baseline / small n.</span>
 <span class="code-kw">import</span> numpy <span class="code-kw">as</span> np
 
 <span class="code-kw">def</span> cosine_similarity(a: np.ndarray, b: np.ndarray) -> float:
@@ -143,15 +143,15 @@
     scored.sort(reverse=<span class="code-kw">True</span>)
     <span class="code-kw">return</span> scored[:k]
 
-<span class="code-comment"># En producción no reimplementas HNSW a mano — usas una librería</span>
-<span class="code-comment"># (faiss, hnswlib, o el vector store gestionado). Lo que sí decides</span>
-<span class="code-comment"># es el trade-off: ef_search más alto = más recall, más latencia.</span>
+<span class="code-comment"># In production you don't reimplement HNSW by hand — you use a library</span>
+<span class="code-comment"># (faiss, hnswlib, or the managed vector store). What you do decide</span>
+<span class="code-comment"># is the trade-off: higher ef_search = more recall, more latency.</span>
 <span class="code-kw">import</span> hnswlib
 
 index = hnswlib.Index(space=<span class="code-str">"cosine"</span>, dim=1536)
 index.init_index(max_elements=1_000_000, ef_construction=200, M=16)
 index.add_items(vectors, ids)
-index.set_ef(64)  <span class="code-comment"># ef_search: sube esto si el recall no alcanza</span>
+index.set_ef(64)  <span class="code-comment"># ef_search: raise this if recall isn't enough</span>
 labels, distances = index.knn_query(query, k=5)</pre>
     </div>
   </div>
@@ -159,17 +159,17 @@ labels, distances = index.knn_query(query, k=5)</pre>
   <div class="algo-card" id="ratelimit">
     <div class="algo-head">
       <span class="algo-name">Token Bucket</span>
-      <span class="algo-day">Día 05 · Reliability</span>
+      <span class="algo-day">Day 05 · Reliability</span>
     </div>
     <div class="meta-grid">
-      <div class="meta-item"><div class="k">Uso</div><div class="v">Limitar el throughput hacia el proveedor del LLM o hacia una tool downstream.</div></div>
-      <div class="meta-item"><div class="k">Cuándo</div><div class="v">Cualquier tráfico saliente que pueda dispararse en loop (por un bug, por prompt injection, o simplemente por picos legítimos).</div></div>
-      <div class="meta-item"><div class="k">Por qué (vs. sliding window)</div><div class="v">Permite ráfagas cortas controladas sin rechazar tráfico legítimo — más flexible que un contador fijo por ventana.</div></div>
-      <div class="meta-item"><div class="k">Qué sentido tiene</div><div class="v">El "bucket" se rellena a tasa constante; cada request consume un token. Sin tokens, esperas o rechazas — el mecanismo es la analogía completa.</div></div>
+      <div class="meta-item"><div class="k">Use</div><div class="v">Limit throughput toward the LLM provider or a downstream tool.</div></div>
+      <div class="meta-item"><div class="k">When</div><div class="v">Any outbound traffic that could spike in a loop (from a bug, from prompt injection, or simply legitimate bursts).</div></div>
+      <div class="meta-item"><div class="k">Why (vs. sliding window)</div><div class="v">Allows short controlled bursts without rejecting legitimate traffic — more flexible than a fixed counter per window.</div></div>
+      <div class="meta-item"><div class="k">What it actually means</div><div class="v">The "bucket" refills at a constant rate; each request consumes a token. Without tokens, you wait or reject — the mechanism is the full analogy.</div></div>
     </div>
     <div class="complexity-row">
-      <span>Tiempo: <b>O(1)</b> por request</span>
-      <span>Espacio: <b>O(1)</b> por cliente</span>
+      <span>Time: <b>O(1)</b> per request</span>
+      <span>Space: <b>O(1)</b> per client</span>
     </div>
     <div class="code-block">
       <div class="code-head"><span>token_bucket.py</span><span class="lang">python</span></div>
@@ -191,42 +191,42 @@ labels, distances = index.knn_query(query, k=5)</pre>
         <span class="code-kw">if</span> self.tokens >= 1:
             self.tokens -= 1
             <span class="code-kw">return</span> <span class="code-kw">True</span>
-        <span class="code-kw">return</span> <span class="code-kw">False</span>  <span class="code-comment"># caller decide: rechazar, encolar, o degradar</span></pre>
+        <span class="code-kw">return</span> <span class="code-kw">False</span>  <span class="code-comment"># caller decides: reject, queue, or degrade</span></pre>
     </div>
   </div>
 
   <div class="algo-card" id="backoff">
     <div class="algo-head">
       <span class="algo-name">Exponential Backoff + Jitter</span>
-      <span class="algo-day">Día 05 · Reliability</span>
+      <span class="algo-day">Day 05 · Reliability</span>
     </div>
     <div class="meta-grid">
-      <div class="meta-item"><div class="k">Uso</div><div class="v">Reintentar una llamada fallida sin generar retry storms sobre un sistema ya degradado.</div></div>
-      <div class="meta-item"><div class="k">Cuándo</div><div class="v">Cualquier fallo transitorio (timeout, 503) — nunca para errores que no van a cambiar con un retry (ej. 400 de validación).</div></div>
-      <div class="meta-item"><div class="k">Por qué</div><div class="v">El backoff exponencial da tiempo al sistema para recuperarse; el jitter evita que todos los clientes reintenten en el mismo instante (thundering herd).</div></div>
-      <div class="meta-item"><div class="k">Qué sentido tiene</div><div class="v">Combinado con un circuit breaker (Closed → Open → Half-Open), evita seguir insistiendo cuando ya está claro que el sistema está caído.</div></div>
+      <div class="meta-item"><div class="k">Use</div><div class="v">Retry a failed call without generating retry storms against an already-degraded system.</div></div>
+      <div class="meta-item"><div class="k">When</div><div class="v">Any transient failure (timeout, 503) — never for errors that won't change with a retry (e.g. a 400 validation error).</div></div>
+      <div class="meta-item"><div class="k">Why</div><div class="v">Exponential backoff gives the system time to recover; jitter prevents every client from retrying at the same instant (thundering herd).</div></div>
+      <div class="meta-item"><div class="k">What it actually means</div><div class="v">Combined with a circuit breaker (Closed → Open → Half-Open), it stops you from keeping at it once it's clear the system is down.</div></div>
     </div>
     <div class="complexity-row">
-      <span>Tiempo: <b>O(1)</b> por intento</span>
-      <span>Intentos acotados: <b>O(log(delay_max))</b></span>
+      <span>Time: <b>O(1)</b> per attempt</span>
+      <span>Bounded attempts: <b>O(log(delay_max))</b></span>
     </div>
     <figure class="diagram">
-      <svg viewBox="0 0 560 140" role="img" aria-label="Diagrama de estados del circuit breaker: Closed permite tráfico y cuenta fallos; al superar un umbral pasa a Open, que rechaza todo de inmediato; tras un timeout pasa a Half-Open, que permite una llamada de prueba; si tiene éxito vuelve a Closed, si falla vuelve a Open.">
+      <svg viewBox="0 0 560 140" role="img" aria-label="Circuit breaker state diagram: Closed allows traffic and counts failures; once a threshold is exceeded it moves to Open, which rejects everything immediately; after a timeout it moves to Half-Open, which allows one test call; if it succeeds it returns to Closed, if it fails it returns to Open.">
         <defs><marker id="dalgarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker></defs>
         <rect x="20" y="40" width="120" height="44" rx="22" class="dbox-accent"/>
         <text x="80" y="66" text-anchor="middle" class="dtext">Closed</text>
         <line x1="140" y1="55" x2="288" y2="55" class="darrow" marker-end="url(#dalgarrow)"/>
-        <text x="215" y="48" text-anchor="middle" class="dtext-muted">umbral de fallos superado</text>
+        <text x="215" y="48" text-anchor="middle" class="dtext-muted">failure threshold exceeded</text>
         <rect x="290" y="40" width="120" height="44" rx="22" class="dbox"/>
         <text x="350" y="66" text-anchor="middle" class="dtext">Open</text>
         <line x1="290" y1="75" x2="150" y2="100" class="darrow" marker-end="url(#dalgarrow)"/>
-        <text x="220" y="118" text-anchor="middle" class="dtext-muted">timeout → prueba</text>
+        <text x="220" y="118" text-anchor="middle" class="dtext-muted">timeout → test call</text>
         <rect x="20" y="95" width="130" height="40" rx="20" class="dbox"/>
         <text x="85" y="119" text-anchor="middle" class="dtext">Half-Open</text>
         <line x1="85" y1="95" x2="80" y2="86" class="darrow" marker-end="url(#dalgarrow)"/>
-        <text x="30" y="100" class="dtext-muted">éxito</text>
+        <text x="30" y="100" class="dtext-muted">success</text>
       </svg>
-      <figcaption>El estado Half-Open es lo que evita elegir entre "reintentar para siempre" o "nunca más" — prueba con una sola llamada.</figcaption>
+      <figcaption>The Half-Open state is what avoids the choice between "retry forever" or "never again" — it tests with a single call.</figcaption>
     </figure>
     <div class="code-block" style="margin-top:14px;">
       <div class="code-head"><span>backoff.py</span><span class="lang">python</span></div>
@@ -234,7 +234,7 @@ labels, distances = index.knn_query(query, k=5)</pre>
 
 <span class="code-kw">def</span> backoff_delay(attempt: int, base=0.5, cap=20.0) -> float:
     exp = min(cap, base * (2 ** attempt))
-    <span class="code-kw">return</span> random.uniform(0, exp)  <span class="code-comment"># "full jitter" — evita sincronización entre clientes</span>
+    <span class="code-kw">return</span> random.uniform(0, exp)  <span class="code-comment"># "full jitter" — avoids synchronization between clients</span>
 
 <span class="code-kw">def</span> call_with_backoff(fn, max_attempts=4):
     <span class="code-kw">for</span> attempt <span class="code-kw">in</span> range(max_attempts):
@@ -249,37 +249,37 @@ labels, distances = index.knn_query(query, k=5)</pre>
 
   <div class="algo-card" id="idempotency">
     <div class="algo-head">
-      <span class="algo-name">Hashing determinístico (idempotency keys)</span>
-      <span class="algo-day">Días 05, 07 · Reliability / Distributed Systems</span>
+      <span class="algo-name">Deterministic Hashing (idempotency keys)</span>
+      <span class="algo-day">Days 05, 07 · Reliability / Distributed Systems</span>
     </div>
     <div class="meta-grid">
-      <div class="meta-item"><div class="k">Uso</div><div class="v">Generar una clave estable que identifica "esta operación específica", para detectar duplicados sin coordinación central.</div></div>
-      <div class="meta-item"><div class="k">Cuándo</div><div class="v">Toda escritura que pueda reintentarse — pagos, creación de tickets, cualquier acción de un Saga.</div></div>
-      <div class="meta-item"><div class="k">Por qué</div><div class="v">Un hash de los parámetros relevantes (o un UUID generado una sola vez al iniciar el flujo) da la misma key ante el mismo intento, sin necesitar una base de datos externa para "acordar" la key.</div></div>
-      <div class="meta-item"><div class="k">Qué sentido tiene</div><div class="v">A gran escala, guardar cada key vista puede ser costoso — ahí entra un Bloom filter: deduplicación aproximada con falsos positivos controlados y espacio sublineal.</div></div>
+      <div class="meta-item"><div class="k">Use</div><div class="v">Generate a stable key that identifies "this specific operation," to detect duplicates without central coordination.</div></div>
+      <div class="meta-item"><div class="k">When</div><div class="v">Any write that can be retried — payments, ticket creation, any Saga action.</div></div>
+      <div class="meta-item"><div class="k">Why</div><div class="v">A hash of the relevant parameters (or a UUID generated once when the flow starts) gives the same key on the same attempt, without needing an external database to "agree" on the key.</div></div>
+      <div class="meta-item"><div class="k">What it actually means</div><div class="v">At large scale, storing every key seen can be expensive — that's where a Bloom filter comes in: approximate deduplication with controlled false positives and sublinear space.</div></div>
     </div>
     <div class="complexity-row">
       <span>Hash: <b>O(1)</b></span>
-      <span>Bloom filter: <b>O(k)</b> por insert/query (k = funciones hash)</span>
-      <span>Espacio Bloom: <b>O(m)</b> sublineal vs. guardar cada key</span>
+      <span>Bloom filter: <b>O(k)</b> per insert/query (k = hash functions)</span>
+      <span>Bloom space: <b>O(m)</b> sublinear vs. storing every key</span>
     </div>
     <div class="code-block">
       <div class="code-head"><span>idempotency.py</span><span class="lang">python</span></div>
       <pre><span class="code-kw">import</span> hashlib, json
 
 <span class="code-kw">def</span> idempotency_key(operation: str, params: dict) -> str:
-    <span class="code-comment"># sort_keys=True: mismo dict, mismo hash, sin importar el orden</span>
+    <span class="code-comment"># sort_keys=True: same dict, same hash, regardless of order</span>
     payload = json.dumps({<span class="code-str">"op"</span>: operation, <span class="code-str">"params"</span>: params}, sort_keys=<span class="code-kw">True</span>)
     <span class="code-kw">return</span> hashlib.sha256(payload.encode()).hexdigest()
 
-<span class="code-comment"># Deduplicación aproximada a gran escala (millones de keys, memoria acotada)</span>
+<span class="code-comment"># Approximate deduplication at large scale (millions of keys, bounded memory)</span>
 <span class="code-kw">from</span> pybloom_live <span class="code-kw">import</span> BloomFilter
 
 seen = BloomFilter(capacity=10_000_000, error_rate=0.001)
 
 <span class="code-kw">def</span> is_probably_duplicate(key: str) -> bool:
     <span class="code-kw">if</span> key <span class="code-kw">in</span> seen:
-        <span class="code-kw">return</span> <span class="code-kw">True</span>  <span class="code-comment"># puede ser falso positivo — verificar contra la fuente real antes de rechazar</span>
+        <span class="code-kw">return</span> <span class="code-kw">True</span>  <span class="code-comment"># could be a false positive — verify against the real source before rejecting</span>
     seen.add(key)
     <span class="code-kw">return</span> <span class="code-kw">False</span></pre>
     </div>
@@ -288,17 +288,17 @@ seen = BloomFilter(capacity=10_000_000, error_rate=0.001)
   <div class="algo-card" id="vectorclock">
     <div class="algo-head">
       <span class="algo-name">Lamport Timestamps / Vector Clocks</span>
-      <span class="algo-day">Día 07 · Distributed Systems</span>
+      <span class="algo-day">Day 07 · Distributed Systems</span>
     </div>
     <div class="meta-grid">
-      <div class="meta-item"><div class="k">Uso</div><div class="v">Determinar el orden causal de eventos generados por distintos servicios, sin depender de relojes de pared sincronizados.</div></div>
-      <div class="meta-item"><div class="k">Cuándo</div><div class="v">Cuando el estado de un pedido se actualiza desde múltiples fuentes (ERP, agente, sistema de pagos) y necesitas reconciliar "qué pasó primero".</div></div>
-      <div class="meta-item"><div class="k">Por qué</div><div class="v">Los relojes de máquinas distintas nunca están perfectamente sincronizados — usar wall-clock time para ordenar eventos produce inconsistencias silenciosas.</div></div>
-      <div class="meta-item"><div class="k">Qué sentido tiene</div><div class="v">Cada nodo mantiene un contador que incrementa en cada evento y se sincroniza (toma el máximo) al recibir un mensaje — el orden relativo queda determinado sin reloj compartido.</div></div>
+      <div class="meta-item"><div class="k">Use</div><div class="v">Determine the causal order of events generated by different services, without relying on synchronized wall clocks.</div></div>
+      <div class="meta-item"><div class="k">When</div><div class="v">When an order's state is updated from multiple sources (ERP, agent, payment system) and you need to reconcile "what happened first."</div></div>
+      <div class="meta-item"><div class="k">Why</div><div class="v">Clocks on different machines are never perfectly synchronized — using wall-clock time to order events produces silent inconsistencies.</div></div>
+      <div class="meta-item"><div class="k">What it actually means</div><div class="v">Each node keeps a counter that increments on every event and syncs (takes the max) when receiving a message — the relative order is determined without a shared clock.</div></div>
     </div>
     <div class="complexity-row">
-      <span>Tiempo: <b>O(n)</b> por evento (n = número de nodos, para vector clocks)</span>
-      <span>Lamport simple: <b>O(1)</b> por evento</span>
+      <span>Time: <b>O(n)</b> per event (n = number of nodes, for vector clocks)</span>
+      <span>Simple Lamport: <b>O(1)</b> per event</span>
     </div>
     <div class="code-block">
       <div class="code-head"><span>lamport_clock.py</span><span class="lang">python</span></div>
@@ -307,11 +307,11 @@ seen = BloomFilter(capacity=10_000_000, error_rate=0.001)
         self.time = 0
 
     <span class="code-kw">def</span> tick(self) -> int:
-        self.time += 1  <span class="code-comment"># evento local</span>
+        self.time += 1  <span class="code-comment"># local event</span>
         <span class="code-kw">return</span> self.time
 
     <span class="code-kw">def</span> merge(self, received_time: int) -> int:
-        <span class="code-comment"># al recibir un mensaje, el reloj "salta" al máximo + 1</span>
+        <span class="code-comment"># upon receiving a message, the clock "jumps" to the max + 1</span>
         self.time = max(self.time, received_time) + 1
         <span class="code-kw">return</span> self.time</pre>
     </div>
@@ -320,17 +320,17 @@ seen = BloomFilter(capacity=10_000_000, error_rate=0.001)
   <div class="algo-card" id="lock">
     <div class="algo-head">
       <span class="algo-name">Optimistic Locking (Compare-and-Swap)</span>
-      <span class="algo-day">Día 07 · Distributed Systems</span>
+      <span class="algo-day">Day 07 · Distributed Systems</span>
     </div>
     <div class="meta-grid">
-      <div class="meta-item"><div class="k">Uso</div><div class="v">Evitar que dos ejecuciones concurrentes (ej. chat + voz del mismo usuario) pisen el mismo recurso al mismo tiempo.</div></div>
-      <div class="meta-item"><div class="k">Cuándo</div><div class="v">Acciones críticas sobre un recurso compartido, cuando los conflictos son poco frecuentes (si son frecuentes, un lock pesimista/distribuido como Redlock rinde mejor).</div></div>
-      <div class="meta-item"><div class="k">Por qué</div><div class="v">No bloquea nada por adelantado — lee la versión actual, escribe solo si nadie la cambió mientras tanto. Más barato que un lock distribuido real cuando la contención es baja.</div></div>
-      <div class="meta-item"><div class="k">Qué sentido tiene</div><div class="v">Es la misma idea que un <code>ETag</code> HTTP o un <code>WHERE version = ?</code> en SQL — "solo actualiza si nadie más lo tocó desde que lo leí".</div></div>
+      <div class="meta-item"><div class="k">Use</div><div class="v">Prevent two concurrent executions (e.g. chat + voice from the same user) from stepping on the same resource at the same time.</div></div>
+      <div class="meta-item"><div class="k">When</div><div class="v">Critical actions on a shared resource, when conflicts are infrequent (if they're frequent, a pessimistic/distributed lock like Redlock performs better).</div></div>
+      <div class="meta-item"><div class="k">Why</div><div class="v">It doesn't block anything upfront — it reads the current version, writes only if nobody changed it in the meantime. Cheaper than a real distributed lock when contention is low.</div></div>
+      <div class="meta-item"><div class="k">What it actually means</div><div class="v">It's the same idea as an HTTP <code>ETag</code> or a <code>WHERE version = ?</code> in SQL — "only update if nobody else touched it since I read it."</div></div>
     </div>
     <div class="complexity-row">
-      <span>Tiempo: <b>O(1)</b> por intento</span>
-      <span>Reintentos ante conflicto: acotados, igual que backoff</span>
+      <span>Time: <b>O(1)</b> per attempt</span>
+      <span>Retries on conflict: bounded, same as backoff</span>
     </div>
     <div class="code-block">
       <div class="code-head"><span>optimistic_lock.py</span><span class="lang">python</span></div>
@@ -339,28 +339,28 @@ seen = BloomFilter(capacity=10_000_000, error_rate=0.001)
     result = db.update(
         order_id,
         {<span class="code-str">"status"</span>: new_status, <span class="code-str">"version"</span>: order.version + 1},
-        <span class="code-comment"># condición: solo escribe si la versión no cambió desde la lectura</span>
+        <span class="code-comment"># condition: only write if the version hasn't changed since the read</span>
         condition=<span class="code-str">"version = :expected_version"</span>,
         expected_version=order.version,
     )
-    <span class="code-kw">return</span> result.success  <span class="code-comment"># False → alguien más ganó la carrera, reintenta con datos frescos</span></pre>
+    <span class="code-kw">return</span> result.success  <span class="code-comment"># False → someone else won the race, retry with fresh data</span></pre>
     </div>
   </div>
 
   <div class="algo-card" id="hashing">
     <div class="algo-head">
       <span class="algo-name">Consistent Hashing</span>
-      <span class="algo-day">Día 08 · Cloud Architecture</span>
+      <span class="algo-day">Day 08 · Cloud Architecture</span>
     </div>
     <div class="meta-grid">
-      <div class="meta-item"><div class="k">Uso</div><div class="v">Distribuir sesiones o datos entre nodos (particiones de DynamoDB, instancias del Agent Runtime detrás de un load balancer).</div></div>
-      <div class="meta-item"><div class="k">Cuándo</div><div class="v">Escalar horizontalmente añadiendo o quitando nodos, sin provocar un resharding masivo cada vez.</div></div>
-      <div class="meta-item"><div class="k">Por qué (vs. hash % n)</div><div class="v">Con <code>hash(key) % n</code>, cambiar n remapea casi todas las keys. Con un anillo consistente, solo se remapean ~K/n claves al agregar/quitar un nodo.</div></div>
-      <div class="meta-item"><div class="k">Qué sentido tiene</div><div class="v">Nodos y keys se ubican en el mismo anillo de hash; cada key pertenece al primer nodo en sentido horario. Los "virtual nodes" evitan que un nodo reciba una porción desproporcionada.</div></div>
+      <div class="meta-item"><div class="k">Use</div><div class="v">Distribute sessions or data across nodes (DynamoDB partitions, Agent Runtime instances behind a load balancer).</div></div>
+      <div class="meta-item"><div class="k">When</div><div class="v">Scaling horizontally by adding or removing nodes, without triggering a massive reshard every time.</div></div>
+      <div class="meta-item"><div class="k">Why (vs. hash % n)</div><div class="v">With <code>hash(key) % n</code>, changing n remaps almost every key. With a consistent ring, only ~K/n keys get remapped when adding/removing a node.</div></div>
+      <div class="meta-item"><div class="k">What it actually means</div><div class="v">Nodes and keys sit on the same hash ring; each key belongs to the first node clockwise. "Virtual nodes" prevent a single node from receiving a disproportionate share.</div></div>
     </div>
     <div class="complexity-row">
-      <span>Lookup: <b>O(log n)</b> con anillo ordenado (bisect)</span>
-      <span>Espacio: <b>O(v)</b> con v = virtual nodes</span>
+      <span>Lookup: <b>O(log n)</b> with a sorted ring (bisect)</span>
+      <span>Space: <b>O(v)</b> with v = virtual nodes</span>
     </div>
     <div class="code-block">
       <div class="code-head"><span>consistent_hash.py</span><span class="lang">python</span></div>
@@ -389,17 +389,17 @@ seen = BloomFilter(capacity=10_000_000, error_rate=0.001)
   <div class="algo-card" id="lru">
     <div class="algo-head">
       <span class="algo-name">LRU Cache</span>
-      <span class="algo-day">Transversal · Reliability / Cloud</span>
+      <span class="algo-day">Cross-cutting · Reliability / Cloud</span>
     </div>
     <div class="meta-grid">
-      <div class="meta-item"><div class="k">Uso</div><div class="v">Cachear resultados de tool calls costosas o embeddings ya calculados para no recomputarlos.</div></div>
-      <div class="meta-item"><div class="k">Cuándo</div><div class="v">Hay reuso real de queries/resultados y el costo de recomputar (latencia o $/token) es alto.</div></div>
-      <div class="meta-item"><div class="k">Por qué</div><div class="v">Evict la entrada usada menos recientemente asume que "lo usado hace poco se va a volver a usar pronto" — cierto para la mayoría de patrones de tráfico de agentes.</div></div>
-      <div class="meta-item"><div class="k">Qué sentido tiene</div><div class="v">Un hashmap para lookup O(1) + una lista doblemente enlazada para saber qué es "más antiguo" — mover al frente en cada acceso.</div></div>
+      <div class="meta-item"><div class="k">Use</div><div class="v">Cache results of expensive tool calls or already-computed embeddings so they aren't recomputed.</div></div>
+      <div class="meta-item"><div class="k">When</div><div class="v">There's real reuse of queries/results and the cost of recomputing (latency or $/token) is high.</div></div>
+      <div class="meta-item"><div class="k">Why</div><div class="v">Evicting the least-recently-used entry assumes "what was used recently will be used again soon" — true for most agent traffic patterns.</div></div>
+      <div class="meta-item"><div class="k">What it actually means</div><div class="v">A hashmap for O(1) lookup + a doubly linked list to know what's "oldest" — move to the front on every access.</div></div>
     </div>
     <div class="complexity-row">
       <span>Get/Put: <b>O(1)</b></span>
-      <span>Espacio: <b>O(capacidad)</b></span>
+      <span>Space: <b>O(capacity)</b></span>
     </div>
     <div class="code-block">
       <div class="code-head"><span>lru_cache.py</span><span class="lang">python</span></div>
@@ -407,9 +407,9 @@ seen = BloomFilter(capacity=10_000_000, error_rate=0.001)
 
 <span class="code-kw">@lru_cache</span>(maxsize=2048)
 <span class="code-kw">def</span> embed_text(text: str) -> tuple[float, ...]:
-    <span class="code-kw">return</span> tuple(embedding_model.encode(text))  <span class="code-comment"># tuple: hasheable, cacheable</span>
+    <span class="code-kw">return</span> tuple(embedding_model.encode(text))  <span class="code-comment"># tuple: hashable, cacheable</span>
 
-<span class="code-comment"># Equivalente explícito, útil cuando necesitas TTL o métricas de hit-rate:</span>
+<span class="code-comment"># Explicit equivalent, useful when you need TTL or hit-rate metrics:</span>
 <span class="code-kw">from</span> collections <span class="code-kw">import</span> OrderedDict
 
 <span class="code-kw">class</span> LRUCache:
@@ -420,31 +420,31 @@ seen = BloomFilter(capacity=10_000_000, error_rate=0.001)
     <span class="code-kw">def</span> get(self, key):
         <span class="code-kw">if</span> key <span class="code-kw">not in</span> self.data:
             <span class="code-kw">return</span> <span class="code-kw">None</span>
-        self.data.move_to_end(key)  <span class="code-comment"># marca como "recién usado"</span>
+        self.data.move_to_end(key)  <span class="code-comment"># mark as "just used"</span>
         <span class="code-kw">return</span> self.data[key]
 
     <span class="code-kw">def</span> put(self, key, value):
         self.data[key] = value
         self.data.move_to_end(key)
         <span class="code-kw">if</span> len(self.data) > self.capacity:
-            self.data.popitem(last=<span class="code-kw">False</span>)  <span class="code-comment"># descarta el menos usado recientemente</span></pre>
+            self.data.popitem(last=<span class="code-kw">False</span>)  <span class="code-comment"># discard the least recently used</span></pre>
     </div>
   </div>
 
   <div class="algo-card" id="sampling">
     <div class="algo-head">
       <span class="algo-name">Reservoir Sampling</span>
-      <span class="algo-day">Día 05 · Observability</span>
+      <span class="algo-day">Day 05 · Observability</span>
     </div>
     <div class="meta-grid">
-      <div class="meta-item"><div class="k">Uso</div><div class="v">Samplear un subconjunto representativo de conversaciones para revisión humana o LLM-as-judge, sin guardar el 100% del tráfico.</div></div>
-      <div class="meta-item"><div class="k">Cuándo</div><div class="v">Volumen alto donde persistir/revisar cada trace es demasiado caro, pero necesitas una muestra estadísticamente válida.</div></div>
-      <div class="meta-item"><div class="k">Por qué</div><div class="v">No sabes cuántos elementos vas a ver en total (es un stream) — reservoir sampling garantiza que cada elemento tiene la misma probabilidad de terminar en la muestra, sin conocer n de antemano.</div></div>
-      <div class="meta-item"><div class="k">Qué sentido tiene</div><div class="v">A medida que llegan más elementos, cada uno nuevo compite por un lugar en el "reservorio" con probabilidad k/i — matemáticamente da una muestra uniforme sin dos pasadas.</div></div>
+      <div class="meta-item"><div class="k">Use</div><div class="v">Sample a representative subset of conversations for human review or LLM-as-judge, without storing 100% of traffic.</div></div>
+      <div class="meta-item"><div class="k">When</div><div class="v">High volume where persisting/reviewing every trace is too expensive, but you need a statistically valid sample.</div></div>
+      <div class="meta-item"><div class="k">Why</div><div class="v">You don't know how many elements you'll see in total (it's a stream) — reservoir sampling guarantees every element has an equal probability of ending up in the sample, without knowing n in advance.</div></div>
+      <div class="meta-item"><div class="k">What it actually means</div><div class="v">As more elements arrive, each new one competes for a spot in the "reservoir" with probability k/i — mathematically this gives a uniform sample without two passes.</div></div>
     </div>
     <div class="complexity-row">
-      <span>Tiempo: <b>O(1)</b> por elemento</span>
-      <span>Espacio: <b>O(k)</b> con k = tamaño de la muestra</span>
+      <span>Time: <b>O(1)</b> per element</span>
+      <span>Space: <b>O(k)</b> with k = sample size</span>
     </div>
     <div class="code-block">
       <div class="code-head"><span>reservoir_sampling.py</span><span class="lang">python</span></div>
@@ -463,13 +463,13 @@ seen = BloomFilter(capacity=10_000_000, error_rate=0.001)
         <span class="code-kw">else</span>:
             j = random.randint(0, self.count - 1)
             <span class="code-kw">if</span> j < self.k:
-                self.reservoir[j] = item  <span class="code-comment"># reemplaza con probabilidad k/count</span></pre>
+                self.reservoir[j] = item  <span class="code-comment"># replace with probability k/count</span></pre>
     </div>
   </div>
 
   <div class="nav-footer">
-    <a href="index.html">&larr; Hub</a>
-    <span>Algoritmos por Etapa · 9 patrones</span>
+    <a href="../index.html">&larr; Hub</a>
+    <span>Algorithms by Stage · 9 patterns</span>
   </div>
 </div>
 
