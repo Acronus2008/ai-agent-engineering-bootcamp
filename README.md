@@ -2,7 +2,7 @@
 
 A free, self-paced, 14-day bootcamp for backend engineers, solutions architects, and developers moving into **enterprise AI agent engineering**. It treats the topic as an engineering discipline — architecture, security, distributed systems, reliability, and real implementation trade-offs — rather than another prompt-engineering primer.
 
-**[Live site →](#)** *(update this link after deploying to Railway)*
+**[Live site →](https://ai-agent-engineering-bootcamp-production.up.railway.app)**
 
 ## Why this exists
 
