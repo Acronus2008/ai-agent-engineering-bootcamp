@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
+<title>Enterprise Integration</title>
+<style>
+  :root{
+    --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
+    --border:#d3dbdd; --accent:#b8681f; --accent-ink:#fff8f0; --accent2:#256d87; --good:#3f7d52; --bad:#a8452a;
+    --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+      --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c; --bad:#e07a5c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+    --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c; --bad:#e07a5c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      repeating-linear-gradient(90deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      var(--bg);
+    color:var(--ink); font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent2);}
+  a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible{outline:2px solid var(--accent2); outline-offset:2px;}
+  .wrap{max-width:760px; margin:0 auto; padding:40px 24px 100px;}
+  .backlink{font-family:var(--font-mono); font-size:12px; text-decoration:none; color:var(--muted); display:inline-flex; gap:6px;}
+  .backlink:hover{color:var(--accent2);}
+  header.masthead{border-bottom:1px solid var(--border); padding-bottom:24px; margin:18px 0 36px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent2); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:20px; height:1px; background:var(--accent2); display:inline-block;}
+  .title-row{display:flex; align-items:baseline; gap:18px; margin-top:10px;}
+  .day-numeral{font-family:var(--font-display); font-size:56px; font-weight:600; color:var(--accent); line-height:1;}
+  h1{font-family:var(--font-display); font-weight:600; font-size:clamp(26px,4vw,34px); margin:0; text-wrap:balance; letter-spacing:-0.01em;}
+  .sub{color:var(--muted); font-size:15px; max-width:60ch; margin-top:10px;}
+  .meta-row{display:flex; gap:20px; margin-top:16px; flex-wrap:wrap; font-family:var(--font-mono); font-size:12px; color:var(--muted);}
+  .meta-row b{color:var(--ink); font-weight:600;}
+  section{margin-bottom:46px;}
+  .section-label{font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); border-top:1px solid var(--border); padding-top:8px; margin-bottom:16px;}
+  h2{font-family:var(--font-display); font-size:21px; margin:0 0 10px; font-weight:600;}
+  h3{font-family:var(--font-display); font-size:17px; margin:22px 0 6px; font-weight:600;}
+  p{margin:0 0 12px;}
+  ul, ol{margin:0 0 12px; padding-left:20px;}
+  li{margin-bottom:6px;}
+  .analogy{background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent2); padding:10px 14px; border-radius:2px; font-size:14px; margin:10px 0 16px;}
+  .analogy b{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent2); display:block; margin-bottom:4px;}
+  code{font-family:var(--font-mono); font-size:.9em; background:var(--surface-2); padding:1px 5px; border-radius:2px;}
+  pre{font-family:var(--font-mono); font-size:13px; background:var(--surface); border:1px solid var(--border); padding:14px; border-radius:3px; overflow-x:auto; line-height:1.5;}
+  .principle-box{border:1px solid var(--accent); background:color-mix(in srgb, var(--accent) 8%, var(--surface)); border-radius:3px; padding:16px 18px; font-family:var(--font-display); font-style:italic; font-size:16px;}
+
+  figure.diagram{margin:0 0 8px; border:1px solid var(--border); border-radius:3px; background:var(--surface); padding:18px 18px 14px;}
+  figure.diagram svg{display:block; width:100%; height:auto;}
+  figure.diagram figcaption{font-family:var(--font-mono); font-size:11px; color:var(--muted); margin-top:12px; text-transform:uppercase; letter-spacing:.05em;}
+  .dbox{fill:var(--surface); stroke:var(--border); stroke-width:1.5;}
+  .dbox-accent{fill:var(--accent); fill-opacity:.12; stroke:var(--accent); stroke-width:1.5;}
+  .dbox-accent2{fill:var(--accent2); fill-opacity:.1; stroke:var(--accent2); stroke-width:1.5;}
+  .dtext{font-family:var(--font-mono); font-size:11px; fill:var(--ink);}
+  .dtext-muted{font-family:var(--font-mono); font-size:10px; fill:var(--muted);}
+  .dtext-accent{font-family:var(--font-mono); font-size:10px; fill:var(--accent2); font-weight:600;}
+  .dlabel{font-family:var(--font-display); font-size:13px; font-weight:600; fill:var(--ink);}
+  .darrow{stroke:var(--muted); stroke-width:1.5; fill:none;}
+  .darrow-accent{stroke:var(--accent2); stroke-width:1.8; fill:none;}
+  .darrow-dashed{stroke:var(--muted); stroke-width:1.5; fill:none; stroke-dasharray:4,3;}
+  .darrow-head{fill:var(--muted);}
+  .darrow-head-accent{fill:var(--accent2);}
+
+  .code-block{border:1px solid var(--border); border-radius:3px; overflow:hidden; margin-bottom:8px;}
+  .code-head{font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); background:var(--surface-2); padding:7px 14px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between;}
+  .code-head span.lang{color:var(--accent2);}
+  .code-block pre{border:none; border-radius:0; margin:0;}
+  .code-comment{color:var(--muted);}
+  .code-str{color:var(--good);}
+  .code-kw{color:var(--accent2);}
+  .concept-grid{display:grid; grid-template-columns:1fr; gap:0;}
+  .concept{border-bottom:1px solid var(--border); padding:16px 0;}
+  .concept:first-child{padding-top:0;}
+  .concept:last-child{border-bottom:none;}
+  .concept-term{font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:4px;}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:12px 0 4px;}
+  th, td{text-align:left; padding:9px 12px; border:1px solid var(--border);}
+  th{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); background:var(--surface-2);}
+  .table-wrap{overflow-x:auto;}
+  .exercise-box{border:1px solid var(--border); background:var(--surface); border-radius:3px; padding:20px;}
+  details{margin-top:14px;}
+  summary{cursor:pointer; font-family:var(--font-mono); font-size:13px; color:var(--accent2); list-style:none;}
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:"▸ ";}
+  details[open] summary::before{content:"▾ ";}
+  .solution{margin-top:12px; padding-top:12px; border-top:1px dashed var(--border); font-size:14px;}
+  .iq-list{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;}
+  .iq-list li{border:1px solid var(--border); border-radius:3px; padding:12px 14px; background:var(--surface); font-size:14px; display:flex; gap:10px;}
+  .iq-list li::before{content:"?"; font-family:var(--font-mono); color:var(--accent); font-weight:700; flex-shrink:0;}
+  .quiz-item{border:1px solid var(--border); border-radius:3px; padding:16px; margin-bottom:12px; background:var(--surface);}
+  .quiz-q{font-weight:600; margin-bottom:10px; font-size:14.5px;}
+  .quiz-opts{display:flex; flex-direction:column; gap:8px;}
+  .quiz-opt{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--bg); color:var(--ink); padding:9px 12px; border-radius:2px; font-family:var(--font-body); font-size:13.5px; cursor:pointer;}
+  .quiz-opt:hover{border-color:var(--accent2);}
+  .quiz-opt.correct{border-color:var(--good); background:color-mix(in srgb, var(--good) 14%, var(--surface));}
+  .quiz-opt.incorrect{border-color:var(--bad); background:color-mix(in srgb, var(--bad) 12%, var(--surface));}
+  .quiz-opt[disabled]{cursor:default;}
+  .quiz-explain{font-size:13px; color:var(--muted); margin-top:10px; display:none; padding-top:10px; border-top:1px dashed var(--border);}
+  .quiz-explain.show{display:block;}
+  .quiz-score{font-family:var(--font-mono); font-size:13px; border:1px solid var(--border); border-radius:3px; padding:12px 14px; background:var(--surface-2); margin-top:6px;}
+  .checklist{display:flex; flex-direction:column; gap:10px;}
+  .check-row{display:flex; align-items:flex-start; gap:10px; font-size:14px;}
+  .check-row input{margin-top:3px; width:16px; height:16px; accent-color:var(--good); flex-shrink:0; cursor:pointer;}
+  .check-row label{cursor:pointer;}
+  .nav-footer{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:18px; font-family:var(--font-mono); font-size:12px;}
+  .nav-footer a{text-decoration:none; border:1px solid var(--border); padding:7px 12px; border-radius:2px;}
+  .nav-footer a:hover{border-color:var(--accent2);}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <a class="backlink" href="index.html">&larr; Volver al hub</a>
+
+  <header class="masthead">
+    <div class="eyebrow">Semana 1 · Día 03 · AI Agents &amp; Enterprise Architecture</div>
+    <div class="title-row">
+      <span class="day-numeral">03</span>
+      <h1>Enterprise Integration</h1>
+    </div>
+    <p class="sub">El agente vive rodeado de CRM, ERP, colas y APIs legacy. Hoy es puro mapeo: qué protocolo usar para qué capacidad, y cómo autorizar cada llamada.</p>
+    <div class="meta-row">
+      <span><b>~90 min</b></span>
+      <span>Prerrequisito: <b>Día 02</b></span>
+      <span>Conecta con: <b>Día 04 — Security</b></span>
+    </div>
+  </header>
+
+  <section>
+    <div class="section-label">Objetivo del día</div>
+    <p>Ya sabes construir APIs, consumir eventos y manejar OAuth2 — eso no cambia. Lo que cambia es <b>quién</b> decide cuándo llamar cada integración: hoy es un LLM, no una rama de código fija, así que cada integración necesita un contrato más explícito y más defensivo.</p>
+  </section>
+
+  <section>
+    <div class="section-label">Principio clave</div>
+    <div class="principle-box">"El agente no debería acceder directamente a los sistemas críticos; debe hacerlo mediante herramientas y APIs con autorización y controles adecuados."</div>
+  </section>
+
+  <section>
+    <div class="section-label">Contenido</div>
+    <div class="concept-grid">
+      <div class="concept">
+        <div class="concept-term">REST</div>
+        <h3>El default para exponer una tool</h3>
+        <p>Request/response síncrono, contrato predecible, fácil de describir como schema para el LLM. Es la forma más simple de envolver una capacidad de negocio como tool.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">GraphQL</div>
+        <h3>Potente para el humano, ambiguo para el modelo</h3>
+        <p>Resuelve over/under-fetching, pero un schema GraphQL completo es difícil de acotar como definición de tool (demasiadas combinaciones posibles). En la práctica: envuelve el GraphQL detrás de una tool REST-like con queries predefinidas y parametrizadas.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Kafka / Event-driven</div>
+        <h3>Para acciones que no necesitan respuesta inmediata</h3>
+        <p>Si la acción del agente dispara un proceso downstream (fulfillment, notificación a otro equipo) y no necesita esperar el resultado para continuar la conversación, un evento es mejor que una llamada síncrona: desacopla al agente de la disponibilidad de ese sistema.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Webhooks</div>
+        <h3>La forma en que el mundo despierta al agente</h3>
+        <p>Cuando algo pasa fuera del turno de conversación (un pago se confirma, un humano aprueba una acción pendiente), un webhook reactiva el agente para continuar donde quedó — clave para flujos con human-in-the-loop.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Databases</div>
+        <h3>Nunca una tool en sí misma</h3>
+        <p>El agente no debería tener una tool tipo "run SQL query". Siempre pasa por un servicio que valida, aplica reglas de negocio y deja rastro de auditoría — igual que exigirías en cualquier sistema con usuarios externos.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">CRM / ERP / SaaS / Legacy</div>
+        <h3>La realidad: rara vez hay una API limpia</h3>
+        <p>Muchas veces necesitas un adapter/anti-corruption layer entre el sistema legacy y la tool que expones al agente — traduce el modelo de datos viejo a un contrato simple y estable.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">OAuth2 / OIDC</div>
+        <h3>Quién autoriza qué, en nombre de quién</h3>
+        <p>El agente actúa <b>en nombre de un usuario</b> (delegated authorization) o con un service account de scope acotado. El token que usa la tool debe llevar los mismos scopes que tendría el usuario si hiciera la acción manualmente — nunca más.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">IAM</div>
+        <h3>Least privilege, por tool</h3>
+        <p>Cada tool tiene su propio scope mínimo necesario. Una tool de "consultar pedido" no debería poder "cancelar pedido" — aunque ambas toquen el mismo sistema.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">API Gateway</div>
+        <h3>El chokepoint donde vive el control</h3>
+        <p>Todas las tool calls del agente pasan por un punto central de auth, rate limiting y logging — es también donde suele vivir buena parte de los guardrails de seguridad (Día 04).</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Diagrama de implementación</div>
+    <h2>La capa de integración completa</h2>
+    <p>Cómo se ve en la práctica el principio del día: el agente solo habla con el API Gateway, nunca directo con CRM, legacy o el bus de eventos.</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 680 300" role="img" aria-label="Diagrama: el Agent Runtime llama al API Gateway, que enruta hacia una tool REST síncrona contra un SaaS CRM con OAuth2, hacia un adapter que envuelve un sistema legacy SOAP, y hacia un evento asíncrono publicado en un bus para disparar fulfillment.">
+        <defs>
+          <marker id="d3arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" class="darrow-head"/>
+          </marker>
+        </defs>
+
+        <rect x="270" y="14" width="140" height="34" rx="3" class="dbox-accent"/>
+        <text x="340" y="36" text-anchor="middle" class="dtext-accent">Agent Runtime</text>
+        <line x1="340" y1="48" x2="340" y2="70" class="darrow" marker-end="url(#d3arrow)"/>
+
+        <rect x="230" y="72" width="220" height="34" rx="3" class="dbox"/>
+        <text x="340" y="94" text-anchor="middle" class="dlabel">API Gateway</text>
+        <text x="340" y="120" text-anchor="middle" class="dtext-muted">auth · rate limit · logging · única puerta</text>
+
+        <line x1="230" y1="90" x2="90" y2="150" class="darrow" marker-end="url(#d3arrow)"/>
+        <line x1="340" y1="106" x2="340" y2="150" class="darrow" marker-end="url(#d3arrow)"/>
+        <line x1="450" y1="90" x2="590" y2="150" class="darrow-dashed" marker-end="url(#d3arrow)"/>
+
+        <rect x="20" y="152" width="140" height="34" rx="3" class="dbox"/>
+        <text x="90" y="174" text-anchor="middle" class="dtext">Salesforce</text>
+        <text x="90" y="200" text-anchor="middle" class="dtext-muted">REST + OAuth2 · sync</text>
+
+        <rect x="270" y="152" width="140" height="34" rx="3" class="dbox"/>
+        <text x="340" y="174" text-anchor="middle" class="dtext">Legacy adapter</text>
+        <text x="340" y="200" text-anchor="middle" class="dtext-muted">REST → SOAP · sync</text>
+
+        <rect x="520" y="152" width="140" height="34" rx="3" class="dbox"/>
+        <text x="590" y="174" text-anchor="middle" class="dtext">Event bus</text>
+        <text x="590" y="200" text-anchor="middle" class="dtext-muted">Kafka/EventBridge · async</text>
+
+        <line x1="90" y1="186" x2="90" y2="222" class="darrow" marker-end="url(#d3arrow)"/>
+        <rect x="20" y="224" width="140" height="34" rx="3" class="dbox"/>
+        <text x="90" y="246" text-anchor="middle" class="dtext-muted">CRM del cliente</text>
+
+        <line x1="340" y1="186" x2="340" y2="222" class="darrow" marker-end="url(#d3arrow)"/>
+        <rect x="270" y="224" width="140" height="34" rx="3" class="dbox"/>
+        <text x="340" y="246" text-anchor="middle" class="dtext-muted">Sistema SOAP legacy</text>
+
+        <line x1="590" y1="186" x2="590" y2="222" class="darrow" marker-end="url(#d3arrow)"/>
+        <rect x="520" y="224" width="140" height="34" rx="3" class="dbox"/>
+        <text x="590" y="246" text-anchor="middle" class="dtext-muted">Fulfillment (async)</text>
+      </svg>
+      <figcaption>Línea punteada = camino asíncrono (evento). Líneas sólidas = llamada síncrona con respuesta esperada.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="section-label">Ejemplo de implementación</div>
+    <h2>El adapter que envuelve el sistema SOAP legacy</h2>
+    <p>La tool que ve el agente es REST limpio; el adapter absorbe toda la fealdad de SOAP detrás.</p>
+    <div class="code-block">
+      <div class="code-head"><span>ticket_adapter.py</span><span class="lang">python</span></div>
+      <pre><span class="code-kw">from</span> fastapi <span class="code-kw">import</span> FastAPI, HTTPException
+<span class="code-kw">import</span> zeep  <span class="code-comment"># cliente SOAP</span>
+
+app = FastAPI()
+soap_client = zeep.Client(<span class="code-str">"https://legacy.internal/tickets?wsdl"</span>)
+
+<span class="code-comment"># Contrato REST limpio — esto es lo único que el agente conoce como tool</span>
+<span class="code-kw">@app</span>.post(<span class="code-str">"/tickets"</span>)
+<span class="code-kw">def</span> create_ticket(payload: TicketCreate, token: str = Depends(verify_oauth_scope)):
+    <span class="code-kw">if not</span> token.has_scope(<span class="code-str">"tickets:write"</span>):
+        <span class="code-kw">raise</span> HTTPException(403, <span class="code-str">"missing tickets:write scope"</span>)
+
+    <span class="code-kw">try</span>:
+        <span class="code-comment"># Traduce el modelo REST simple al request SOAP real</span>
+        soap_response = soap_client.service.CreateIncident(
+            CustomerId=payload.customer_id,
+            Description=payload.description,
+            Priority=map_priority(payload.priority),
+        )
+    <span class="code-kw">except</span> zeep.exceptions.Fault <span class="code-kw">as</span> e:
+        <span class="code-comment"># Error estructurado — el agente lo ve como observación, no como crash</span>
+        <span class="code-kw">raise</span> HTTPException(502, {<span class="code-str">"error"</span>: <span class="code-str">"legacy_system_fault"</span>, <span class="code-str">"detail"</span>: str(e)})
+
+    <span class="code-kw">return</span> {<span class="code-str">"ticket_id"</span>: soap_response.IncidentId, <span class="code-str">"status"</span>: <span class="code-str">"created"</span>}</pre>
+    </div>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">El agente nunca sabe que existe SOAP — solo ve <code>POST /tickets</code> con un schema JSON, exactamente como cualquier otra tool.</p>
+  </section>
+
+  <section>
+    <div class="section-label">Ejercicio práctico</div>
+    <div class="exercise-box">
+      <h2>Caso: agente que gestiona incidencias de un cliente</h2>
+      <p>El agente debe: (a) consultar datos del cliente en Salesforce (CRM SaaS, REST + OAuth2), (b) crear un ticket en un sistema legacy de soporte que solo expone SOAP, (c) disparar el proceso de fulfillment cuando el ticket se resuelve.</p>
+      <ol>
+        <li>¿Qué protocolo/patrón usarías para cada una de las tres integraciones, y por qué?</li>
+        <li>¿Cómo envuelves el sistema legacy SOAP para que sea una tool utilizable por el agente?</li>
+        <li>¿Qué scope de OAuth2 le darías a la tool de Salesforce — y qué NO debería poder hacer?</li>
+      </ol>
+      <details>
+        <summary>Ver enfoque sugerido</summary>
+        <div class="solution">
+          <p><b>1.</b> Salesforce → REST síncrono (necesitas el dato ya para responder). Ticket legacy → REST síncrono también (necesitas confirmar creación), pero envuelto. Fulfillment → evento asíncrono (Kafka/EventBridge), no bloquea la conversación.</p>
+          <p><b>2.</b> Un servicio adapter propio expone un endpoint REST simple (<code>POST /tickets</code>) que internamente traduce a la llamada SOAP — el agente nunca ve SOAP, solo ve un contrato REST limpio con su propio schema de tool.</p>
+          <p><b>3.</b> Scope de solo lectura sobre el objeto Contact/Case del cliente autenticado — nunca write, y nunca acceso a otros clientes. Si se necesita escribir (ej. actualizar un campo), es una tool distinta, con su propio scope y probablemente aprobación humana.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <ul class="iq-list">
+      <li>¿Cómo expondrías un sistema SOAP legacy como tool para un agente?</li>
+      <li>¿Cuándo usarías un evento (Kafka) en vez de una tool call directa para una acción del agente?</li>
+      <li>¿Cómo manejas una tool call que necesita aprobación humana antes de ejecutarse (ej. un reembolso)?</li>
+      <li>¿Dónde encaja el API Gateway en la arquitectura de un agente, y por qué ahí?</li>
+      <li>¿Cómo limitan los scopes de OAuth2 lo que un agente puede hacer en nombre de un usuario?</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-label">Quiz de autoevaluación</div>
+    <div id="quiz"></div>
+    <div class="quiz-score" id="quizScore">0 / 6 respondidas correctamente</div>
+  </section>
+
+  <section>
+    <div class="section-label">Checklist de cierre</div>
+    <div class="checklist" id="checklist">
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Sé cuándo elegir evento vs llamada síncrona para una acción del agente.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Puedo explicar por qué el agente nunca debería tener una tool "run SQL".</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Entiendo delegated authorization y por qué el scope del token importa.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Resolví el ejercicio del caso Salesforce/legacy sin ver la solución primero.</label></div>
+      <div class="check-row"><input type="checkbox" id="c5"><label for="c5">Completé el quiz con 6/6.</label></div>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="index.html">&larr; Hub</a>
+    <span>Día 03 de 14</span>
+    <a href="day-04.html">Día 04 &rarr;</a>
+  </div>
+</div>
+
+<script>
+  const QUIZ = [
+    {
+      q: "¿Cuál es el escenario más apropiado para usar un evento (Kafka) en vez de una tool call síncrona?",
+      opts: ["Cuando necesitas la respuesta inmediatamente para continuar la conversación", "Cuando la acción dispara un proceso downstream y el agente no necesita esperar su resultado", "Siempre, los eventos son mejores que REST", "Nunca, los agentes solo deberían usar REST"],
+      correct: 1,
+      explain: "Los eventos desacoplan al agente de sistemas que no necesita esperar — ideal para side effects que no bloquean la respuesta al usuario."
+    },
+    {
+      q: "¿Por qué el agente no debería tener una tool tipo 'ejecutar SQL arbitrario'?",
+      opts: ["Porque el LLM no entiende SQL", "Porque elimina el punto de validación, autorización y auditoría que da una tool bien definida", "Porque las bases de datos son lentas", "No hay problema, es una buena práctica"],
+      correct: 1,
+      explain: "Una tool específica te da un contrato acotado donde validar y auditar. SQL libre es equivalente a dar acceso root al modelo."
+    },
+    {
+      q: "En delegated authorization vía OAuth2, el token que usa una tool debería tener...",
+      opts: ["Todos los scopes posibles, por si acaso", "Los mismos scopes que tendría el usuario si hiciera la acción manualmente, nunca más", "Ningún scope, la tool no necesita autorización", "Un scope distinto por cada conversación, sin relación al usuario"],
+      correct: 1,
+      explain: "El principio es que el agente actúa con exactamente el mismo nivel de permiso que el usuario en cuyo nombre opera — ni más ni menos."
+    },
+    {
+      q: "¿Qué rol cumple el API Gateway en la arquitectura de un agente?",
+      opts: ["Es opcional y no aporta nada relevante", "Chokepoint central de auth, rate limiting y logging para todas las tool calls", "Reemplaza la necesidad de tools bien definidas", "Solo se usa para servir contenido estático"],
+      correct: 1,
+      explain: "Es el punto central donde se puede aplicar control y observabilidad de forma consistente sobre todas las llamadas del agente."
+    },
+    {
+      q: "Para envolver un sistema legacy SOAP como tool de un agente, la mejor práctica es...",
+      opts: ["Exponer el WSDL directamente al modelo", "Construir un adapter que traduce a un contrato REST simple y estable", "Pedirle al modelo que genere el XML SOAP directamente", "No es posible integrar sistemas legacy con agentes"],
+      correct: 1,
+      explain: "Un anti-corruption layer aísla al agente de la complejidad del sistema legacy detrás de un contrato limpio."
+    },
+    {
+      q: "Una acción que requiere aprobación humana antes de ejecutarse (ej. un reembolso) se maneja mejor...",
+      opts: ["Dejando que el agente la ejecute y notifique después", "Con una tool que crea una solicitud pendiente, y un webhook que reactiva al agente cuando se aprueba", "Ignorando la necesidad de aprobación si el usuario insiste", "Bloqueando por completo esa capacidad del agente"],
+      correct: 1,
+      explain: "El patrón es: la tool no ejecuta directamente, crea un pending approval; un evento/webhook externo notifica cuando se aprueba, y el agente retoma el flujo."
+    }
+  ];
+  const quizEl = document.getElementById('quiz');
+  let correctCount = 0, answered = 0;
+  QUIZ.forEach((item, i) => {
+    const box = document.createElement('div');
+    box.className = 'quiz-item';
+    const optsHtml = item.opts.map((o, j) => `<button class="quiz-opt" data-idx="${j}">${o}</button>`).join('');
+    box.innerHTML = `<div class="quiz-q">${i+1}. ${item.q}</div><div class="quiz-opts">${optsHtml}</div><div class="quiz-explain" id="explain-${i}">${item.explain}</div>`;
+    quizEl.appendChild(box);
+    box.querySelectorAll('.quiz-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (box.dataset.answered) return;
+        box.dataset.answered = "1"; answered++;
+        const idx = parseInt(btn.getAttribute('data-idx'));
+        box.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+        if (idx === item.correct) { btn.classList.add('correct'); correctCount++; }
+        else { btn.classList.add('incorrect'); box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct'); }
+        document.getElementById(`explain-${i}`).classList.add('show');
+        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+      });
+    });
+  });
+  const CHECK_KEY = 'aiaeb-day03-checklist';
+  const boxes = document.querySelectorAll('#checklist input[type=checkbox]');
+  function loadChecks(){ try{ return JSON.parse(localStorage.getItem(CHECK_KEY)) || {}; } catch(e){ return {}; } }
+  function saveChecks(state){ localStorage.setItem(CHECK_KEY, JSON.stringify(state)); }
+  const state = loadChecks();
+  boxes.forEach(b => {
+    if (state[b.id]) b.checked = true;
+    b.addEventListener('change', () => { const s = loadChecks(); s[b.id] = b.checked; saveChecks(s); });
+  });
+</script>
+
+</body>
+</html>

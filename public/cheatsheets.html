@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
+<title>Cheat Sheets FDE</title>
+<style>
+  :root{
+    --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
+    --border:#d3dbdd; --accent:#b8681f; --accent-ink:#fff8f0; --accent2:#256d87; --good:#3f7d52;
+    --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+      --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+    --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      repeating-linear-gradient(90deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      var(--bg);
+    color:var(--ink); font-family:var(--font-body); line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent2);}
+  a:focus-visible{outline:2px solid var(--accent2); outline-offset:2px;}
+  .wrap{max-width:920px; margin:0 auto; padding:40px 24px 100px;}
+  .backlink{font-family:var(--font-mono); font-size:12px; text-decoration:none; color:var(--muted); display:inline-flex; gap:6px;}
+  .backlink:hover{color:var(--accent2);}
+  header.masthead{border-bottom:1px solid var(--border); padding-bottom:24px; margin:18px 0 32px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent2); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:20px; height:1px; background:var(--accent2); display:inline-block;}
+  h1{font-family:var(--font-display); font-weight:600; font-size:clamp(28px,4.5vw,38px); margin:10px 0 8px; text-wrap:balance; letter-spacing:-0.01em;}
+  .sub{color:var(--muted); font-size:15px; max-width:60ch;}
+  .toc{display:flex; gap:8px; flex-wrap:wrap; margin-top:18px;}
+  .toc a{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; border:1px solid var(--border); padding:5px 11px; border-radius:2px; text-decoration:none; color:var(--muted);}
+  .toc a:hover{border-color:var(--accent2); color:var(--accent2);}
+
+  .sheet{border:1px solid var(--border); border-radius:4px; background:var(--surface); padding:26px 28px; margin-bottom:28px; scroll-margin-top:20px;}
+  .sheet-head{display:flex; justify-content:space-between; align-items:baseline; border-bottom:2px solid var(--accent); padding-bottom:10px; margin-bottom:16px;}
+  .sheet-title{font-family:var(--font-display); font-size:22px; font-weight:600;}
+  .sheet-num{font-family:var(--font-mono); font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.06em;}
+
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  @media (max-width:640px){.two-col{grid-template-columns:1fr;}}
+
+  .mini-h{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent2); margin:14px 0 6px;}
+  .mini-h:first-child{margin-top:0;}
+  ul.dense{margin:0 0 4px; padding-left:16px; font-size:13px;}
+  ul.dense li{margin-bottom:4px;}
+  p.dense{font-size:13px; margin:0 0 8px;}
+  code{font-family:var(--font-mono); font-size:.92em; background:var(--surface-2); padding:0 4px; border-radius:2px;}
+  pre.diagram{font-family:var(--font-mono); font-size:11.5px; background:var(--bg); border:1px solid var(--border); padding:10px 12px; border-radius:2px; overflow-x:auto; line-height:1.5; margin:0 0 10px;}
+
+  figure.diagram{margin:0 0 10px; border:1px solid var(--border); border-radius:2px; background:var(--bg); padding:12px 14px;}
+  figure.diagram svg{display:block; width:100%; height:auto;}
+  .dbox{fill:var(--surface); stroke:var(--border); stroke-width:1.3;}
+  .dbox-accent{fill:var(--accent); fill-opacity:.14; stroke:var(--accent); stroke-width:1.3;}
+  .dtext{font-family:var(--font-mono); font-size:10px; fill:var(--ink);}
+  .darrow{stroke:var(--muted); stroke-width:1.2; fill:none;}
+  .darrow-head{fill:var(--muted);}
+
+  table.dense{width:100%; border-collapse:collapse; font-size:12px; margin:0 0 10px;}
+  table.dense th, table.dense td{text-align:left; padding:5px 8px; border:1px solid var(--border); vertical-align:top;}
+  table.dense th{font-family:var(--font-mono); font-size:10px; text-transform:uppercase; color:var(--muted); background:var(--surface-2);}
+
+  .principle-mini{font-family:var(--font-display); font-style:italic; font-size:14px; border-left:2px solid var(--accent); padding-left:10px; margin:8px 0;}
+
+  .nav-footer{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:18px; font-family:var(--font-mono); font-size:12px;}
+  .nav-footer a{text-decoration:none; border:1px solid var(--border); padding:7px 12px; border-radius:2px;}
+  .nav-footer a:hover{border-color:var(--accent2);}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <a class="backlink" href="index.html">&larr; Volver al hub</a>
+
+  <header class="masthead">
+    <div class="eyebrow">Referencia · AI Agent Engineering Bootcamp</div>
+    <h1>Cheat Sheets</h1>
+    <p class="sub">Un one-pager denso por track. Para repaso el día antes de la entrevista, no para primera lectura.</p>
+    <div class="toc">
+      <a href="#s1">01 AI Agents</a>
+      <a href="#s2">02 System Design</a>
+      <a href="#s3">03 Security</a>
+      <a href="#s4">04 Distributed &amp; Cloud</a>
+      <a href="#s5">05 Communication</a>
+    </div>
+  </header>
+
+  <div class="sheet" id="s1">
+    <div class="sheet-head"><span class="sheet-title">AI Agents</span><span class="sheet-num">01 / 05</span></div>
+    <figure class="diagram">
+      <svg viewBox="0 0 600 95" role="img" aria-label="Diagrama compacto: User a Channel a Agent Runtime, que contiene LLM, Memory, RAG y Tools; Tools es la única salida hacia sistemas externos.">
+        <defs><marker id="csarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker></defs>
+        <rect x="10" y="8" width="70" height="26" rx="3" class="dbox"/><text x="45" y="25" text-anchor="middle" class="dtext">User</text>
+        <line x1="80" y1="21" x2="98" y2="21" class="darrow" marker-end="url(#csarrow)"/>
+        <rect x="100" y="8" width="90" height="26" rx="3" class="dbox"/><text x="145" y="25" text-anchor="middle" class="dtext">Channel</text>
+        <line x1="190" y1="21" x2="208" y2="21" class="darrow" marker-end="url(#csarrow)"/>
+        <rect x="210" y="8" width="140" height="26" rx="3" class="dbox-accent"/><text x="280" y="25" text-anchor="middle" class="dtext">Agent Runtime</text>
+
+        <line x1="280" y1="34" x2="175" y2="56" class="darrow" marker-end="url(#csarrow)"/>
+        <line x1="280" y1="34" x2="275" y2="56" class="darrow" marker-end="url(#csarrow)"/>
+        <line x1="280" y1="34" x2="375" y2="56" class="darrow" marker-end="url(#csarrow)"/>
+        <line x1="280" y1="34" x2="495" y2="56" class="darrow" marker-end="url(#csarrow)"/>
+
+        <rect x="140" y="58" width="70" height="26" rx="3" class="dbox"/><text x="175" y="75" text-anchor="middle" class="dtext">LLM</text>
+        <rect x="220" y="58" width="110" height="26" rx="3" class="dbox"/><text x="275" y="75" text-anchor="middle" class="dtext">Memory</text>
+        <rect x="340" y="58" width="70" height="26" rx="3" class="dbox"/><text x="375" y="75" text-anchor="middle" class="dtext">RAG</text>
+        <rect x="420" y="58" width="150" height="26" rx="3" class="dbox"/><text x="495" y="75" text-anchor="middle" class="dtext">Tools → CRM/ERP/DB/APIs</text>
+      </svg>
+    </figure>
+    <div class="two-col">
+      <div>
+        <div class="mini-h">Los 12 fundamentales</div>
+        <ul class="dense">
+          <li><b>LLM</b> — predicción de tokens, stateless.</li>
+          <li><b>Prompting</b> — system = config, user = request.</li>
+          <li><b>Structured Outputs</b> — output validable por schema.</li>
+          <li><b>Function Calling</b> — LLM propone, backend ejecuta.</li>
+          <li><b>Agent</b> — loop pensar→actuar→observar.</li>
+          <li><b>Orchestration</b> — coordina tools/pasos/agentes.</li>
+          <li><b>RAG</b> — consulta en runtime, no fine-tuning.</li>
+          <li><b>Embeddings</b> — similitud semántica vectorial.</li>
+          <li><b>Context Window</b> — presupuesto de tokens.</li>
+          <li><b>Memory</b> — short (sesión) / long (store externo).</li>
+          <li><b>Hallucination</b> — falla con confianza, sin error.</li>
+          <li><b>Guardrails</b> — middleware de validación.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="mini-h">Single vs Multi-agent</div>
+        <table class="dense">
+          <tr><th></th><th>Single</th><th>Multi</th></tr>
+          <tr><td>Complejidad</td><td>Baja</td><td>Alta</td></tr>
+          <tr><td>Seguridad</td><td>1 scope</td><td>Scopes por agente</td></tr>
+          <tr><td>Cuándo</td><td>Dominio acotado</td><td>Dominios heterogéneos</td></tr>
+        </table>
+        <div class="mini-h">RAG vs Fine-tuning</div>
+        <p class="dense">RAG = read en runtime, fácil de actualizar. Fine-tuning = hornea el conocimiento en pesos, caro y difícil de mantener.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet" id="s2">
+    <div class="sheet-head"><span class="sheet-title">System Design</span><span class="sheet-num">02 / 05</span></div>
+    <div class="two-col">
+      <div>
+        <div class="mini-h">Framework de 16 pasos</div>
+        <ul class="dense">
+          <li>1. Clarificar</li><li>2. Usuarios</li><li>3. Objetivos</li>
+          <li>4. Req. funcionales</li><li>5. Req. no funcionales</li><li>6. Restricciones</li>
+          <li>7. Arquitectura alto nivel</li><li>8. Arquitectura del agente</li><li>9. Integraciones</li>
+          <li>10. Datos</li><li>11. Seguridad</li><li>12. Resiliencia</li>
+          <li>13. Observabilidad</li><li>14. Escalabilidad</li><li>15. Trade-offs</li><li>16. Rollout</li>
+        </ul>
+      </div>
+      <div>
+        <div class="mini-h">Composition Case (9 pasos)</div>
+        <ul class="dense">
+          <li>Problem → Users → Pain Points</li>
+          <li>Business Value → Processes</li>
+          <li>Automation Opportunities → Risks</li>
+          <li>Architecture (recién aquí) → Implementation</li>
+        </ul>
+        <div class="mini-h">Regla de oro</div>
+        <div class="principle-mini">3-5 min clarificando antes de dibujar una sola caja.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet" id="s3">
+    <div class="sheet-head"><span class="sheet-title">Security</span><span class="sheet-num">03 / 05</span></div>
+    <div class="principle-mini">"Un agente enterprise no debe tener autonomía ilimitada."</div>
+    <div class="two-col">
+      <div>
+        <div class="mini-h">Identity &amp; Data</div>
+        <ul class="dense">
+          <li>OAuth2/OIDC/JWT — scope = exactamente el permiso del usuario.</li>
+          <li>Nunca secrets crudos en el contexto del LLM.</li>
+          <li>PII: minimizar lo que entra al contexto, no solo lo que se persiste.</li>
+        </ul>
+        <div class="mini-h">Governance</div>
+        <ul class="dense">
+          <li>RBAC por tool, según rol del usuario.</li>
+          <li>Audit log: quién, qué tool, con qué args, resultado.</li>
+          <li>Human-in-the-loop para acciones irreversibles.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="mini-h">AI Security (OWASP-style)</div>
+        <ul class="dense">
+          <li><b>Prompt injection</b> — tratar contenido externo como dato, nunca instrucción.</li>
+          <li><b>Excessive agency</b> — se arregla con arquitectura (scope mínimo), no con el prompt.</li>
+          <li><b>Data exfiltration</b> — allowlist de destinos, no fetch arbitrario.</li>
+          <li><b>Insecure output handling</b> — output del LLM = input no confiable.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet" id="s4">
+    <div class="sheet-head"><span class="sheet-title">Distributed Systems &amp; Cloud</span><span class="sheet-num">04 / 05</span></div>
+    <div class="two-col">
+      <div>
+        <div class="mini-h">Conceptos clave</div>
+        <ul class="dense">
+          <li><b>CAP</b> — durante partición: consistencia o disponibilidad.</li>
+          <li><b>Saga</b> — pasos con compensating actions, no ACID distribuido.</li>
+          <li><b>Outbox</b> — evento + cambio de estado en la misma tx local.</li>
+          <li><b>Idempotency</b> — key generada al iniciar, no en cada retry.</li>
+          <li><b>Exactly-once</b> — no existe; se simula con at-least-once + idempotency.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="mini-h">AWS — 5 comparaciones</div>
+        <table class="dense">
+          <tr><td><b>Lambda</b></td><td>tools cortas/stateless</td></tr>
+          <tr><td><b>ECS/EKS</b></td><td>Agent Runtime, larga duración</td></tr>
+          <tr><td><b>SQS</b></td><td>trabajo punto a punto</td></tr>
+          <tr><td><b>Kafka/MSK</b></td><td>múltiples consumidores del mismo evento</td></tr>
+          <tr><td><b>Step Functions</b></td><td>orquestar Saga con retry/error por paso</td></tr>
+          <tr><td><b>DynamoDB</b></td><td>estado de conversación (clave-valor)</td></tr>
+          <tr><td><b>RDS</b></td><td>datos de negocio relacionales</td></tr>
+          <tr><td><b>API Gateway</b></td><td>muchos endpoints tipo tool</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet" id="s5">
+    <div class="sheet-head"><span class="sheet-title">Communication</span><span class="sheet-num">05 / 05</span></div>
+    <div class="two-col">
+      <div>
+        <div class="mini-h">Framework CDRT-R</div>
+        <p class="dense"><b>Context</b> → <b>Decision</b> → <b>Reason</b> → <b>Trade-off</b> → <b>Result</b>. 60-90s por decisión técnica.</p>
+        <div class="mini-h">STAR + Architecture Context</div>
+        <p class="dense">Situation, Task, Action, Result + el detalle técnico específico de la decisión.</p>
+        <div class="mini-h">Presentación ejecutiva</div>
+        <p class="dense">Conclusión primero, detalle técnico si preguntan.</p>
+      </div>
+      <div>
+        <div class="mini-h">Technical English</div>
+        <ul class="dense">
+          <li>"Let me clarify the requirements first."</li>
+          <li>"There are two main trade-offs here."</li>
+          <li>"The bottleneck is likely to be..."</li>
+          <li>"I'd introduce async processing if volume grows beyond..."</li>
+          <li>"The main risk with this approach is..."</li>
+          <li>"Let's walk through the failure path."</li>
+          <li>"I'll assume X — correct me if that's wrong."</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <a href="index.html">&larr; Hub</a>
+    <span>Cheat Sheets · 5 tracks</span>
+  </div>
+</div>
+
+</body>
+</html>

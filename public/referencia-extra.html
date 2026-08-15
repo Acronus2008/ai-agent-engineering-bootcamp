@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
+<title>Temas Complementarios</title>
+<style>
+  :root{
+    --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
+    --border:#d3dbdd; --accent:#b8681f; --accent-ink:#fff8f0; --accent2:#256d87; --good:#3f7d52;
+    --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+      --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+    --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      repeating-linear-gradient(90deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      var(--bg);
+    color:var(--ink); font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent2);}
+  a:focus-visible{outline:2px solid var(--accent2); outline-offset:2px;}
+  .wrap{max-width:780px; margin:0 auto; padding:40px 24px 100px;}
+  .backlink{font-family:var(--font-mono); font-size:12px; text-decoration:none; color:var(--muted); display:inline-flex; gap:6px;}
+  .backlink:hover{color:var(--accent2);}
+  header.masthead{border-bottom:1px solid var(--border); padding-bottom:24px; margin:18px 0 32px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent2); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:20px; height:1px; background:var(--accent2); display:inline-block;}
+  h1{font-family:var(--font-display); font-weight:600; font-size:clamp(26px,4.5vw,36px); margin:10px 0 8px; text-wrap:balance; letter-spacing:-0.01em;}
+  .sub{color:var(--muted); font-size:15px; max-width:62ch;}
+  .toc{display:flex; gap:8px; flex-wrap:wrap; margin-top:18px;}
+  .toc a{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; border:1px solid var(--border); padding:5px 11px; border-radius:2px; text-decoration:none; color:var(--muted);}
+  .toc a:hover{border-color:var(--accent2); color:var(--accent2);}
+
+  section{margin-bottom:44px; scroll-margin-top:20px;}
+  .section-label{font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); border-top:1px solid var(--border); padding-top:8px; margin-bottom:6px; display:flex; justify-content:space-between;}
+  .priority-tag{color:var(--muted); text-transform:none; letter-spacing:0;}
+  h2{font-family:var(--font-display); font-size:21px; margin:6px 0 8px; font-weight:600;}
+  .track-note{font-size:13.5px; color:var(--muted); margin-bottom:16px;}
+  p{margin:0 0 12px;}
+
+  .diagram-wrap{overflow-x:auto; border:1px solid var(--border); border-radius:3px; background:var(--surface); padding:14px 16px; margin-bottom:16px;}
+  .diagram-wrap pre{border:none; padding:0; margin:0; background:none; color:var(--ink); font-family:var(--font-mono); font-size:12.5px; line-height:1.6;}
+
+  figure.diagram{margin:0 0 16px; border:1px solid var(--border); border-radius:3px; background:var(--surface); padding:16px 18px 12px;}
+  figure.diagram svg{display:block; width:100%; height:auto;}
+  figure.diagram figcaption{font-family:var(--font-mono); font-size:10.5px; color:var(--muted); margin-top:10px; text-transform:uppercase; letter-spacing:.05em;}
+  .dbox{fill:var(--surface); stroke:var(--border); stroke-width:1.4;}
+  .dbox-accent{fill:var(--accent); fill-opacity:.14; stroke:var(--accent); stroke-width:1.4;}
+  .dtext{font-family:var(--font-mono); font-size:11px; fill:var(--ink);}
+  .dtext-muted{font-family:var(--font-mono); font-size:10px; fill:var(--muted);}
+  .darrow{stroke:var(--muted); stroke-width:1.4; fill:none;}
+  .darrow-head{fill:var(--muted);}
+
+  .concept-grid{display:grid; grid-template-columns:1fr; gap:0;}
+  .concept{border-bottom:1px solid var(--border); padding:12px 0;}
+  .concept:first-child{padding-top:0;}
+  .concept:last-child{border-bottom:none;}
+  .concept-term{font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:3px;}
+  .concept p{font-size:14px; margin:0;}
+
+  .checkq{font-size:13px; color:var(--accent2); font-style:italic; margin-top:14px; border-top:1px dashed var(--border); padding-top:10px;}
+
+  .nav-footer{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:18px; font-family:var(--font-mono); font-size:12px;}
+  .nav-footer a{text-decoration:none; border:1px solid var(--border); padding:7px 12px; border-radius:2px;}
+  .nav-footer a:hover{border-color:var(--accent2);}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <a class="backlink" href="index.html">&larr; Volver al hub</a>
+
+  <header class="masthead">
+    <div class="eyebrow">Referencia · AI Agent Engineering Bootcamp</div>
+    <h1>Temas Complementarios</h1>
+    <p class="sub">Voice &amp; Multichannel, Software Engineering, Data Architecture y DevOps — prioridad 🟠 en el bootcamp acelerado porque tu background ya los cubre. Repaso, no aprendizaje desde cero.</p>
+    <div class="toc">
+      <a href="#voice">Voice &amp; Multichannel</a>
+      <a href="#swe">Software Engineering</a>
+      <a href="#data">Data Architecture</a>
+      <a href="#devops">DevOps</a>
+    </div>
+  </header>
+
+  <section id="voice">
+    <div class="section-label">Track <span class="priority-tag">🟠 Media</span></div>
+    <h2>Voice &amp; Multichannel Agents</h2>
+    <p class="track-note">Ampliado desde el Día 10 (agente de voz enterprise) — aquí el detalle completo.</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 560 115" role="img" aria-label="Diagrama: el teléfono envía audio a Speech-to-Text, que pasa el texto al Agent, el cual consulta Tools y RAG y genera una respuesta que Text-to-Speech convierte de vuelta en audio hacia el teléfono.">
+        <defs><marker id="rexarrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker></defs>
+        <rect x="10" y="15" width="90" height="30" rx="3" class="dbox"/><text x="55" y="34" text-anchor="middle" class="dtext">Phone</text>
+        <line x1="100" y1="30" x2="118" y2="30" class="darrow" marker-end="url(#rexarrow)"/>
+        <rect x="120" y="15" width="110" height="30" rx="3" class="dbox"/><text x="175" y="34" text-anchor="middle" class="dtext">Speech-to-Text</text>
+        <line x1="230" y1="30" x2="248" y2="30" class="darrow" marker-end="url(#rexarrow)"/>
+        <rect x="250" y="15" width="110" height="30" rx="3" class="dbox-accent"/><text x="305" y="34" text-anchor="middle" class="dtext">Agent</text>
+        <line x1="360" y1="30" x2="378" y2="30" class="darrow" marker-end="url(#rexarrow)"/>
+        <rect x="380" y="15" width="110" height="30" rx="3" class="dbox"/><text x="435" y="34" text-anchor="middle" class="dtext">Text-to-Speech</text>
+
+        <polyline points="435,45 435,70 55,70 55,45" class="darrow" marker-end="url(#rexarrow)" fill="none"/>
+        <text x="245" y="66" text-anchor="middle" class="dtext-muted">audio de respuesta</text>
+
+        <line x1="305" y1="45" x2="305" y2="78" class="darrow" marker-end="url(#rexarrow)"/>
+        <rect x="250" y="80" width="110" height="28" rx="3" class="dbox"/><text x="305" y="98" text-anchor="middle" class="dtext">Tools + RAG</text>
+      </svg>
+    </figure>
+    <div class="concept-grid">
+      <div class="concept"><div class="concept-term">Latencia percibida</div><p>Un silencio de 2s en voz se siente como falla; el mismo delay en chat pasa desapercibido. Presupuesta latencia por etapa del pipeline STT→LLM→TTS.</p></div>
+      <div class="concept"><div class="concept-term">Interrupciones (barge-in)</div><p>El usuario puede hablar mientras el agente responde — el sistema debe poder cortar el TTS y procesar la nueva entrada sin perder contexto.</p></div>
+      <div class="concept"><div class="concept-term">Conversation state</div><p>Sin UI visual, el estado de "dónde estamos en la conversación" vive completamente en el backend — el usuario no puede "scrollear hacia arriba" para recordar.</p></div>
+      <div class="concept"><div class="concept-term">Human handoff / call transfer</div><p>El humano que recibe la llamada necesita el contexto completo (transcript + intención detectada) para no hacer que el cliente repita todo.</p></div>
+      <div class="concept"><div class="concept-term">Autenticación por voz</div><p>Sin UI, se recurre a PIN verbal, verificación de 2 factores, o biometría de voz — más débil que autenticación visual, requiere diseño explícito.</p></div>
+    </div>
+    <p class="checkq">Autocheck: ¿puedo explicar por qué la latencia importa más en voz que en chat, sin dudar?</p>
+  </section>
+
+  <section id="swe">
+    <div class="section-label">Track <span class="priority-tag">🔴 Alta (pero interview sharpening, no aprendizaje nuevo)</span></div>
+    <h2>Software Engineering Deep Dive</h2>
+    <p class="track-note">No es estudiar Java/Spring desde cero — es poder defender decisiones y bajar de arquitectura a implementación cuando te lo pidan.</p>
+    <div class="concept-grid">
+      <div class="concept"><div class="concept-term">APIs &amp; Microservices</div><p>Puedes diseñar el contrato de una tool como lo harías con cualquier microservicio: versión, validación de input, manejo de errores explícito.</p></div>
+      <div class="concept"><div class="concept-term">Concurrency &amp; Async</div><p>El Agent Runtime probablemente maneja múltiples tool calls en paralelo cuando son independientes — sé capaz de explicar cómo evitarías condiciones de carrera ahí.</p></div>
+      <div class="concept"><div class="concept-term">Resilience Patterns</div><p>Retry, timeout, circuit breaker — ya los viste aplicados a agentes en el Día 05. Sé capaz de implementarlos en código, no solo describirlos.</p></div>
+      <div class="concept"><div class="concept-term">Clean Architecture &amp; SOLID</div><p>Si te piden diseñar un componente (ej. el adapter de una tool), demuestra separación de capas: la lógica de negocio no debería depender del SDK del LLM.</p></div>
+      <div class="concept"><div class="concept-term">Testing</div><p>Piensa en cómo testearías una tool con dependencias externas (mocks) y cómo testearías el comportamiento del agente mismo (evals, Día 05).</p></div>
+    </div>
+    <p class="checkq">Autocheck: ¿podría implementar en código, no solo explicar, una de las tools que diseñé esta semana?</p>
+  </section>
+
+  <section id="data">
+    <div class="section-label">Track <span class="priority-tag">🟠 Media</span></div>
+    <h2>Data Architecture</h2>
+    <p class="track-note">Aprovecha tu experiencia existente en Data Engineering — la pregunta nueva es cómo se conecta con RAG.</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 650 50" role="img" aria-label="Diagrama: los datos operacionales alimentan la plataforma de datos, que produce una capa de conocimiento curada, que alimenta RAG, que alimenta al agente.">
+        <defs><marker id="rexarrow2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker></defs>
+        <rect x="10" y="10" width="140" height="30" rx="3" class="dbox"/><text x="80" y="29" text-anchor="middle" class="dtext">Operational Data</text>
+        <line x1="150" y1="25" x2="168" y2="25" class="darrow" marker-end="url(#rexarrow2)"/>
+        <rect x="170" y="10" width="120" height="30" rx="3" class="dbox"/><text x="230" y="29" text-anchor="middle" class="dtext">Data Platform</text>
+        <line x1="290" y1="25" x2="308" y2="25" class="darrow" marker-end="url(#rexarrow2)"/>
+        <rect x="310" y="10" width="130" height="30" rx="3" class="dbox"/><text x="375" y="29" text-anchor="middle" class="dtext">Knowledge Layer</text>
+        <line x1="440" y1="25" x2="458" y2="25" class="darrow" marker-end="url(#rexarrow2)"/>
+        <rect x="460" y="10" width="70" height="30" rx="3" class="dbox"/><text x="495" y="29" text-anchor="middle" class="dtext">RAG</text>
+        <line x1="530" y1="25" x2="548" y2="25" class="darrow" marker-end="url(#rexarrow2)"/>
+        <rect x="550" y="10" width="90" height="30" rx="3" class="dbox-accent"/><text x="595" y="29" text-anchor="middle" class="dtext">Agent</text>
+      </svg>
+    </figure>
+    <div class="concept-grid">
+      <div class="concept"><div class="concept-term">OLTP vs OLAP</div><p>Los sistemas transaccionales (OLTP) alimentan el Data Platform; el Knowledge Layer que consume RAG suele derivar de una capa más analítica/curada (OLAP-like), no de la tabla transaccional cruda.</p></div>
+      <div class="concept"><div class="concept-term">CDC &amp; Streaming</div><p>Change Data Capture permite mantener el Knowledge Layer actualizado casi en tiempo real, en vez de reindexar por batch completo cada vez.</p></div>
+      <div class="concept"><div class="concept-term">Data Governance &amp; Quality</div><p>Si el dato fuente está mal etiquetado o desactualizado, el RAG lo hereda directamente — la calidad del agente empieza en la calidad del pipeline de datos.</p></div>
+    </div>
+    <p class="checkq">Pregunta clave del track: ¿cómo mantenemos actualizado y confiable el conocimiento que usa el agente?</p>
+  </section>
+
+  <section id="devops">
+    <div class="section-label">Track <span class="priority-tag">🟠 Media</span></div>
+    <h2>DevOps / CI-CD</h2>
+    <p class="track-note">Cómo una solución de IA llega de código a producción de forma controlada — no distinto de cualquier otro sistema, con matices.</p>
+    <div class="concept-grid">
+      <div class="concept"><div class="concept-term">Docker &amp; Kubernetes</div><p>El Agent Runtime se empaqueta y despliega igual que cualquier servicio — nada específico de IA aquí, más allá de gestionar credenciales del proveedor de LLM como cualquier secret.</p></div>
+      <div class="concept"><div class="concept-term">Blue/Green &amp; Canary</div><p>Especialmente relevante para cambios de <b>prompt o de modelo</b> (Día 05) — un canary rollout permite medir calidad antes de exponer el cambio al 100% del tráfico.</p></div>
+      <div class="concept"><div class="concept-term">Feature Flags</div><p>Útiles para activar/desactivar capacidades del agente (ej. una tool nueva de alto riesgo) sin necesitar un nuevo deploy.</p></div>
+      <div class="concept"><div class="concept-term">Rollback Strategies</div><p>Si un cambio de prompt degrada la calidad, necesitas poder revertir tan rápido como revertirías un bug de código — el versionado de prompts (Día 05) es lo que lo hace posible.</p></div>
+    </div>
+    <p class="checkq">Autocheck: ¿cómo haría rollback de un cambio de prompt que degradó la calidad en producción?</p>
+  </section>
+
+  <div class="nav-footer">
+    <a href="index.html">&larr; Hub</a>
+    <span>Temas complementarios · 4 tracks</span>
+  </div>
+</div>
+
+</body>
+</html>

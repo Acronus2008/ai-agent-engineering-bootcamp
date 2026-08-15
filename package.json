@@ -1,0 +1,16 @@
+{
+  "name": "ai-agent-engineering-bootcamp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A 14-day, self-paced bootcamp for architects and developers moving into enterprise AI agent engineering — system design, security, distributed systems, reliability, and interview practice.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
+<title>Banco de Mock Interview</title>
+<style>
+  :root{
+    --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
+    --border:#d3dbdd; --accent:#b8681f; --accent-ink:#fff8f0; --accent2:#256d87; --good:#3f7d52;
+    --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+      --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+    --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      repeating-linear-gradient(90deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      var(--bg);
+    color:var(--ink); font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent2);}
+  a:focus-visible, button:focus-visible, summary:focus-visible{outline:2px solid var(--accent2); outline-offset:2px;}
+  .wrap{max-width:780px; margin:0 auto; padding:40px 24px 100px;}
+  .backlink{font-family:var(--font-mono); font-size:12px; text-decoration:none; color:var(--muted); display:inline-flex; gap:6px;}
+  .backlink:hover{color:var(--accent2);}
+  header.masthead{border-bottom:1px solid var(--border); padding-bottom:24px; margin:18px 0 32px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent2); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:20px; height:1px; background:var(--accent2); display:inline-block;}
+  h1{font-family:var(--font-display); font-weight:600; font-size:clamp(28px,4.5vw,38px); margin:10px 0 8px; text-wrap:balance; letter-spacing:-0.01em;}
+  .sub{color:var(--muted); font-size:15px; max-width:60ch;}
+  .toc{display:flex; gap:8px; flex-wrap:wrap; margin-top:18px;}
+  .toc a{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; border:1px solid var(--border); padding:5px 11px; border-radius:2px; text-decoration:none; color:var(--muted);}
+  .toc a:hover{border-color:var(--accent2); color:var(--accent2);}
+  section{margin-bottom:44px; scroll-margin-top:20px;}
+  .section-label{font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); border-top:1px solid var(--border); padding-top:8px; margin-bottom:14px;}
+  h2{font-family:var(--font-display); font-size:22px; margin:0 0 6px; font-weight:600;}
+  .duration{font-family:var(--font-mono); font-size:12px; color:var(--muted); margin-bottom:14px;}
+  p{margin:0 0 12px;}
+  ul, ol{margin:0 0 12px; padding-left:20px;}
+  li{margin-bottom:6px;}
+  .framework-flow{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin:12px 0;}
+  .framework-flow .node{border:1px solid var(--accent); color:var(--accent); font-family:var(--font-mono); font-size:11px; text-transform:uppercase; padding:6px 11px; border-radius:2px;}
+  .framework-flow .arrow{color:var(--muted); font-family:var(--font-mono); font-size:12px;}
+  .case-list{list-style:none; padding:0; margin:12px 0; display:flex; flex-direction:column; gap:8px;}
+  .case-list li{font-family:var(--font-display); font-style:italic; font-size:14.5px; border:1px solid var(--border); background:var(--surface); border-radius:2px; padding:11px 14px;}
+  .q-list{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:6px;}
+  .q-list li{font-size:14px; padding:8px 11px; background:var(--surface); border:1px solid var(--border); border-radius:2px;}
+  details{margin-top:10px; border-top:1px dashed var(--border); padding-top:10px;}
+  summary{cursor:pointer; font-family:var(--font-mono); font-size:12.5px; color:var(--accent2); list-style:none;}
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:"▸ ";}
+  details[open] summary::before{content:"▾ ";}
+  .tdd-item{border-bottom:1px solid var(--border); padding:12px 0;}
+  .tdd-item:last-child{border-bottom:none;}
+  .tdd-q{font-family:var(--font-display); font-size:15px; font-weight:600;}
+  .angle{font-size:13.5px; margin-top:6px;}
+  .angle b{color:var(--accent2); font-family:var(--font-mono); font-size:11px; text-transform:uppercase;}
+  .tip-box{background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent2); padding:10px 14px; border-radius:2px; font-size:14px; margin:12px 0;}
+  .tip-box b{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent2); display:block; margin-bottom:4px;}
+  .nav-footer{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:18px; font-family:var(--font-mono); font-size:12px;}
+  .nav-footer a{text-decoration:none; border:1px solid var(--border); padding:7px 12px; border-radius:2px;}
+  .nav-footer a:hover{border-color:var(--accent2);}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <a class="backlink" href="index.html">&larr; Volver al hub</a>
+
+  <header class="masthead">
+    <div class="eyebrow">Referencia · AI Agent Engineering Bootcamp</div>
+    <h1>Banco de Mock Interview</h1>
+    <p class="sub">Las 4 modalidades del proceso, con framework de respuesta y casos adicionales para practicar más allá del Día 14 — vuelve aquí cuantas veces necesites.</p>
+    <div class="toc">
+      <a href="#mock1">Mock 1 · System Design</a>
+      <a href="#mock2">Mock 2 · Composition Case</a>
+      <a href="#mock3">Mock 3 · General Manager</a>
+      <a href="#mock4">Mock 4 · Technical Deep Dive</a>
+    </div>
+  </header>
+
+  <section id="mock1">
+    <div class="section-label">Mock 1</div>
+    <h2>System Design</h2>
+    <div class="duration">60 minutos · entrevistador → candidato · feedback técnico y de comunicación</div>
+    <div class="framework-flow">
+      <span class="node">Clarificar</span><span class="arrow">→</span>
+      <span class="node">Requisitos</span><span class="arrow">→</span>
+      <span class="node">Arquitectura</span><span class="arrow">→</span>
+      <span class="node">Seguridad</span><span class="arrow">→</span>
+      <span class="node">Resiliencia</span><span class="arrow">→</span>
+      <span class="node">Rollout</span>
+    </div>
+    <p>Framework completo de 16 pasos en el Día 06. Casos ya resueltos: agente de voz enterprise (Día 10), agente bancario (Día 14).</p>
+    <div class="tip-box"><b>Tip</b>El entrevistador evalúa el proceso tanto como el resultado — pasar 3-5 min clarificando antes de dibujar una caja gana sobre diseñar rápido lo incorrecto.</div>
+    <p>Casos adicionales para seguir practicando:</p>
+    <ul class="case-list">
+      <li>"Diseña un agente que ayude a médicos a resumir historiales clínicos y sugerir códigos de facturación, sin tomar decisiones clínicas autónomas."</li>
+      <li>"Diseña un agente que gestione reservas de un hotel — consultas, cambios y cancelaciones — integrado con el PMS existente."</li>
+      <li>"Diseña un agente interno que resuelva tickets de soporte técnico de primer nivel para empleados de una empresa de 5.000 personas."</li>
+    </ul>
+  </section>
+
+  <section id="mock2">
+    <div class="section-label">Mock 2</div>
+    <h2>Composition Case</h2>
+    <div class="duration">45 minutos · problema ambiguo · estructuración · priorización · solución</div>
+    <div class="framework-flow">
+      <span class="node">Problem</span><span class="arrow">→</span>
+      <span class="node">Users</span><span class="arrow">→</span>
+      <span class="node">Pain Points</span><span class="arrow">→</span>
+      <span class="node">Business Value</span><span class="arrow">→</span>
+      <span class="node">Processes</span><span class="arrow">→</span>
+      <span class="node">...</span><span class="arrow">→</span>
+      <span class="node">Architecture</span><span class="arrow">→</span>
+      <span class="node">Implementation</span>
+    </div>
+    <p>Framework completo de 9 pasos en el Día 09. Casos ya resueltos: reconciliación logística (Día 09), FAQ de RRHH (Día 14).</p>
+    <div class="tip-box"><b>Tip</b>Architecture aparece en el paso 8 de 9 — si llegas ahí antes del minuto 20, probablemente te saltaste algo.</div>
+    <p>Casos adicionales para seguir practicando:</p>
+    <ul class="case-list">
+      <li>"El equipo de ventas de una empresa SaaS tarda 3 días en promedio en responder a leads entrantes calificados."</li>
+      <li>"Los clientes de una fintech abandonan el proceso de onboarding en un 40% antes de completar la verificación de identidad."</li>
+      <li>"El equipo de finanzas de una empresa de manufactura dedica 15 horas semanales a conciliar facturas de proveedores contra órdenes de compra."</li>
+    </ul>
+  </section>
+
+  <section id="mock3">
+    <div class="section-label">Mock 3</div>
+    <h2>General Manager</h2>
+    <div class="duration">30 minutos · behavioral · &lt;2 min por respuesta</div>
+    <p>Responde usando el formato <b>STAR + Architecture Context</b> (Día 13) — Situation, Task, Action, Result, más el detalle técnico específico. Tu banco de 8 historias del Día 13 debería cubrir todas estas.</p>
+    <ul class="q-list">
+      <li>Why this company?</li>
+      <li>Why FDE?</li>
+      <li>Why AI?</li>
+      <li>Why now?</li>
+      <li>How do you work with customers?</li>
+      <li>Describe a difficult architecture decision.</li>
+      <li>Describe a production incident.</li>
+      <li>Tell me about something you had to learn quickly.</li>
+    </ul>
+    <div class="tip-box"><b>Tip</b>No busques la historia "perfecta" — busca la más específica. Un detalle técnico concreto vale más que un logro impresionante contado en genérico.</div>
+  </section>
+
+  <section id="mock4">
+    <div class="section-label">Mock 4</div>
+    <h2>Technical Deep Dive</h2>
+    <div class="duration">30 minutos · preguntas directas · formato rápido</div>
+    <p>Responde en voz alta antes de abrir cada ángulo sugerido.</p>
+
+    <div class="tdd-item">
+      <div class="tdd-q">¿Por qué RAG vs fine-tuning?</div>
+      <details><summary>Ver ángulo sugerido</summary><div class="angle"><b>Día 01</b> RAG consulta en runtime (fácil de mantener actualizado); fine-tuning hornea el conocimiento en los pesos (costoso, difícil de actualizar).</div></details>
+    </div>
+    <div class="tdd-item">
+      <div class="tdd-q">¿Cómo evitar prompt injection?</div>
+      <details><summary>Ver ángulo sugerido</summary><div class="angle"><b>Día 04</b> Tratar todo contenido externo como dato, nunca instrucción; tools de scope mínimo para acotar el daño aunque la injection "funcione".</div></details>
+    </div>
+    <div class="tdd-item">
+      <div class="tdd-q">¿Cómo limitar las acciones de un agente?</div>
+      <details><summary>Ver ángulo sugerido</summary><div class="angle"><b>Días 02 y 04</b> Tools de scope mínimo + aprobación humana para acciones de alto impacto — arquitectura, no prompting.</div></details>
+    </div>
+    <div class="tdd-item">
+      <div class="tdd-q">¿Qué ocurre si el LLM falla?</div>
+      <details><summary>Ver ángulo sugerido</summary><div class="angle"><b>Día 05</b> Model fallback a un proveedor/modelo secundario, circuit breaker, y una respuesta degradada honesta.</div></details>
+    </div>
+    <div class="tdd-item">
+      <div class="tdd-q">¿Cómo evaluar la calidad de un agente?</div>
+      <details><summary>Ver ángulo sugerido</summary><div class="angle"><b>Día 05</b> Golden set offline antes de deploy + muestreo online de conversaciones reales (humano o LLM-as-judge).</div></details>
+    </div>
+    <div class="tdd-item">
+      <div class="tdd-q">¿Cuándo usar multi-agent?</div>
+      <details><summary>Ver ángulo sugerido</summary><div class="angle"><b>Día 02</b> Dominios de conocimiento heterogéneos con distintos scopes de seguridad — no por default.</div></details>
+    </div>
+    <div class="tdd-item">
+      <div class="tdd-q">¿Dónde almacenar el estado?</div>
+      <details><summary>Ver ángulo sugerido</summary><div class="angle"><b>Días 02 y 08</b> DynamoDB para estado de conversación; RDS para datos de negocio relacionales.</div></details>
+    </div>
+    <div class="tdd-item">
+      <div class="tdd-q">¿Cómo diseñar observabilidad?</div>
+      <details><summary>Ver ángulo sugerido</summary><div class="angle"><b>Día 05</b> Trace distribuido que cruce LLM + tool calls + orquestación, más métricas específicas de AI.</div></details>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="index.html">&larr; Hub</a>
+    <span>Banco de mock interview</span>
+  </div>
+</div>
+
+</body>
+</html>

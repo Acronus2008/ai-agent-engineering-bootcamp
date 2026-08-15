@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
+<title>Production AI &amp; Reliability</title>
+<style>
+  :root{
+    --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
+    --border:#d3dbdd; --accent:#b8681f; --accent-ink:#fff8f0; --accent2:#256d87; --good:#3f7d52; --bad:#a8452a;
+    --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+      --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c; --bad:#e07a5c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+    --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c; --bad:#e07a5c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      repeating-linear-gradient(90deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      var(--bg);
+    color:var(--ink); font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent2);}
+  a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible{outline:2px solid var(--accent2); outline-offset:2px;}
+  .wrap{max-width:760px; margin:0 auto; padding:40px 24px 100px;}
+  .backlink{font-family:var(--font-mono); font-size:12px; text-decoration:none; color:var(--muted); display:inline-flex; gap:6px;}
+  .backlink:hover{color:var(--accent2);}
+  header.masthead{border-bottom:1px solid var(--border); padding-bottom:24px; margin:18px 0 36px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent2); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:20px; height:1px; background:var(--accent2); display:inline-block;}
+  .week-done{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--good); border:1px solid var(--good); padding:3px 8px; border-radius:2px; margin-left:auto;}
+  .title-row{display:flex; align-items:baseline; gap:18px; margin-top:10px;}
+  .day-numeral{font-family:var(--font-display); font-size:56px; font-weight:600; color:var(--accent); line-height:1;}
+  h1{font-family:var(--font-display); font-weight:600; font-size:clamp(26px,4vw,34px); margin:0; text-wrap:balance; letter-spacing:-0.01em;}
+  .sub{color:var(--muted); font-size:15px; max-width:60ch; margin-top:10px;}
+  .meta-row{display:flex; gap:20px; margin-top:16px; flex-wrap:wrap; font-family:var(--font-mono); font-size:12px; color:var(--muted);}
+  .meta-row b{color:var(--ink); font-weight:600;}
+  section{margin-bottom:46px;}
+  .section-label{font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); border-top:1px solid var(--border); padding-top:8px; margin-bottom:16px;}
+  h2{font-family:var(--font-display); font-size:21px; margin:0 0 10px; font-weight:600;}
+  h3{font-family:var(--font-display); font-size:17px; margin:22px 0 6px; font-weight:600;}
+  p{margin:0 0 12px;}
+  ul, ol{margin:0 0 12px; padding-left:20px;}
+  li{margin-bottom:6px;}
+  .analogy{background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent2); padding:10px 14px; border-radius:2px; font-size:14px; margin:10px 0 16px;}
+  .analogy b{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent2); display:block; margin-bottom:4px;}
+  code{font-family:var(--font-mono); font-size:.9em; background:var(--surface-2); padding:1px 5px; border-radius:2px;}
+  pre{font-family:var(--font-mono); font-size:13px; background:var(--surface); border:1px solid var(--border); padding:14px; border-radius:3px; overflow-x:auto; line-height:1.5;}
+
+  figure.diagram{margin:0 0 8px; border:1px solid var(--border); border-radius:3px; background:var(--surface); padding:18px 18px 14px;}
+  figure.diagram svg{display:block; width:100%; height:auto;}
+  figure.diagram figcaption{font-family:var(--font-mono); font-size:11px; color:var(--muted); margin-top:12px; text-transform:uppercase; letter-spacing:.05em;}
+  .dbox{fill:var(--surface); stroke:var(--border); stroke-width:1.5;}
+  .dbox-accent{fill:var(--accent); fill-opacity:.12; stroke:var(--accent); stroke-width:1.5;}
+  .dbox-bad{fill:var(--bad); fill-opacity:.1; stroke:var(--bad); stroke-width:1.5;}
+  .dlifeline{stroke:var(--border); stroke-width:1; stroke-dasharray:3,3;}
+  .dtext{font-family:var(--font-mono); font-size:11px; fill:var(--ink);}
+  .dtext-muted{font-family:var(--font-mono); font-size:10px; fill:var(--muted);}
+  .dtext-accent{font-family:var(--font-mono); font-size:10px; fill:var(--accent2); font-weight:600;}
+  .dtext-bad{font-family:var(--font-mono); font-size:10px; fill:var(--bad); font-weight:600;}
+  .dlabel{font-family:var(--font-display); font-size:13px; font-weight:600; fill:var(--ink);}
+  .darrow{stroke:var(--muted); stroke-width:1.5; fill:none;}
+  .darrow-bad{stroke:var(--bad); stroke-width:1.5; fill:none;}
+  .darrow-accent{stroke:var(--accent2); stroke-width:1.8; fill:none;}
+  .darrow-head{fill:var(--muted);}
+  .darrow-head-bad{fill:var(--bad);}
+  .darrow-head-accent{fill:var(--accent2);}
+
+  .code-block{border:1px solid var(--border); border-radius:3px; overflow:hidden; margin-bottom:8px;}
+  .code-head{font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); background:var(--surface-2); padding:7px 14px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between;}
+  .code-head span.lang{color:var(--accent2);}
+  .code-block pre{border:none; border-radius:0; margin:0;}
+  .code-comment{color:var(--muted);}
+  .code-str{color:var(--good);}
+  .code-kw{color:var(--accent2);}
+
+  .group-title{font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:26px 0 4px;}
+  .concept-grid{display:grid; grid-template-columns:1fr; gap:0;}
+  .concept{border-bottom:1px solid var(--border); padding:14px 0;}
+  .concept:first-child{padding-top:0;}
+  .concept:last-child{border-bottom:none;}
+  .concept-term{font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:4px;}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:12px 0 4px;}
+  th, td{text-align:left; padding:9px 12px; border:1px solid var(--border);}
+  th{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); background:var(--surface-2);}
+  .table-wrap{overflow-x:auto;}
+  .exercise-box{border:1px solid var(--border); background:var(--surface); border-radius:3px; padding:20px;}
+  details{margin-top:14px;}
+  summary{cursor:pointer; font-family:var(--font-mono); font-size:13px; color:var(--accent2); list-style:none;}
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:"▸ ";}
+  details[open] summary::before{content:"▾ ";}
+  .solution{margin-top:12px; padding-top:12px; border-top:1px dashed var(--border); font-size:14px;}
+  .iq-list{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;}
+  .iq-list li{border:1px solid var(--border); border-radius:3px; padding:12px 14px; background:var(--surface); font-size:14px; display:flex; gap:10px;}
+  .iq-list li::before{content:"?"; font-family:var(--font-mono); color:var(--accent); font-weight:700; flex-shrink:0;}
+  .quiz-item{border:1px solid var(--border); border-radius:3px; padding:16px; margin-bottom:12px; background:var(--surface);}
+  .quiz-q{font-weight:600; margin-bottom:10px; font-size:14.5px;}
+  .quiz-opts{display:flex; flex-direction:column; gap:8px;}
+  .quiz-opt{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--bg); color:var(--ink); padding:9px 12px; border-radius:2px; font-family:var(--font-body); font-size:13.5px; cursor:pointer;}
+  .quiz-opt:hover{border-color:var(--accent2);}
+  .quiz-opt.correct{border-color:var(--good); background:color-mix(in srgb, var(--good) 14%, var(--surface));}
+  .quiz-opt.incorrect{border-color:var(--bad); background:color-mix(in srgb, var(--bad) 12%, var(--surface));}
+  .quiz-opt[disabled]{cursor:default;}
+  .quiz-explain{font-size:13px; color:var(--muted); margin-top:10px; display:none; padding-top:10px; border-top:1px dashed var(--border);}
+  .quiz-explain.show{display:block;}
+  .quiz-score{font-family:var(--font-mono); font-size:13px; border:1px solid var(--border); border-radius:3px; padding:12px 14px; background:var(--surface-2); margin-top:6px;}
+  .checklist{display:flex; flex-direction:column; gap:10px;}
+  .check-row{display:flex; align-items:flex-start; gap:10px; font-size:14px;}
+  .check-row input{margin-top:3px; width:16px; height:16px; accent-color:var(--good); flex-shrink:0; cursor:pointer;}
+  .check-row label{cursor:pointer;}
+  .nav-footer{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:18px; font-family:var(--font-mono); font-size:12px;}
+  .nav-footer a{text-decoration:none; border:1px solid var(--border); padding:7px 12px; border-radius:2px;}
+  .nav-footer a:hover{border-color:var(--accent2);}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <a class="backlink" href="index.html">&larr; Volver al hub</a>
+
+  <header class="masthead">
+    <div class="eyebrow">Semana 1 · Día 05 · AI Agents &amp; Enterprise Architecture <span class="week-done">Cierra semana 1</span></div>
+    <div class="title-row">
+      <span class="day-numeral">05</span>
+      <h1>Production AI &amp; Reliability</h1>
+    </div>
+    <p class="sub">Retries, circuit breakers e idempotency ya los dominas de backend clásico. Hoy: aplicarlos al loop de un agente, y la capa nueva — evals, costo por token y versionado de prompts.</p>
+    <div class="meta-row">
+      <span><b>~100 min</b></span>
+      <span>Prerrequisito: <b>Día 04</b></span>
+      <span>Conecta con: <b>Día 06 — System Design</b></span>
+    </div>
+  </header>
+
+  <section>
+    <div class="section-label">Objetivo del día</div>
+    <p>Cerrar la Semana 1 con la pregunta que separa un demo de una solución real: <b>¿qué pasa cuando algo falla?</b> — un tool call, el LLM, la red — y cómo lo sabrías antes de que te lo diga un cliente enojado.</p>
+  </section>
+
+  <section>
+    <div class="section-label">Contenido</div>
+
+    <div class="group-title">Reliability clásica, aplicada al loop del agente</div>
+    <div class="concept-grid">
+      <div class="concept">
+        <div class="concept-term">Retries &amp; Timeouts</div>
+        <h3>Todo tool call y toda llamada al LLM necesita ambos</h3>
+        <p>Sin timeout, el loop del agente puede quedar colgado indefinidamente a mitad de una conversación. Los retries deben ser acotados (backoff, máximo de intentos) — nunca dejar que el agente reintente indefinidamente dentro de su propio razonamiento.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Circuit Breakers</div>
+        <h3>Fallar rápido cuando una dependencia está caída</h3>
+        <p>Si una tool falla repetidamente, el circuit breaker corta las llamadas y fuerza un fallback inmediato — evita que el agente siga "intentando" mientras el usuario espera.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Idempotency</div>
+        <h3>Crítico cuando el que reintenta puede ser el agente O el usuario</h3>
+        <p>Un timeout seguido de un retry, o un usuario repitiendo "hazlo de nuevo", puede disparar la misma acción dos veces. Cada tool que modifica estado necesita una idempotency key.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Fallbacks</div>
+        <h3>Una respuesta degradada es mejor que colgarse</h3>
+        <p>Si una tool no está disponible: "no puedo consultar eso ahora, te conecto con una persona" — nunca dejar que el agente invente el dato faltante.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Rate Limiting</div>
+        <h3>Protege al proveedor del LLM y a los sistemas downstream</h3>
+        <p>Un agente en loop (por bug o por injection) puede generar tráfico explosivo hacia tools o hacia el proveedor del modelo — necesita límites igual que cualquier cliente automatizado.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Queues &amp; DLQ</div>
+        <h3>Para las acciones asíncronas que dispara el agente</h3>
+        <p>Un evento de fulfillment que falla tras sus reintentos no debe perderse silenciosamente — va a una dead-letter queue para investigación, igual que en cualquier pipeline async.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Observability, Tracing, Metrics, Logging</div>
+        <h3>Un solo trace que cruza LLM calls + tool calls + orquestación</h3>
+        <p>La diferencia con backend clásico: necesitas ver la <b>cadena de razonamiento completa</b> de un request — qué decidió el modelo, qué tool llamó, con qué resultado, en qué orden — como un único trace distribuido, no llamadas sueltas.</p>
+      </div>
+    </div>
+
+    <div class="group-title">Lo específico de AI en producción</div>
+    <div class="concept-grid">
+      <div class="concept">
+        <div class="concept-term">Model Fallback</div>
+        <h3>Qué pasa si el proveedor del LLM está caído</h3>
+        <p>Arquitectura pluggable: si el modelo primario falla o degrada, se cae a un modelo secundario (otro proveedor o uno más simple) — con la expectativa explícita de que la calidad puede bajar temporalmente.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Token Usage &amp; Costo</div>
+        <h3>Un loop descontrolado también es un incidente de costo</h3>
+        <p>Cada sesión/request debería tener un presupuesto de tokens. Sin límite, un bug en la lógica de orquestación (o una injection) puede generar un loop que dispara el costo sin que nadie lo note hasta la factura.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Latency</div>
+        <h3>El LLM es casi siempre el paso más lento del pipeline</h3>
+        <p>Streaming de respuesta, paralelizar tool calls independientes cuando sea posible, y presupuestar latencia por paso — igual que optimizarías cualquier request de alta latencia.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Hallucination Monitoring</div>
+        <h3>No es un test que pasas una vez, es una métrica continua</h3>
+        <p>Señales en producción: tasa de respuestas sin soporte en los documentos recuperados, contradicciones detectadas por un modelo evaluador, feedback negativo de usuarios — trackeadas en el tiempo, no solo validadas pre-lanzamiento.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Tool Failures</div>
+        <h3>Deben llegar al agente como observación estructurada, no tragarse</h3>
+        <p>Si una tool falla y el error se traga silenciosamente, el agente puede alucinar un resultado. El error estructurado le da al agente la información para decidir: reintentar, usar un fallback, o escalar.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Prompt / Version Management</div>
+        <h3>Los prompts son código: versionados, testeados, con rollback</h3>
+        <p>Un cambio de prompt es un cambio de comportamiento en producción — mismo rigor que un deploy: canary, evaluación antes de 100% rollout, capacidad de revertir.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Agent Evaluation</div>
+        <h3>Offline (golden set) + online (muestreo de conversaciones reales)</h3>
+        <p>Un set de casos de prueba fijos detecta regresiones antes de deploy. Un muestreo continuo de conversaciones reales (revisión humana o LLM-as-judge) detecta lo que el golden set no anticipó.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Diagrama de implementación</div>
+    <h2>Retry + idempotency en acción</h2>
+    <p>El mismo <code>idempotency_key</code> viaja en ambos intentos — es lo que convierte un timeout más un retry en "una sola operación", no en dos.</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 620 250" role="img" aria-label="Diagrama de secuencia: el usuario pide crear un ticket, el primer intento hace timeout, el segundo intento reenvía la misma idempotency key, el servicio detecta la duplicación y devuelve el mismo ticket ya creado, y el agente confirma al usuario.">
+        <defs>
+          <marker id="d5arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker>
+          <marker id="d5arrow-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head-bad"/></marker>
+          <marker id="d5arrow-accent" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head-accent"/></marker>
+        </defs>
+
+        <line x1="60" y1="46" x2="60" y2="235" class="dlifeline"/>
+        <line x1="300" y1="46" x2="300" y2="235" class="dlifeline"/>
+        <line x1="540" y1="46" x2="540" y2="235" class="dlifeline"/>
+
+        <rect x="15" y="16" width="90" height="26" rx="3" class="dbox"/>
+        <text x="60" y="33" text-anchor="middle" class="dlabel">User</text>
+        <rect x="230" y="16" width="140" height="26" rx="3" class="dbox"/>
+        <text x="300" y="33" text-anchor="middle" class="dlabel">Agent Runtime</text>
+        <rect x="475" y="16" width="130" height="26" rx="3" class="dbox"/>
+        <text x="540" y="33" text-anchor="middle" class="dlabel">Ticket Service</text>
+
+        <line x1="60" y1="62" x2="294" y2="62" class="darrow" marker-end="url(#d5arrow)"/>
+        <text x="180" y="56" text-anchor="middle" class="dtext-muted">1. crear ticket</text>
+
+        <line x1="300" y1="90" x2="534" y2="90" class="darrow" marker-end="url(#d5arrow)"/>
+        <text x="420" y="84" text-anchor="middle" class="dtext-muted">2. create_ticket(key=K) — intento 1</text>
+
+        <line x1="540" y1="118" x2="306" y2="118" class="darrow-bad" stroke-dasharray="4,3" marker-end="url(#d5arrow-bad)"/>
+        <text x="420" y="112" text-anchor="middle" class="dtext-bad">3. timeout (5s) — sin respuesta</text>
+
+        <line x1="300" y1="146" x2="534" y2="146" class="darrow-accent" marker-end="url(#d5arrow-accent)"/>
+        <text x="420" y="140" text-anchor="middle" class="dtext-accent">4. retry create_ticket(key=K) — intento 2</text>
+
+        <line x1="540" y1="174" x2="306" y2="174" class="darrow" marker-end="url(#d5arrow)"/>
+        <text x="420" y="168" text-anchor="middle" class="dtext-muted">5. 200 OK ticket_id=T1 (dedup por key)</text>
+
+        <line x1="300" y1="202" x2="66" y2="202" class="darrow" marker-end="url(#d5arrow)"/>
+        <text x="180" y="196" text-anchor="middle" class="dtext-muted">6. ticket confirmado</text>
+
+        <text x="310" y="228" text-anchor="middle" class="dtext-muted">si el intento 2 también falla → circuit breaker abre → fallback inmediato, sin más reintentos</text>
+      </svg>
+      <figcaption>La key (K) es la que decide "es la misma operación" — no el número de intentos.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="section-label">Ejemplo de implementación</div>
+    <h2>Wrapper idempotente con retry acotado</h2>
+    <p>La key se genera una sola vez, al iniciar el flujo — nunca dentro del loop de retry.</p>
+    <div class="code-block">
+      <div class="code-head"><span>reliable_tool_call.py</span><span class="lang">python</span></div>
+      <pre><span class="code-kw">import</span> time, uuid
+
+<span class="code-kw">def</span> call_with_retry(fn, *, max_attempts=2, timeout_s=5, backoff_s=1):
+    idempotency_key = str(uuid.uuid4())  <span class="code-comment"># generada UNA vez, fuera del loop</span>
+
+    <span class="code-kw">for</span> attempt <span class="code-kw">in</span> range(1, max_attempts + 1):
+        <span class="code-kw">if</span> circuit_breaker.is_open(fn.__name__):
+            <span class="code-kw">return</span> fallback_response()  <span class="code-comment"># fail fast, no más intentos</span>
+
+        <span class="code-kw">try</span>:
+            result = fn(idempotency_key=idempotency_key, timeout=timeout_s)
+            circuit_breaker.record_success(fn.__name__)
+            <span class="code-kw">return</span> result
+        <span class="code-kw">except</span> TimeoutError:
+            circuit_breaker.record_failure(fn.__name__)
+            <span class="code-kw">if</span> attempt == max_attempts:
+                <span class="code-kw">return</span> fallback_response()
+            time.sleep(backoff_s * attempt)  <span class="code-comment"># backoff corto, acotado</span>
+
+<span class="code-kw">def</span> fallback_response() -> dict:
+    <span class="code-comment"># Honesto con el usuario, nunca inventa un resultado</span>
+    <span class="code-kw">return</span> {<span class="code-str">"status"</span>: <span class="code-str">"pending_verification"</span>, <span class="code-str">"message"</span>: <span class="code-str">"Estamos confirmando tu ticket."</span>}</pre>
+    </div>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">El <code>circuit_breaker</code> es solo un contador con umbral y un flag — no necesitas una librería para empezar, solo la disciplina de nunca reintentar sin límite.</p>
+  </section>
+
+  <section>
+    <div class="section-label">Ejercicio práctico</div>
+    <div class="exercise-box">
+      <h2>Caso: la tool "crear ticket" falla intermitentemente por timeout</h2>
+      <p>Uno de cada veinte llamados a <code>create_ticket</code> hace timeout a los 5s, pero el ticket a veces sí se crea del lado del sistema legacy (el timeout es en la respuesta, no en la operación).</p>
+      <ol>
+        <li>¿Cómo diseñas la idempotency key para esta tool?</li>
+        <li>¿Qué política de retry aplicarías, y por qué?</li>
+        <li>¿Qué ve el usuario mientras tanto, y qué queda en el trace para depurarlo después?</li>
+      </ol>
+      <details>
+        <summary>Ver enfoque sugerido</summary>
+        <div class="solution">
+          <p><b>1.</b> Una idempotency key generada por el agente al iniciar la operación (no por el sistema legacy), enviada en cada intento — el backend del ticket la usa para detectar "ya procesé esto" y devolver el mismo resultado en vez de crear un duplicado.</p>
+          <p><b>2.</b> Retry único con backoff corto, y si vuelve a fallar, no seguir reintentando indefinidamente — pasar a fallback (avisar al usuario que se está verificando) en vez de que el agente "decida" reintentar por su cuenta dentro del razonamiento.</p>
+          <p><b>3.</b> El usuario ve un mensaje honesto ("estoy confirmando si se creó el ticket"), nunca una afirmación no verificada. El trace debe registrar la idempotency key, cada intento, su timeout, y el resultado final de la verificación — para poder reconstruir exactamente qué pasó si el cliente reclama un ticket duplicado.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <ul class="iq-list">
+      <li>¿Cómo haces idempotente una tool call cuando el sistema subyacente no lo soporta nativamente?</li>
+      <li>¿Qué pasa si el proveedor del LLM está caído? ¿Cómo diseñas el fallback?</li>
+      <li>¿Cómo construirías un trace distribuido a través del razonamiento multi-paso de un agente?</li>
+      <li>¿Cómo evalúas la calidad de un agente en producción, no solo antes del lanzamiento?</li>
+      <li>¿Cuál es tu estrategia para controlar un uso descontrolado de tokens/costo por un loop del agente?</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-label">Quiz de autoevaluación — Día 05</div>
+    <div id="quiz5"></div>
+    <div class="quiz-score" id="quizScore5">0 / 6 respondidas correctamente</div>
+  </section>
+
+  <section>
+    <div class="section-label">Repaso rápido — Semana 1 completa</div>
+    <p style="color:var(--muted); font-size:13px; margin-top:-6px;">Cinco preguntas cruzando los cinco días. Si fallas alguna, vale la pena volver al día correspondiente antes de avanzar a la Semana 2.</p>
+    <div id="quizWeek1"></div>
+    <div class="quiz-score" id="quizScoreWeek1">0 / 5 respondidas correctamente</div>
+  </section>
+
+  <section>
+    <div class="section-label">Checklist de cierre — Semana 1</div>
+    <div class="checklist" id="checklist">
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Puedo diseñar idempotency para una tool call que puede duplicarse.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Sé qué es un golden set y para qué sirve frente a la evaluación online.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Puedo explicar por qué un prompt necesita versionado como el código.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Completé los 5 días de la Semana 1 con sus quizzes en 6/6 o mejor.</label></div>
+      <div class="check-row"><input type="checkbox" id="c5"><label for="c5">Puedo dibujar de memoria el diagrama completo: Channel → Agent Runtime → LLM/Memory/RAG/Tools → sistemas enterprise.</label></div>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="index.html">&larr; Hub</a>
+    <span>Día 05 de 14 · fin Semana 1</span>
+    <a href="day-06.html">Día 06 &rarr;</a>
+  </div>
+</div>
+
+<script>
+  function buildQuiz(containerId, scoreId, QUIZ){
+    const quizEl = document.getElementById(containerId);
+    let correctCount = 0, answered = 0;
+    QUIZ.forEach((item, i) => {
+      const box = document.createElement('div');
+      box.className = 'quiz-item';
+      const optsHtml = item.opts.map((o, j) => `<button class="quiz-opt" data-idx="${j}">${o}</button>`).join('');
+      box.innerHTML = `<div class="quiz-q">${i+1}. ${item.q}</div><div class="quiz-opts">${optsHtml}</div><div class="quiz-explain" id="${containerId}-explain-${i}">${item.explain}</div>`;
+      quizEl.appendChild(box);
+      box.querySelectorAll('.quiz-opt').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (box.dataset.answered) return;
+          box.dataset.answered = "1"; answered++;
+          const idx = parseInt(btn.getAttribute('data-idx'));
+          box.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+          if (idx === item.correct) { btn.classList.add('correct'); correctCount++; }
+          else { btn.classList.add('incorrect'); box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct'); }
+          document.getElementById(`${containerId}-explain-${i}`).classList.add('show');
+          document.getElementById(scoreId).textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+        });
+      });
+    });
+  }
+
+  buildQuiz('quiz5', 'quizScore5', [
+    {
+      q: "¿Por qué es peligroso dejar que el agente reintente indefinidamente una tool call fallida dentro de su propio razonamiento?",
+      opts: ["No es peligroso, más intentos siempre ayudan", "Puede generar retry storms, costo descontrolado y una experiencia colgada para el usuario", "Los LLMs no pueden hacer retries", "Solo afecta el uso de memoria RAM"],
+      correct: 1,
+      explain: "Los retries deben ser acotados y controlados por el sistema, no dejados a discreción del modelo dentro del loop."
+    },
+    {
+      q: "Un circuit breaker en la arquitectura de un agente sirve principalmente para...",
+      opts: ["Aumentar la creatividad del modelo", "Cortar llamadas a una dependencia que falla repetidamente y forzar un fallback rápido", "Reemplazar la necesidad de logging", "Acelerar las respuestas del LLM"],
+      correct: 1,
+      explain: "Evita que el agente siga golpeando una dependencia caída mientras el usuario espera — falla rápido y degrada con gracia."
+    },
+    {
+      q: "¿Qué distingue la evaluación 'offline' de la 'online' de un agente?",
+      opts: [
+        "Offline usa internet, online no",
+        "Offline corre contra un golden set fijo antes de deploy; online muestrea conversaciones reales en producción",
+        "Son exactamente lo mismo",
+        "Offline es solo para modelos pequeños"
+      ],
+      correct: 1,
+      explain: "Offline detecta regresiones conocidas antes de lanzar. Online detecta lo que el golden set no anticipó, con tráfico real."
+    },
+    {
+      q: "Si una tool call falla, ¿qué debería pasar con ese error?",
+      opts: ["Tragarse silenciosamente para no confundir al modelo", "Llegar al agente como observación estructurada para que pueda decidir el siguiente paso", "Terminar automáticamente la conversación", "Ignorarse y responder con un valor por defecto sin avisar"],
+      correct: 1,
+      explain: "Un error tragado silenciosamente es la puerta de entrada a una alucinación — el agente necesita ver el fallo para razonar sobre él."
+    },
+    {
+      q: "¿Por qué los prompts requieren versionado similar al código?",
+      opts: [
+        "No lo requieren, son solo texto",
+        "Porque un cambio de prompt es un cambio de comportamiento en producción, y necesitas poder auditar y revertir",
+        "Solo por razones de copyright",
+        "Únicamente para ahorrar tokens"
+      ],
+      correct: 1,
+      explain: "Sin versionado no puedes saber qué prompt produjo qué comportamiento, ni revertir un cambio que degradó la calidad."
+    },
+    {
+      q: "El presupuesto de tokens por sesión/request es importante principalmente porque...",
+      opts: ["Es un requisito legal", "Un loop descontrolado (por bug o injection) puede disparar el costo sin que nadie lo note hasta la factura", "Mejora la precisión del modelo", "Reduce la necesidad de guardrails"],
+      correct: 1,
+      explain: "Es tanto un control de reliability como de costo — sin límite, un fallo silencioso se convierte en un incidente financiero."
+    }
+  ]);
+
+  buildQuiz('quizWeek1', 'quizScoreWeek1', [
+    {
+      q: "(Día 1) Function calling significa que el LLM...",
+      opts: ["Ejecuta código directamente en un sandbox", "Propone una acción; tu backend valida y decide si ejecutarla", "Nunca puede interactuar con sistemas externos", "Reemplaza la necesidad de APIs"],
+      correct: 1,
+      explain: "El punto de control siempre es tu backend, no el modelo."
+    },
+    {
+      q: "(Día 2) ¿Qué separa a single-agent de multi-agent como decisión de diseño?",
+      opts: ["El tamaño del modelo usado", "Si hay dominios heterogéneos con distintos scopes de seguridad que justifiquen la separación", "Multi-agent siempre es superior", "No hay diferencia real"],
+      correct: 1,
+      explain: "Multi-agent se justifica por separación real de dominio/seguridad, no por complejidad percibida."
+    },
+    {
+      q: "(Día 3) ¿Cuándo preferirías un evento (Kafka) sobre una tool call síncrona?",
+      opts: ["Siempre", "Cuando la acción dispara un proceso downstream que no bloquea la respuesta al usuario", "Nunca, los agentes solo usan REST", "Solo si el sistema legacy usa SOAP"],
+      correct: 1,
+      explain: "Los eventos desacoplan al agente de sistemas que no necesita esperar."
+    },
+    {
+      q: "(Día 4) La defensa más efectiva contra excessive agency es...",
+      opts: ["Un prompt más largo", "Tools de scope mínimo + aprobación humana para acciones de alto impacto", "Desactivar todas las tools", "Confiar en el modelo"],
+      correct: 1,
+      explain: "Es un problema de arquitectura, no de prompting."
+    },
+    {
+      q: "(Día 5) Un trace distribuido de un agente debería mostrar...",
+      opts: ["Solo el tiempo total de respuesta", "La cadena completa: decisiones del modelo, tool calls y sus resultados, en orden", "Únicamente los errores", "Solo se aplica a sistemas sin IA"],
+      correct: 1,
+      explain: "Necesitas ver el razonamiento completo para depurar por qué el agente tomó una decisión específica."
+    }
+  ]);
+
+  const CHECK_KEY = 'aiaeb-day05-checklist';
+  const boxes = document.querySelectorAll('#checklist input[type=checkbox]');
+  function loadChecks(){ try{ return JSON.parse(localStorage.getItem(CHECK_KEY)) || {}; } catch(e){ return {}; } }
+  function saveChecks(state){ localStorage.setItem(CHECK_KEY, JSON.stringify(state)); }
+  const state = loadChecks();
+  boxes.forEach(b => {
+    if (state[b.id]) b.checked = true;
+    b.addEventListener('change', () => { const s = loadChecks(); s[b.id] = b.checked; saveChecks(s); });
+  });
+</script>
+
+</body>
+</html>

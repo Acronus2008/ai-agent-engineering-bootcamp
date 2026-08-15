@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
+<title>AI Agent Engineering Bootcamp</title>
+<style>
+  :root{
+    --bg:#eef1f0;
+    --surface:#ffffff;
+    --surface-2:#e4e9e7;
+    --ink:#1a232b;
+    --muted:#5c6b73;
+    --border:#d3dbdd;
+    --accent:#b8681f;
+    --accent-ink:#fff8f0;
+    --accent2:#256d87;
+    --good:#3f7d52;
+    --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10161c;
+      --surface:#171f28;
+      --surface-2:#1c2530;
+      --ink:#e6ecef;
+      --muted:#93a3ac;
+      --border:#2a3540;
+      --accent:#e0964e;
+      --accent-ink:#171208;
+      --accent2:#6db8d6;
+      --good:#63b37c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10161c;
+    --surface:#171f28;
+    --surface-2:#1c2530;
+    --ink:#e6ecef;
+    --muted:#93a3ac;
+    --border:#2a3540;
+    --accent:#e0964e;
+    --accent-ink:#171208;
+    --accent2:#6db8d6;
+    --good:#63b37c;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      repeating-linear-gradient(90deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent2);}
+  a:focus-visible, button:focus-visible, input:focus-visible{outline:2px solid var(--accent2); outline-offset:2px;}
+
+  .wrap{max-width:920px; margin:0 auto; padding:56px 24px 96px;}
+
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--accent2); display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:""; width:20px; height:1px; background:var(--accent2); display:inline-block;}
+
+  header.masthead{border-bottom:1px solid var(--border); padding-bottom:28px; margin-bottom:40px;}
+  h1{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(32px,5vw,46px);
+    margin:10px 0 8px; text-wrap:balance; letter-spacing:-0.01em;
+  }
+  .sub{color:var(--muted); font-size:16px; max-width:60ch;}
+
+  .stat-row{display:flex; gap:28px; margin-top:24px; flex-wrap:wrap;}
+  .stat{font-family:var(--font-mono);}
+  .stat .n{font-size:22px; color:var(--ink); font-variant-numeric:tabular-nums;}
+  .stat .l{font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted);}
+
+  .progress-shell{
+    margin-top:22px; height:8px; border:1px solid var(--border); border-radius:2px;
+    overflow:hidden; background:var(--surface-2);
+  }
+  .progress-fill{height:100%; background:var(--accent); width:0%; transition:width .3s ease;}
+
+  section{margin-bottom:52px;}
+  .section-label{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--accent); border-top:1px solid var(--border); padding-top:8px; margin-bottom:18px;
+    display:flex; justify-content:space-between; align-items:baseline;
+  }
+  .section-label span.count{color:var(--muted);}
+
+  h2.week-title{font-family:var(--font-display); font-size:24px; margin:0 0 4px; font-weight:600;}
+  .week-desc{color:var(--muted); font-size:14px; margin-bottom:16px; max-width:64ch;}
+
+  .day-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:12px;}
+  .day-card{
+    border:1px solid var(--border); background:var(--surface); border-radius:3px;
+    padding:16px 16px 14px; position:relative; transition:border-color .15s ease;
+  }
+  .day-card:has(.day-check:checked){border-color:var(--good);}
+  .day-top{display:flex; justify-content:space-between; align-items:flex-start; gap:8px;}
+  .day-num{font-family:var(--font-mono); font-size:12px; color:var(--muted); letter-spacing:.06em;}
+  .day-card h3{font-family:var(--font-display); font-size:17px; margin:6px 0 8px; font-weight:600; line-height:1.3;}
+  .day-topics{font-size:13px; color:var(--muted); margin:0 0 12px; line-height:1.5;}
+  .day-foot{display:flex; justify-content:space-between; align-items:center; gap:10px;}
+  .day-link{
+    font-family:var(--font-mono); font-size:12px; text-decoration:none; color:var(--accent2);
+    border:1px solid var(--border); padding:5px 10px; border-radius:2px;
+  }
+  .day-link:hover{border-color:var(--accent2);}
+  .day-link.disabled{color:var(--muted); pointer-events:none; opacity:.6;}
+  .check-label{display:flex; align-items:center; gap:6px; font-family:var(--font-mono); font-size:11px; color:var(--muted); cursor:pointer;}
+  .day-check{accent-color:var(--good); width:15px; height:15px; cursor:pointer;}
+
+  .extras-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:12px;}
+  .extra-card{border:1px dashed var(--border); border-radius:3px; padding:16px; background:var(--surface);}
+  .extra-card h3{font-family:var(--font-display); font-size:16px; margin:0 0 6px;}
+  .extra-card p{font-size:13px; color:var(--muted); margin:0 0 10px;}
+  .badge{font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); border:1px solid var(--border); padding:2px 6px; border-radius:2px;}
+
+  .principle{
+    border-left:2px solid var(--accent); padding:2px 0 2px 18px; font-family:var(--font-display);
+    font-size:19px; font-style:italic; color:var(--ink); max-width:62ch; text-wrap:balance;
+  }
+
+  footer{color:var(--muted); font-size:12px; font-family:var(--font-mono); border-top:1px solid var(--border); padding-top:16px;}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="eyebrow">Enterprise AI Agents · Architecture &amp; Engineering</div>
+    <h1>Bootcamp de preparación</h1>
+    <p class="sub">14 días · 1&ndash;2 horas diarias · diseñar, construir y operar soluciones enterprise con IA, trabajando con clientes.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="n">3</div><div class="l">Semanas</div></div>
+      <div class="stat"><div class="n">14</div><div class="l">Días</div></div>
+      <div class="stat"><div class="n" id="doneCount">0</div><div class="l">Completados</div></div>
+      <div class="stat"><div class="n" id="pctCount">0%</div><div class="l">Avance</div></div>
+    </div>
+    <div class="progress-shell"><div class="progress-fill" id="progressFill"></div></div>
+  </header>
+
+  <section>
+    <div class="section-label">Semana 1 <span class="count">AI Agents &amp; Enterprise Architecture</span></div>
+    <h2 class="week-title">Fundamentos del agente enterprise</h2>
+    <p class="week-desc">De LLM a sistema operable: cómo piensa un agente, cómo se integra con sistemas internos y qué lo hace seguro y confiable en producción.</p>
+    <div class="day-grid" id="week1"></div>
+  </section>
+
+  <section>
+    <div class="section-label">Semana 2 <span class="count">Systems &amp; Cloud</span></div>
+    <h2 class="week-title">Arquitectura y sistemas distribuidos</h2>
+    <p class="week-desc">El framework de System Design aplicado a casos con IA, decisiones de infraestructura AWS y descomposición de problemas ambiguos.</p>
+    <div class="day-grid" id="week2"></div>
+  </section>
+
+  <section>
+    <div class="section-label">Semana 3 <span class="count">FDE, Cliente &amp; Mocks</span></div>
+    <h2 class="week-title">La parte diferencial del rol</h2>
+    <p class="week-desc">Product thinking, consultoría con clientes enterprise, comunicación ejecutiva y el día completo de simulacros.</p>
+    <div class="day-grid" id="week3"></div>
+  </section>
+
+  <section>
+    <div class="section-label">Referencia <span class="count">Consulta libre, no atados a un día</span></div>
+    <div class="extras-grid" id="extras"></div>
+  </section>
+
+  <section>
+    <div class="section-label">Temas 🟠 comprimidos <span class="count">Referencia rápida, no días completos</span></div>
+    <p class="week-desc">Voice &amp; Multichannel, Software Engineering Deep Dive, Data Architecture y DevOps se cubren en una página de referencia única — background existente hace innecesario un día completo por tema.</p>
+  </section>
+
+  <section>
+    <p class="principle">"No prepararnos para responder preguntas de IA. Prepararnos para diseñar y construir soluciones enterprise con IA."</p>
+  </section>
+
+  <footer>aiaeb-bootcamp · progreso guardado localmente en este navegador</footer>
+</div>
+
+<script>
+  const WEEK1 = [
+    {n:1, title:"Enterprise AI Fundamentals", topics:"LLMs · Prompting · Structured outputs · Function calling · RAG · Embeddings · Context · Memory · Guardrails", url:"day-01.html"},
+    {n:2, title:"Arquitectura de AI Agents", topics:"Agent runtime · Tools · Memory · State · Orquestación · Single vs multi-agent", url:"day-02.html"},
+    {n:3, title:"Enterprise Integration", topics:"REST · GraphQL · Kafka · Webhooks · OAuth2/OIDC · IAM · API Gateway", url:"day-03.html"},
+    {n:4, title:"Security &amp; Compliance", topics:"Identity · PII · Prompt injection · Excessive agency · RBAC · Human-in-the-loop", url:"day-04.html"},
+    {n:5, title:"Production AI &amp; Reliability", topics:"Retries · Circuit breakers · Idempotency · Observability · Eval de agentes", url:"day-05.html"},
+  ];
+  const WEEK2 = [
+    {n:6, title:"System Design Framework", topics:"El framework de 16 pasos · primer caso práctico guiado", url:"day-06.html"},
+    {n:7, title:"Distributed Systems", topics:"CAP · Saga · Outbox · Idempotency · Exactly-once · Backpressure", url:"day-07.html"},
+    {n:8, title:"Cloud Architecture (AWS)", topics:"SQS vs Kafka · Lambda vs ECS · DynamoDB vs RDS · defensa de trade-offs", url:"day-08.html"},
+    {n:9, title:"Composition Case", topics:"Problem → Users → Pain Points → Business Value → Architecture", url:"day-09.html"},
+    {n:10, title:"Mock System Design completo", topics:"Caso: agente de voz enterprise end-to-end + rúbrica de autoevaluación", url:"day-10.html"},
+  ];
+  const WEEK3 = [
+    {n:11, title:"Product Thinking &amp; Customer Skills", topics:"Discovery · Requirements gathering · Ambigüedad · Trade-offs", url:"day-11.html"},
+    {n:12, title:"Communication &amp; Executive Presence", topics:"Framework Context→Decision→Reason→Trade-off→Result · Technical English", url:"day-12.html"},
+    {n:13, title:"Behavioral Interview", topics:"Banco de historias STAR mapeadas a preguntas típicas de procesos FDE/Architect", url:"day-13.html"},
+    {n:14, title:"Día de Mocks completo", topics:"System Design · Composition Case · GM/Behavioral · Technical Deep Dive", url:"day-14.html"},
+  ];
+  const EXTRAS = [
+    {title:"Glosario interactivo", desc:"Términos clave por track, filtrable.", url:"glosario.html"},
+    {title:"Banco de mock interview", desc:"Las 4 modalidades con framework de respuesta.", url:"mock-bank.html"},
+    {title:"Cheat sheets", desc:"One-pagers por track para repaso rápido.", url:"cheatsheets.html"},
+    {title:"Temas 🟠 — referencia rápida", desc:"Voice, Software Eng, Data, DevOps.", url:"referencia-extra.html"},
+    {title:"Algoritmos por etapa", desc:"9 algoritmos con complejidad e implementación Python.", url:"algoritmos.html"},
+    {title:"Stack tecnológico", desc:"Python/Go/Rust/C++/Java por capa de arquitectura.", url:"stack-tecnologico.html"},
+  ];
+
+  function dayCard(d){
+    const el = document.createElement('div');
+    el.className = 'day-card';
+    const linkHtml = d.url
+      ? `<a class="day-link" href="${d.url}">Abrir →</a>`
+      : `<span class="day-link disabled">Próximamente</span>`;
+    el.innerHTML = `
+      <div class="day-top">
+        <span class="day-num">DÍA ${String(d.n).padStart(2,'0')}</span>
+        <label class="check-label">
+          <input type="checkbox" class="day-check" data-day="${d.n}">
+          hecho
+        </label>
+      </div>
+      <h3>${d.title}</h3>
+      <p class="day-topics">${d.topics}</p>
+      <div class="day-foot">${linkHtml}</div>
+    `;
+    return el;
+  }
+
+  function extraCard(x){
+    const el = document.createElement('div');
+    el.className = 'extra-card';
+    el.innerHTML = `
+      <span class="badge">${x.url ? 'Disponible' : 'Próximamente'}</span>
+      <h3>${x.title}</h3>
+      <p>${x.desc}</p>
+      ${x.url ? `<a class="day-link" href="${x.url}">Abrir →</a>` : ''}
+    `;
+    return el;
+  }
+
+  const w1 = document.getElementById('week1');
+  const w2 = document.getElementById('week2');
+  const w3 = document.getElementById('week3');
+  const ex = document.getElementById('extras');
+  WEEK1.forEach(d => w1.appendChild(dayCard(d)));
+  WEEK2.forEach(d => w2.appendChild(dayCard(d)));
+  WEEK3.forEach(d => w3.appendChild(dayCard(d)));
+  EXTRAS.forEach(x => ex.appendChild(extraCard(x)));
+
+  const STORAGE_KEY = 'aiaeb-hub-progress';
+  const TOTAL = WEEK1.length + WEEK2.length + WEEK3.length;
+
+  function loadProgress(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+    catch(e){ return {}; }
+  }
+  function saveProgress(state){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+  function updateStats(){
+    const state = loadProgress();
+    const done = Object.values(state).filter(Boolean).length;
+    document.getElementById('doneCount').textContent = done;
+    const pct = Math.round((done/TOTAL)*100);
+    document.getElementById('pctCount').textContent = pct + '%';
+    document.getElementById('progressFill').style.width = pct + '%';
+  }
+
+  document.querySelectorAll('.day-check').forEach(cb => {
+    const state = loadProgress();
+    const day = cb.getAttribute('data-day');
+    cb.checked = !!state[day];
+    cb.addEventListener('change', () => {
+      const s = loadProgress();
+      s[day] = cb.checked;
+      saveProgress(s);
+      updateStats();
+    });
+  });
+  updateStats();
+</script>
+
+</body>
+</html>

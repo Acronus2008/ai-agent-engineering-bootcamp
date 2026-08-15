@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
+<title>System Design Framework</title>
+<style>
+  :root{
+    --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
+    --border:#d3dbdd; --accent:#b8681f; --accent-ink:#fff8f0; --accent2:#256d87; --good:#3f7d52; --bad:#a8452a;
+    --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+      --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c; --bad:#e07a5c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+    --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c; --bad:#e07a5c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      repeating-linear-gradient(90deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      var(--bg);
+    color:var(--ink); font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent2);}
+  a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible{outline:2px solid var(--accent2); outline-offset:2px;}
+  .wrap{max-width:760px; margin:0 auto; padding:40px 24px 100px;}
+  .backlink{font-family:var(--font-mono); font-size:12px; text-decoration:none; color:var(--muted); display:inline-flex; gap:6px;}
+  .backlink:hover{color:var(--accent2);}
+  header.masthead{border-bottom:1px solid var(--border); padding-bottom:24px; margin:18px 0 36px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent2); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:20px; height:1px; background:var(--accent2); display:inline-block;}
+  .week-start{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--accent2); border:1px solid var(--accent2); padding:3px 8px; border-radius:2px; margin-left:auto;}
+  .title-row{display:flex; align-items:baseline; gap:18px; margin-top:10px;}
+  .day-numeral{font-family:var(--font-display); font-size:56px; font-weight:600; color:var(--accent); line-height:1;}
+  h1{font-family:var(--font-display); font-weight:600; font-size:clamp(26px,4vw,34px); margin:0; text-wrap:balance; letter-spacing:-0.01em;}
+  .sub{color:var(--muted); font-size:15px; max-width:60ch; margin-top:10px;}
+  .meta-row{display:flex; gap:20px; margin-top:16px; flex-wrap:wrap; font-family:var(--font-mono); font-size:12px; color:var(--muted);}
+  .meta-row b{color:var(--ink); font-weight:600;}
+  section{margin-bottom:46px;}
+  .section-label{font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); border-top:1px solid var(--border); padding-top:8px; margin-bottom:16px;}
+  h2{font-family:var(--font-display); font-size:21px; margin:0 0 10px; font-weight:600;}
+  h3{font-family:var(--font-display); font-size:17px; margin:22px 0 6px; font-weight:600;}
+  p{margin:0 0 12px;}
+  ul, ol{margin:0 0 12px; padding-left:20px;}
+  li{margin-bottom:6px;}
+  .analogy{background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent2); padding:10px 14px; border-radius:2px; font-size:14px; margin:10px 0 16px;}
+  .analogy b{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent2); display:block; margin-bottom:4px;}
+  code{font-family:var(--font-mono); font-size:.9em; background:var(--surface-2); padding:1px 5px; border-radius:2px;}
+  pre{font-family:var(--font-mono); font-size:13px; background:var(--surface); border:1px solid var(--border); padding:14px; border-radius:3px; overflow-x:auto; line-height:1.5;}
+
+  figure.diagram{margin:0 0 8px; border:1px solid var(--border); border-radius:3px; background:var(--surface); padding:18px 18px 14px;}
+  figure.diagram svg{display:block; width:100%; height:auto;}
+  figure.diagram figcaption{font-family:var(--font-mono); font-size:11px; color:var(--muted); margin-top:12px; text-transform:uppercase; letter-spacing:.05em;}
+  .dbox{fill:var(--surface); stroke:var(--border); stroke-width:1.5;}
+  .dbox-accent{fill:var(--accent); fill-opacity:.12; stroke:var(--accent); stroke-width:1.5;}
+  .dtext{font-family:var(--font-mono); font-size:11px; fill:var(--ink);}
+  .dtext-muted{font-family:var(--font-mono); font-size:10px; fill:var(--muted);}
+  .dtext-accent{font-family:var(--font-mono); font-size:10px; fill:var(--accent2); font-weight:600;}
+  .dlabel{font-family:var(--font-display); font-size:13px; font-weight:600; fill:var(--ink);}
+  .darrow{stroke:var(--muted); stroke-width:1.5; fill:none;}
+  .darrow-head{fill:var(--muted);}
+
+  .steps{counter-reset:step; list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0;}
+  .steps li{counter-increment:step; border-bottom:1px solid var(--border); padding:12px 0 12px 44px; position:relative; font-size:14px;}
+  .steps li:last-child{border-bottom:none;}
+  .steps li::before{content:counter(step, decimal-leading-zero); position:absolute; left:0; top:12px; font-family:var(--font-mono); font-size:12px; color:var(--accent); font-weight:700;}
+  .steps b{display:block; font-family:var(--font-display); font-size:15px; margin-bottom:2px;}
+  .exercise-box{border:1px solid var(--border); background:var(--surface); border-radius:3px; padding:20px;}
+  details{margin-top:14px;}
+  summary{cursor:pointer; font-family:var(--font-mono); font-size:13px; color:var(--accent2); list-style:none;}
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:"▸ ";}
+  details[open] summary::before{content:"▾ ";}
+  .solution{margin-top:12px; padding-top:12px; border-top:1px dashed var(--border); font-size:14px;}
+  .iq-list{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;}
+  .iq-list li{border:1px solid var(--border); border-radius:3px; padding:12px 14px; background:var(--surface); font-size:14px; display:flex; gap:10px;}
+  .iq-list li::before{content:"?"; font-family:var(--font-mono); color:var(--accent); font-weight:700; flex-shrink:0;}
+  .quiz-item{border:1px solid var(--border); border-radius:3px; padding:16px; margin-bottom:12px; background:var(--surface);}
+  .quiz-q{font-weight:600; margin-bottom:10px; font-size:14.5px;}
+  .quiz-opts{display:flex; flex-direction:column; gap:8px;}
+  .quiz-opt{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--bg); color:var(--ink); padding:9px 12px; border-radius:2px; font-family:var(--font-body); font-size:13.5px; cursor:pointer;}
+  .quiz-opt:hover{border-color:var(--accent2);}
+  .quiz-opt.correct{border-color:var(--good); background:color-mix(in srgb, var(--good) 14%, var(--surface));}
+  .quiz-opt.incorrect{border-color:var(--bad); background:color-mix(in srgb, var(--bad) 12%, var(--surface));}
+  .quiz-opt[disabled]{cursor:default;}
+  .quiz-explain{font-size:13px; color:var(--muted); margin-top:10px; display:none; padding-top:10px; border-top:1px dashed var(--border);}
+  .quiz-explain.show{display:block;}
+  .quiz-score{font-family:var(--font-mono); font-size:13px; border:1px solid var(--border); border-radius:3px; padding:12px 14px; background:var(--surface-2); margin-top:6px;}
+  .checklist{display:flex; flex-direction:column; gap:10px;}
+  .check-row{display:flex; align-items:flex-start; gap:10px; font-size:14px;}
+  .check-row input{margin-top:3px; width:16px; height:16px; accent-color:var(--good); flex-shrink:0; cursor:pointer;}
+  .check-row label{cursor:pointer;}
+  .nav-footer{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:18px; font-family:var(--font-mono); font-size:12px;}
+  .nav-footer a{text-decoration:none; border:1px solid var(--border); padding:7px 12px; border-radius:2px;}
+  .nav-footer a:hover{border-color:var(--accent2);}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <a class="backlink" href="index.html">&larr; Volver al hub</a>
+
+  <header class="masthead">
+    <div class="eyebrow">Semana 2 · Día 06 · Systems &amp; Cloud <span class="week-start">Abre semana 2</span></div>
+    <div class="title-row">
+      <span class="day-numeral">06</span>
+      <h1>System Design Framework</h1>
+    </div>
+    <p class="sub">El framework de 16 pasos que vas a usar en la entrevista técnica — memorízalo como una checklist, no como un guion rígido.</p>
+    <div class="meta-row">
+      <span><b>~100 min</b></span>
+      <span>Prerrequisito: <b>Semana 1 completa</b></span>
+      <span>Conecta con: <b>Día 07 — Distributed Systems</b></span>
+    </div>
+  </header>
+
+  <section>
+    <div class="section-label">Objetivo del día</div>
+    <p>System Design clásico ya lo sabes hacer. Hoy: el framework específico para casos con IA, y practicar recorrerlo en voz alta con un caso guiado — la habilidad que se evalúa no es "sabes las piezas", es "las recorres en orden bajo presión".</p>
+  </section>
+
+  <section>
+    <div class="section-label">El framework de 16 pasos</div>
+    <ol class="steps">
+      <li><b>1. Clarificar el problema</b> No empieces a diseñar sin entender qué se está pidiendo realmente.</li>
+      <li><b>2. Identificar usuarios</b> ¿Quién interactúa con el sistema? ¿Clientes finales, agentes internos, ambos?</li>
+      <li><b>3. Definir objetivos</b> ¿Qué éxito significa aquí? Conéctalo a una métrica de negocio si puedes.</li>
+      <li><b>4. Requisitos funcionales</b> Qué debe hacer el sistema, en lenguaje concreto.</li>
+      <li><b>5. Requisitos no funcionales</b> Latencia, disponibilidad, throughput, consistencia.</li>
+      <li><b>6. Restricciones</b> Presupuesto, sistemas legacy existentes, compliance, plazos.</li>
+      <li><b>7. Arquitectura de alto nivel</b> Las cajas grandes: canal, orquestación, integración, datos.</li>
+      <li><b>8. Arquitectura del agente</b> Agent runtime, tools, memory, RAG — el diagrama del Día 02.</li>
+      <li><b>9. Integraciones</b> Qué sistemas toca, con qué protocolo, síncrono o async.</li>
+      <li><b>10. Datos</b> Qué se persiste, dónde, con qué modelo (RAG, transaccional, ambos).</li>
+      <li><b>11. Seguridad</b> Identity, scopes, guardrails — el Día 04 aplicado al caso.</li>
+      <li><b>12. Resiliencia</b> Qué pasa cuando algo falla — el Día 05 aplicado al caso.</li>
+      <li><b>13. Observabilidad</b> Cómo sabrías que algo salió mal antes que el cliente te lo diga.</li>
+      <li><b>14. Escalabilidad</b> Qué se rompe primero si el tráfico se multiplica por 10.</li>
+      <li><b>15. Trade-offs</b> Nombra las alternativas que descartaste y por qué.</li>
+      <li><b>16. Rollout</b> Cómo lanzas esto sin apostar todo de una vez — canary, feature flags, piloto.</li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="section-label">Cómo usarlo bajo presión</div>
+    <p>No lo recites de memoria en la entrevista — úsalo como un mapa mental para no quedarte en blanco. El error más común no es "no saber la arquitectura", es <b>saltar directo al paso 7 sin clarificar el problema primero</b>. El entrevistador está evaluando tu proceso tanto como tu resultado.</p>
+    <div class="analogy"><b>Regla práctica</b>Pasa al menos 3-5 minutos en los pasos 1-6 antes de dibujar una sola caja. Un candidato que clarifica bien y diseña algo simple gana sobre uno que diseña algo elaborado para el problema equivocado.</div>
+  </section>
+
+  <section>
+    <div class="section-label">Caso práctico guiado</div>
+    <div class="exercise-box">
+      <h2>Enunciado: "Diseña un agente que ayude a los reps de ventas a preparar reuniones."</h2>
+      <p>Es intencionalmente ambiguo. Recorre los primeros 6 pasos <b>en voz alta</b>, como si estuvieras en la entrevista, antes de ver el enfoque sugerido.</p>
+      <details>
+        <summary>Ver enfoque sugerido para los pasos 1-6</summary>
+        <div class="solution">
+          <p><b>1. Clarificar:</b> "¿Preparar significa resumir el historial del cliente, sugerir talking points, o ambos? ¿Es antes de la reunión o también durante?" — nunca asumas el alcance.</p>
+          <p><b>2. Usuarios:</b> Reps de ventas (usuario primario). Posiblemente managers que revisan calidad de preparación (usuario secundario).</p>
+          <p><b>3. Objetivo:</b> Reducir el tiempo de prep de 30 min a 5 min, manteniendo o mejorando la calidad de la reunión (nota el patrón del Día 19 del plan: KPI concreto, no "usar IA").</p>
+          <p><b>4. Funcionales:</b> Resumir historial de CRM, últimas interacciones, noticias recientes de la empresa del cliente, sugerir 3 talking points.</p>
+          <p><b>5. No funcionales:</b> Debe estar listo &lt;30s antes de que empiece la reunión (viene del calendario), alta disponibilidad en horario laboral, no necesita ser tiempo real dentro de la reunión.</p>
+          <p><b>6. Restricciones:</b> CRM existente (Salesforce), datos del cliente son sensibles (no pueden salir de la red corporativa), equipo de ventas no técnico.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Diagrama de implementación</div>
+    <h2>Cómo se vería (pasos 7-9, aplicados al caso de ventas)</h2>
+    <p>El ejercicio guiado se detuvo en el paso 6 (restricciones). Así se ve continuar hasta la arquitectura.</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 640 180" role="img" aria-label="Diagrama: un evento de calendario dispara el Agent Runtime, que consulta el historial de CRM y noticias recientes de la empresa, genera un resumen con talking points, y lo entrega al representante de ventas por Slack o email antes de la reunión.">
+        <defs>
+          <marker id="d6arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker>
+        </defs>
+
+        <rect x="10" y="20" width="140" height="40" rx="3" class="dbox"/>
+        <text x="80" y="44" text-anchor="middle" class="dtext">Evento de calendario</text>
+        <line x1="150" y1="40" x2="188" y2="40" class="darrow" marker-end="url(#d6arrow)"/>
+
+        <rect x="190" y="20" width="140" height="40" rx="3" class="dbox-accent"/>
+        <text x="260" y="44" text-anchor="middle" class="dtext-accent">Agent Runtime</text>
+
+        <line x1="245" y1="60" x2="235" y2="98" class="darrow" marker-end="url(#d6arrow)"/>
+        <text x="200" y="82" class="dtext-muted">consulta CRM</text>
+        <rect x="175" y="100" width="110" height="40" rx="3" class="dbox"/>
+        <text x="230" y="124" text-anchor="middle" class="dtext">Historial CRM</text>
+
+        <line x1="285" y1="60" x2="355" y2="98" class="darrow" marker-end="url(#d6arrow)"/>
+        <text x="330" y="82" class="dtext-muted">consulta noticias</text>
+        <rect x="305" y="100" width="110" height="40" rx="3" class="dbox"/>
+        <text x="360" y="124" text-anchor="middle" class="dtext">Noticias recientes</text>
+
+        <line x1="330" y1="40" x2="458" y2="40" class="darrow" marker-end="url(#d6arrow)"/>
+        <text x="395" y="34" text-anchor="middle" class="dtext-muted">genera resumen</text>
+        <rect x="460" y="20" width="160" height="40" rx="3" class="dbox"/>
+        <text x="540" y="44" text-anchor="middle" class="dtext">Talking points</text>
+
+        <line x1="540" y1="60" x2="540" y2="98" class="darrow" marker-end="url(#d6arrow)"/>
+        <text x="555" y="82" class="dtext-muted">&lt;30s antes</text>
+        <rect x="460" y="100" width="160" height="40" rx="3" class="dbox"/>
+        <text x="540" y="124" text-anchor="middle" class="dtext">Rep de ventas (Slack/email)</text>
+      </svg>
+      <figcaption>Nota que ambas consultas (CRM, noticias) son de solo lectura — no hay escritura ni acción irreversible en este flujo.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <ul class="iq-list">
+      <li>¿Por qué clarificar el problema antes de diseñar, incluso si crees entenderlo?</li>
+      <li>¿Cómo decides qué requisitos no funcionales importan más para un caso dado?</li>
+      <li>¿Qué haces si el entrevistador no te da suficiente información?</li>
+      <li>¿Cómo presentas trade-offs sin sonar indeciso?</li>
+      <li>¿Por qué el rollout es parte del diseño y no un detalle de implementación aparte?</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-label">Quiz de autoevaluación</div>
+    <div id="quiz"></div>
+    <div class="quiz-score" id="quizScore">0 / 6 respondidas correctamente</div>
+  </section>
+
+  <section>
+    <div class="section-label">Checklist de cierre</div>
+    <div class="checklist" id="checklist">
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Puedo recitar los 16 pasos sin ver la lista.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Practiqué los pasos 1-6 del caso de ventas en voz alta antes de ver la solución.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Sé explicar por qué clarificar primero gana sobre diseñar rápido.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Completé el quiz con 6/6.</label></div>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="index.html">&larr; Hub</a>
+    <span>Día 06 de 14</span>
+    <a href="day-07.html">Día 07 &rarr;</a>
+  </div>
+</div>
+
+<script>
+  const QUIZ = [
+    {
+      q: "¿Cuál es el error más común al empezar un caso de System Design?",
+      opts: ["Hacer demasiadas preguntas de clarificación", "Saltar directo a dibujar arquitectura sin clarificar el problema primero", "Mencionar trade-offs", "Hablar del rollout"],
+      correct: 1,
+      explain: "El entrevistador evalúa el proceso — diseñar rápido lo incorrecto pesa más en contra que tardar en clarificar."
+    },
+    {
+      q: "Los requisitos no funcionales (paso 5) incluyen principalmente...",
+      opts: ["Qué debe hacer el sistema funcionalmente", "Latencia, disponibilidad, throughput, consistencia", "El presupuesto del proyecto", "La lista de usuarios"],
+      correct: 1,
+      explain: "Los funcionales son el 'qué hace'; los no funcionales son las cualidades bajo las que debe operar."
+    },
+    {
+      q: "¿Por qué 'rollout' (paso 16) es parte del diseño de sistema y no un detalle aparte?",
+      opts: ["No lo es, se puede omitir siempre", "Porque cómo lanzas algo sin riesgo (canary, feature flags) es parte de diseñar la solución completa", "Solo aplica a sistemas sin IA", "Es responsabilidad exclusiva de DevOps, nunca del diseño"],
+      correct: 1,
+      explain: "Un buen diseño incluye cómo mitigar el riesgo de lanzarlo — es tan parte de la solución como la arquitectura misma."
+    },
+    {
+      q: "Si el entrevistador da poca información sobre el caso, la mejor respuesta es...",
+      opts: ["Asumir lo más común y seguir sin preguntar", "Hacer preguntas de clarificación específicas y declarar los supuestos que sí tomas", "Pedir que reformule todo el problema", "Quedarte en silencio esperando más detalles"],
+      correct: 1,
+      explain: "Clarificar activamente, y ser explícito sobre los supuestos que decides tomar, demuestra el proceso que se está evaluando."
+    },
+    {
+      q: "¿Qué papel juega el paso 15 (trade-offs) en la evaluación del candidato?",
+      opts: ["Ninguno, es opcional", "Demuestra que consideraste alternativas y entiendes las consecuencias de tu elección", "Solo importa si el entrevistador pregunta directamente", "Sirve para rellenar tiempo"],
+      correct: 1,
+      explain: "Nombrar lo que descartaste y por qué es evidencia de pensamiento arquitectónico, no solo de conocer patrones."
+    },
+    {
+      q: "El paso 8 ('arquitectura del agente') se refiere específicamente a...",
+      opts: ["La infraestructura de red", "Agent runtime, tools, memory y RAG — el diagrama base del Día 02", "El presupuesto del proyecto", "Los requisitos no funcionales"],
+      correct: 1,
+      explain: "Es donde aterrizas el framework general de System Design en los componentes específicos de un agente de IA."
+    }
+  ];
+  const quizEl = document.getElementById('quiz');
+  let correctCount = 0, answered = 0;
+  QUIZ.forEach((item, i) => {
+    const box = document.createElement('div');
+    box.className = 'quiz-item';
+    const optsHtml = item.opts.map((o, j) => `<button class="quiz-opt" data-idx="${j}">${o}</button>`).join('');
+    box.innerHTML = `<div class="quiz-q">${i+1}. ${item.q}</div><div class="quiz-opts">${optsHtml}</div><div class="quiz-explain" id="explain-${i}">${item.explain}</div>`;
+    quizEl.appendChild(box);
+    box.querySelectorAll('.quiz-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (box.dataset.answered) return;
+        box.dataset.answered = "1"; answered++;
+        const idx = parseInt(btn.getAttribute('data-idx'));
+        box.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+        if (idx === item.correct) { btn.classList.add('correct'); correctCount++; }
+        else { btn.classList.add('incorrect'); box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct'); }
+        document.getElementById(`explain-${i}`).classList.add('show');
+        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+      });
+    });
+  });
+  const CHECK_KEY = 'aiaeb-day06-checklist';
+  const boxes = document.querySelectorAll('#checklist input[type=checkbox]');
+  function loadChecks(){ try{ return JSON.parse(localStorage.getItem(CHECK_KEY)) || {}; } catch(e){ return {}; } }
+  function saveChecks(state){ localStorage.setItem(CHECK_KEY, JSON.stringify(state)); }
+  const state = loadChecks();
+  boxes.forEach(b => {
+    if (state[b.id]) b.checked = true;
+    b.addEventListener('change', () => { const s = loadChecks(); s[b.id] = b.checked; saveChecks(s); });
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
+<title>Cloud Architecture (AWS)</title>
+<style>
+  :root{
+    --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
+    --border:#d3dbdd; --accent:#b8681f; --accent-ink:#fff8f0; --accent2:#256d87; --good:#3f7d52; --bad:#a8452a;
+    --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+      --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c; --bad:#e07a5c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+    --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c; --bad:#e07a5c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      repeating-linear-gradient(90deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      var(--bg);
+    color:var(--ink); font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent2);}
+  a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible{outline:2px solid var(--accent2); outline-offset:2px;}
+  .wrap{max-width:760px; margin:0 auto; padding:40px 24px 100px;}
+  .backlink{font-family:var(--font-mono); font-size:12px; text-decoration:none; color:var(--muted); display:inline-flex; gap:6px;}
+  .backlink:hover{color:var(--accent2);}
+  header.masthead{border-bottom:1px solid var(--border); padding-bottom:24px; margin:18px 0 36px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent2); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:20px; height:1px; background:var(--accent2); display:inline-block;}
+  .title-row{display:flex; align-items:baseline; gap:18px; margin-top:10px;}
+  .day-numeral{font-family:var(--font-display); font-size:56px; font-weight:600; color:var(--accent); line-height:1;}
+  h1{font-family:var(--font-display); font-weight:600; font-size:clamp(26px,4vw,34px); margin:0; text-wrap:balance; letter-spacing:-0.01em;}
+  .sub{color:var(--muted); font-size:15px; max-width:60ch; margin-top:10px;}
+  .meta-row{display:flex; gap:20px; margin-top:16px; flex-wrap:wrap; font-family:var(--font-mono); font-size:12px; color:var(--muted);}
+  .meta-row b{color:var(--ink); font-weight:600;}
+  section{margin-bottom:46px;}
+  .section-label{font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); border-top:1px solid var(--border); padding-top:8px; margin-bottom:16px;}
+  h2{font-family:var(--font-display); font-size:21px; margin:0 0 10px; font-weight:600;}
+  h3{font-family:var(--font-display); font-size:17px; margin:22px 0 6px; font-weight:600;}
+  p{margin:0 0 12px;}
+  ul, ol{margin:0 0 12px; padding-left:20px;}
+  li{margin-bottom:6px;}
+  .analogy{background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent2); padding:10px 14px; border-radius:2px; font-size:14px; margin:10px 0 16px;}
+  .analogy b{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent2); display:block; margin-bottom:4px;}
+  code{font-family:var(--font-mono); font-size:.9em; background:var(--surface-2); padding:1px 5px; border-radius:2px;}
+  pre{font-family:var(--font-mono); font-size:13px; background:var(--surface); border:1px solid var(--border); padding:14px; border-radius:3px; overflow-x:auto; line-height:1.5;}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:12px 0 4px;}
+  th, td{text-align:left; padding:9px 12px; border:1px solid var(--border); vertical-align:top;}
+  th{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); background:var(--surface-2);}
+  .table-wrap{overflow-x:auto; margin-bottom:8px;}
+
+  figure.diagram{margin:0 0 8px; border:1px solid var(--border); border-radius:3px; background:var(--surface); padding:18px 18px 14px;}
+  figure.diagram svg{display:block; width:100%; height:auto;}
+  figure.diagram figcaption{font-family:var(--font-mono); font-size:11px; color:var(--muted); margin-top:12px; text-transform:uppercase; letter-spacing:.05em;}
+  .dbox{fill:var(--surface); stroke:var(--border); stroke-width:1.5;}
+  .dbox-accent{fill:var(--accent); fill-opacity:.12; stroke:var(--accent); stroke-width:1.5;}
+  .dtext{font-family:var(--font-mono); font-size:11px; fill:var(--ink);}
+  .dtext-muted{font-family:var(--font-mono); font-size:10px; fill:var(--muted);}
+  .dlabel{font-family:var(--font-display); font-size:13px; font-weight:600; fill:var(--ink);}
+  .darrow{stroke:var(--muted); stroke-width:1.5; fill:none;}
+  .darrow-head{fill:var(--muted);}
+
+  .code-block{border:1px solid var(--border); border-radius:3px; overflow:hidden; margin-bottom:8px;}
+  .code-head{font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); background:var(--surface-2); padding:7px 14px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between;}
+  .code-head span.lang{color:var(--accent2);}
+  .code-block pre{border:none; border-radius:0; margin:0;}
+  .code-comment{color:var(--muted);}
+  .code-str{color:var(--good);}
+  .code-kw{color:var(--accent2);}
+  .group-title{font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:26px 0 4px;}
+  .concept-grid{display:grid; grid-template-columns:1fr; gap:0;}
+  .concept{border-bottom:1px solid var(--border); padding:14px 0;}
+  .concept:first-child{padding-top:0;}
+  .concept:last-child{border-bottom:none;}
+  .concept-term{font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:4px;}
+  .exercise-box{border:1px solid var(--border); background:var(--surface); border-radius:3px; padding:20px;}
+  details{margin-top:14px;}
+  summary{cursor:pointer; font-family:var(--font-mono); font-size:13px; color:var(--accent2); list-style:none;}
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:"▸ ";}
+  details[open] summary::before{content:"▾ ";}
+  .solution{margin-top:12px; padding-top:12px; border-top:1px dashed var(--border); font-size:14px;}
+  .iq-list{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;}
+  .iq-list li{border:1px solid var(--border); border-radius:3px; padding:12px 14px; background:var(--surface); font-size:14px; display:flex; gap:10px;}
+  .iq-list li::before{content:"?"; font-family:var(--font-mono); color:var(--accent); font-weight:700; flex-shrink:0;}
+  .quiz-item{border:1px solid var(--border); border-radius:3px; padding:16px; margin-bottom:12px; background:var(--surface);}
+  .quiz-q{font-weight:600; margin-bottom:10px; font-size:14.5px;}
+  .quiz-opts{display:flex; flex-direction:column; gap:8px;}
+  .quiz-opt{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--bg); color:var(--ink); padding:9px 12px; border-radius:2px; font-family:var(--font-body); font-size:13.5px; cursor:pointer;}
+  .quiz-opt:hover{border-color:var(--accent2);}
+  .quiz-opt.correct{border-color:var(--good); background:color-mix(in srgb, var(--good) 14%, var(--surface));}
+  .quiz-opt.incorrect{border-color:var(--bad); background:color-mix(in srgb, var(--bad) 12%, var(--surface));}
+  .quiz-opt[disabled]{cursor:default;}
+  .quiz-explain{font-size:13px; color:var(--muted); margin-top:10px; display:none; padding-top:10px; border-top:1px dashed var(--border);}
+  .quiz-explain.show{display:block;}
+  .quiz-score{font-family:var(--font-mono); font-size:13px; border:1px solid var(--border); border-radius:3px; padding:12px 14px; background:var(--surface-2); margin-top:6px;}
+  .checklist{display:flex; flex-direction:column; gap:10px;}
+  .check-row{display:flex; align-items:flex-start; gap:10px; font-size:14px;}
+  .check-row input{margin-top:3px; width:16px; height:16px; accent-color:var(--good); flex-shrink:0; cursor:pointer;}
+  .check-row label{cursor:pointer;}
+  .nav-footer{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:18px; font-family:var(--font-mono); font-size:12px;}
+  .nav-footer a{text-decoration:none; border:1px solid var(--border); padding:7px 12px; border-radius:2px;}
+  .nav-footer a:hover{border-color:var(--accent2);}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <a class="backlink" href="index.html">&larr; Volver al hub</a>
+
+  <header class="masthead">
+    <div class="eyebrow">Semana 2 · Día 08 · Systems &amp; Cloud</div>
+    <div class="title-row">
+      <span class="day-numeral">08</span>
+      <h1>Cloud Architecture (AWS)</h1>
+    </div>
+    <p class="sub">Ya conoces los servicios. Hoy el objetivo es defender la elección, no listar características — practicando las cinco comparaciones que más aparecen en entrevista.</p>
+    <div class="meta-row">
+      <span><b>~90 min</b></span>
+      <span>Prerrequisito: <b>Día 07</b></span>
+      <span>Conecta con: <b>Día 09 — Composition Case</b></span>
+    </div>
+  </header>
+
+  <section>
+    <div class="section-label">Objetivo del día</div>
+    <p>El objetivo no es memorizar servicios — es <b>justificar decisiones y trade-offs</b>. Recorre las cinco comparaciones aplicadas al mismo caso: un agente de soporte que necesita ejecutar tools, orquestar un flujo con pasos, y guardar estado de conversación.</p>
+  </section>
+
+  <section>
+    <div class="section-label">Las cinco comparaciones</div>
+
+    <div class="group-title">Lambda vs ECS / EKS</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><th>Lambda</th><td>Ejecución de tools individuales: corta duración, stateless, tráfico impredecible. Pagas por invocación, cold start aceptable si la tool no es latency-crítica.</td></tr>
+          <tr><th>ECS / EKS</th><td>El Agent Runtime en sí: proceso de larga duración, mantiene conexiones (streaming al usuario), necesita warm start garantizado y más control sobre recursos.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="group-title">API Gateway vs ALB</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><th>API Gateway</th><td>La capa de tool calls del agente: auth por ruta, throttling, validación de request/schema por endpoint — encaja con muchos endpoints pequeños y bien definidos (una tool = una ruta).</td></tr>
+          <tr><th>ALB</th><td>Routing a un número menor de servicios/contenedores de larga duración, más barato a alto throughput, menos "inteligencia" por request.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="group-title">SQS vs Kafka (MSK)</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><th>SQS</th><td>Distribución de trabajo punto a punto: una cola de "acciones pendientes de aprobación humana", un solo consumidor procesa cada mensaje una vez.</td></tr>
+          <tr><th>Kafka / MSK</th><td>Un evento del agente ("conversación completada") que <b>varios</b> sistemas independientes necesitan consumir (analytics, CRM sync, billing) — cada consumidor mantiene su propio offset.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="group-title">Step Functions vs Kafka</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><th>Step Functions</th><td>Orquestar una secuencia definida con retry y manejo de error built-in — el ajuste natural para implementar la Saga del Día 07 (reembolso: verificar → cobrar → actualizar → notificar).</td></tr>
+          <tr><th>Kafka</th><td>Reacciones desacopladas donde nadie necesita "poseer" la secuencia completa — cada sistema reacciona al evento a su propio ritmo, sin un orquestador central.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="group-title">DynamoDB vs RDS / PostgreSQL</div>
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><th>DynamoDB</th><td>Estado de conversación: patrón de acceso por clave (session_id), necesita escalar con conversaciones concurrentes, lecturas de baja latencia, poca necesidad de joins.</td></tr>
+          <tr><th>RDS / PostgreSQL</th><td>Datos de negocio relacionales (pedidos, clientes) donde necesitas joins, consistencia fuerte y queries complejas — no el lugar para el historial de chat.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">El resto del stack, en una línea cada uno</div>
+    <div class="concept-grid">
+      <div class="concept"><div class="concept-term">EventBridge</div><h3>Bus de eventos con schema, para rutear eventos del agente a múltiples targets según reglas — sin construir tu propio router.</h3></div>
+      <div class="concept"><div class="concept-term">S3</div><h3>Donde aterrizan los documentos crudos antes de que el pipeline de ingesta de RAG (Día 02) los chunkee y embeba.</h3></div>
+      <div class="concept"><div class="concept-term">Secrets Manager</div><h3>Las tools nunca tienen credenciales en código o env vars planas — las obtienen en runtime, con rotación automática.</h3></div>
+      <div class="concept"><div class="concept-term">CloudWatch (+ X-Ray)</div><h3>El punto de agregación de logs/métricas, y la forma AWS-nativa de construir el trace distribuido del Día 05.</h3></div>
+      <div class="concept"><div class="concept-term">IAM</div><h3>Cada Lambda de tool tiene su propio role con el permiso mínimo — la versión concreta del least privilege del Día 04.</h3></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Diagrama de implementación</div>
+    <h2>La arquitectura AWS completa</h2>
+    <p>Cómo aterrizan las cinco comparaciones de arriba en una sola arquitectura real.</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 640 240" role="img" aria-label="Diagrama: API Gateway enruta al Agent Runtime en ECS, que lee y escribe estado de conversación en DynamoDB y dispara ejecuciones de Step Functions; Step Functions invoca Lambdas de tools que actualizan RDS, y en caso de fallo enruta a una cola SQS de revisión humana.">
+        <defs>
+          <marker id="d8arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker>
+        </defs>
+
+        <rect x="10" y="20" width="130" height="40" rx="3" class="dbox"/>
+        <text x="75" y="44" text-anchor="middle" class="dtext">API Gateway</text>
+        <line x1="140" y1="40" x2="168" y2="40" class="darrow" marker-end="url(#d8arrow)"/>
+
+        <rect x="170" y="20" width="160" height="40" rx="3" class="dbox-accent"/>
+        <text x="250" y="44" text-anchor="middle" class="dtext">ECS · Agent Runtime</text>
+
+        <line x1="240" y1="60" x2="240" y2="98" class="darrow" marker-end="url(#d8arrow)"/>
+        <text x="255" y="82" class="dtext-muted">session state</text>
+        <rect x="170" y="100" width="140" height="40" rx="3" class="dbox"/>
+        <text x="240" y="124" text-anchor="middle" class="dtext">DynamoDB</text>
+
+        <line x1="330" y1="40" x2="348" y2="40" class="darrow" marker-end="url(#d8arrow)"/>
+        <text x="340" y="30" text-anchor="middle" class="dtext-muted">start execution</text>
+        <rect x="350" y="20" width="150" height="40" rx="3" class="dbox"/>
+        <text x="425" y="44" text-anchor="middle" class="dtext">Step Functions</text>
+
+        <line x1="425" y1="60" x2="425" y2="98" class="darrow" marker-end="url(#d8arrow)"/>
+        <text x="440" y="82" class="dtext-muted">invoca pasos</text>
+        <rect x="350" y="100" width="150" height="40" rx="3" class="dbox"/>
+        <text x="425" y="124" text-anchor="middle" class="dtext">Lambda (tools)</text>
+
+        <line x1="425" y1="140" x2="425" y2="178" class="darrow" marker-end="url(#d8arrow)"/>
+        <text x="440" y="162" class="dtext-muted">update pedido</text>
+        <rect x="350" y="180" width="150" height="40" rx="3" class="dbox"/>
+        <text x="425" y="204" text-anchor="middle" class="dtext">RDS</text>
+
+        <line x1="500" y1="50" x2="538" y2="98" class="darrow" marker-end="url(#d8arrow)"/>
+        <text x="550" y="80" class="dtext-muted">si falla</text>
+        <rect x="510" y="100" width="120" height="40" rx="3" class="dbox"/>
+        <text x="570" y="124" text-anchor="middle" class="dtext">SQS revisión</text>
+      </svg>
+      <figcaption>El mismo Saga del Día 07, ahora con nombres de servicio reales en cada caja.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="section-label">Ejemplo de implementación</div>
+    <h2>Disparar el Saga desde el Agent Runtime</h2>
+    <p>El ECS Runtime no ejecuta el Saga directamente — dispara una ejecución de Step Functions y sigue con la conversación.</p>
+    <div class="code-block">
+      <div class="code-head"><span>trigger_refund_saga.py</span><span class="lang">python</span></div>
+      <pre><span class="code-kw">import</span> boto3, json, uuid
+
+sfn = boto3.client(<span class="code-str">"stepfunctions"</span>)
+
+<span class="code-kw">def</span> start_refund_saga(order_id: str, amount: float) -> str:
+    execution_name = f<span class="code-str">"refund-{order_id}-{uuid.uuid4().hex[:8]}"</span>
+
+    response = sfn.start_execution(
+        stateMachineArn=REFUND_SAGA_ARN,
+        name=execution_name,        <span class="code-comment"># Step Functions rechaza nombres duplicados</span>
+        input=json.dumps({                  <span class="code-comment"># → idempotency gratis a nivel de ejecución</span>
+            <span class="code-str">"order_id"</span>: order_id,
+            <span class="code-str">"amount"</span>: amount,
+            <span class="code-str">"idempotency_key"</span>: execution_name,
+        }),
+    )
+    <span class="code-kw">return</span> response[<span class="code-str">"executionArn"</span>]  <span class="code-comment"># el agente puede consultar el estado luego</span></pre>
+    </div>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">El nombre de la ejecución hace doble función: identifica el run y actúa como idempotency key — Step Functions rechaza un <code>start_execution</code> con un nombre ya usado.</p>
+  </section>
+
+  <section>
+    <div class="section-label">Ejercicio práctico</div>
+    <div class="exercise-box">
+      <h2>Caso: llevar el agente de soporte (Día 02) a AWS</h2>
+      <p>Decide, con justificación de una frase cada una:</p>
+      <ol>
+        <li>¿Dónde vive el Agent Runtime — Lambda o ECS?</li>
+        <li>¿Dónde vive el estado de la conversación?</li>
+        <li>¿Cómo implementas el Saga de "procesar reembolso" del Día 07 con servicios AWS concretos?</li>
+      </ol>
+      <details>
+        <summary>Ver enfoque sugerido</summary>
+        <div class="solution">
+          <p><b>1.</b> ECS (o similar), porque el runtime necesita mantener el streaming de la respuesta al usuario y hacer múltiples llamadas al LLM/tools dentro del mismo request — un cold start de Lambda en cada turno de conversación sería una mala experiencia. Las tools individuales sí pueden ser Lambdas.</p>
+          <p><b>2.</b> DynamoDB, indexado por <code>session_id</code> — acceso de baja latencia por clave, y escala naturalmente con conversaciones concurrentes sin necesidad de joins.</p>
+          <p><b>3.</b> Step Functions orquesta los 4 pasos (verificar → cobrar → actualizar pedido en RDS → notificar), con retry configurado por paso y una rama de error explícita hacia una cola SQS de "revisión humana" si el paso de actualización falla después de que el cobro ya se emitió.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <ul class="iq-list">
+      <li>¿Cuándo elegirías Lambda sobre ECS para implementar una tool, y viceversa?</li>
+      <li>¿Cómo implementarías el patrón Saga del día anterior usando Step Functions?</li>
+      <li>SQS vs Kafka/MSK para un evento de agente dado — ¿cuál es tu criterio de decisión?</li>
+      <li>¿Por qué DynamoDB podría ser mejor que RDS para el estado de conversación, y cuándo cambiaría eso?</li>
+      <li>¿Cómo le das a una tool basada en Lambda acceso seguro a una API key de terceros?</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-label">Quiz de autoevaluación</div>
+    <div id="quiz"></div>
+    <div class="quiz-score" id="quizScore">0 / 6 respondidas correctamente</div>
+  </section>
+
+  <section>
+    <div class="section-label">Checklist de cierre</div>
+    <div class="checklist" id="checklist">
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Puedo justificar las 5 comparaciones en una frase cada una, sin dudar.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Diseñé la versión AWS del agente de soporte sin ver la solución primero.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Sé mapear el Saga del Día 07 a Step Functions concretamente.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Completé el quiz con 6/6.</label></div>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="index.html">&larr; Hub</a>
+    <span>Día 08 de 14</span>
+    <a href="day-09.html">Día 09 &rarr;</a>
+  </div>
+</div>
+
+<script>
+  const QUIZ = [
+    {
+      q: "Para el Agent Runtime que mantiene streaming de respuesta y múltiples llamadas por conversación, ¿qué es preferible?",
+      opts: ["Lambda, siempre", "ECS/EKS, por el manejo de conexiones persistentes y warm start", "S3, porque es más barato", "No importa la elección"],
+      correct: 1,
+      explain: "Lambda encaja mejor para tools individuales de corta duración; el runtime en sí se beneficia de un proceso de larga duración."
+    },
+    {
+      q: "¿Cuál es el criterio principal para elegir Kafka/MSK sobre SQS?",
+      opts: ["Kafka es siempre más barato", "Múltiples consumidores independientes necesitan reaccionar al mismo evento", "SQS no soporta JSON", "Kafka es exclusivo para logs"],
+      correct: 1,
+      explain: "SQS es ideal para distribución de trabajo punto a punto; Kafka brilla cuando varios sistemas distintos consumen el mismo stream de eventos."
+    },
+    {
+      q: "Step Functions encaja naturalmente con el patrón Saga porque...",
+      opts: ["Es más barato que Lambda", "Orquesta una secuencia definida de pasos con retry y manejo de error built-in por paso", "Reemplaza la necesidad de bases de datos", "Solo funciona con DynamoDB"],
+      correct: 1,
+      explain: "Le da a la Saga un lugar explícito para definir cada paso, su retry y su rama de compensación/error."
+    },
+    {
+      q: "El estado de conversación de un agente (por session_id) encaja mejor en...",
+      opts: ["RDS, porque necesita joins complejos", "DynamoDB, por el patrón de acceso por clave y la necesidad de baja latencia a escala", "S3, como almacenamiento de objetos", "No debería persistirse nunca"],
+      correct: 1,
+      explain: "Es un patrón de acceso clave-valor de alta concurrencia — el punto fuerte de DynamoDB, no de una base relacional."
+    },
+    {
+      q: "¿Por qué una tool nunca debería tener una API key de terceros hardcodeada en el código?",
+      opts: ["No hay ningún riesgo real", "Porque Secrets Manager permite obtenerla en runtime con rotación, reduciendo el riesgo de exposición", "Porque Lambda no soporta variables de entorno", "Es solo una preferencia de estilo"],
+      correct: 1,
+      explain: "Secrets Manager (o equivalente) es el mecanismo para que las credenciales no vivan en código ni en configuración estática."
+    },
+    {
+      q: "API Gateway es preferible sobre ALB cuando...",
+      opts: ["Necesitas el menor costo posible a cualquier escala", "Tienes muchos endpoints pequeños tipo tool, cada uno con su propia auth y validación de schema", "Solo tienes un servicio backend", "Nunca — ALB siempre es superior"],
+      correct: 1,
+      explain: "API Gateway aporta control granular por ruta (auth, throttling, validación) — justo lo que necesitas cuando cada tool es un endpoint distinto."
+    }
+  ];
+  const quizEl = document.getElementById('quiz');
+  let correctCount = 0, answered = 0;
+  QUIZ.forEach((item, i) => {
+    const box = document.createElement('div');
+    box.className = 'quiz-item';
+    const optsHtml = item.opts.map((o, j) => `<button class="quiz-opt" data-idx="${j}">${o}</button>`).join('');
+    box.innerHTML = `<div class="quiz-q">${i+1}. ${item.q}</div><div class="quiz-opts">${optsHtml}</div><div class="quiz-explain" id="explain-${i}">${item.explain}</div>`;
+    quizEl.appendChild(box);
+    box.querySelectorAll('.quiz-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (box.dataset.answered) return;
+        box.dataset.answered = "1"; answered++;
+        const idx = parseInt(btn.getAttribute('data-idx'));
+        box.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+        if (idx === item.correct) { btn.classList.add('correct'); correctCount++; }
+        else { btn.classList.add('incorrect'); box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct'); }
+        document.getElementById(`explain-${i}`).classList.add('show');
+        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+      });
+    });
+  });
+  const CHECK_KEY = 'aiaeb-day08-checklist';
+  const boxes = document.querySelectorAll('#checklist input[type=checkbox]');
+  function loadChecks(){ try{ return JSON.parse(localStorage.getItem(CHECK_KEY)) || {}; } catch(e){ return {}; } }
+  function saveChecks(state){ localStorage.setItem(CHECK_KEY, JSON.stringify(state)); }
+  const state = loadChecks();
+  boxes.forEach(b => {
+    if (state[b.id]) b.checked = true;
+    b.addEventListener('change', () => { const s = loadChecks(); s[b.id] = b.checked; saveChecks(s); });
+  });
+</script>
+
+</body>
+</html>

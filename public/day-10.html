@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
+<title>Mock System Design</title>
+<style>
+  :root{
+    --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
+    --border:#d3dbdd; --accent:#b8681f; --accent-ink:#fff8f0; --accent2:#256d87; --good:#3f7d52; --bad:#a8452a;
+    --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+      --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c; --bad:#e07a5c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+    --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c; --bad:#e07a5c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      repeating-linear-gradient(90deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      var(--bg);
+    color:var(--ink); font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent2);}
+  a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible{outline:2px solid var(--accent2); outline-offset:2px;}
+  .wrap{max-width:760px; margin:0 auto; padding:40px 24px 100px;}
+  .backlink{font-family:var(--font-mono); font-size:12px; text-decoration:none; color:var(--muted); display:inline-flex; gap:6px;}
+  .backlink:hover{color:var(--accent2);}
+  header.masthead{border-bottom:1px solid var(--border); padding-bottom:24px; margin:18px 0 36px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent2); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:20px; height:1px; background:var(--accent2); display:inline-block;}
+  .week-done{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--good); border:1px solid var(--good); padding:3px 8px; border-radius:2px; margin-left:auto;}
+  .title-row{display:flex; align-items:baseline; gap:18px; margin-top:10px;}
+  .day-numeral{font-family:var(--font-display); font-size:56px; font-weight:600; color:var(--accent); line-height:1;}
+  h1{font-family:var(--font-display); font-weight:600; font-size:clamp(26px,4vw,34px); margin:0; text-wrap:balance; letter-spacing:-0.01em;}
+  .sub{color:var(--muted); font-size:15px; max-width:60ch; margin-top:10px;}
+  .meta-row{display:flex; gap:20px; margin-top:16px; flex-wrap:wrap; font-family:var(--font-mono); font-size:12px; color:var(--muted);}
+  .meta-row b{color:var(--ink); font-weight:600;}
+  section{margin-bottom:46px;}
+  .section-label{font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); border-top:1px solid var(--border); padding-top:8px; margin-bottom:16px;}
+  h2{font-family:var(--font-display); font-size:21px; margin:0 0 10px; font-weight:600;}
+  h3{font-family:var(--font-display); font-size:17px; margin:22px 0 6px; font-weight:600;}
+  p{margin:0 0 12px;}
+  ul, ol{margin:0 0 12px; padding-left:20px;}
+  li{margin-bottom:6px;}
+  .analogy{background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent2); padding:10px 14px; border-radius:2px; font-size:14px; margin:10px 0 16px;}
+  .analogy b{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent2); display:block; margin-bottom:4px;}
+  code{font-family:var(--font-mono); font-size:.9em; background:var(--surface-2); padding:1px 5px; border-radius:2px;}
+  pre{font-family:var(--font-mono); font-size:13px; background:var(--surface); border:1px solid var(--border); padding:14px; border-radius:3px; overflow-x:auto; line-height:1.5;}
+  .case-box{border:2px solid var(--accent); background:color-mix(in srgb, var(--accent) 6%, var(--surface)); border-radius:3px; padding:20px 22px;}
+  .case-box .tag{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--accent); margin-bottom:8px; display:block;}
+
+  figure.diagram{margin:0 0 8px; border:1px solid var(--border); border-radius:3px; background:var(--surface); padding:18px 18px 14px;}
+  figure.diagram svg{display:block; width:100%; height:auto;}
+  figure.diagram figcaption{font-family:var(--font-mono); font-size:11px; color:var(--muted); margin-top:12px; text-transform:uppercase; letter-spacing:.05em;}
+  .dbox{fill:var(--surface); stroke:var(--border); stroke-width:1.5;}
+  .dbox-accent{fill:var(--accent); fill-opacity:.12; stroke:var(--accent); stroke-width:1.5;}
+  .dtext{font-family:var(--font-mono); font-size:11px; fill:var(--ink);}
+  .dtext-muted{font-family:var(--font-mono); font-size:10px; fill:var(--muted);}
+  .darrow{stroke:var(--muted); stroke-width:1.5; fill:none;}
+  .darrow-dashed{stroke:var(--muted); stroke-width:1.5; fill:none; stroke-dasharray:4,3;}
+  .darrow-head{fill:var(--muted);}
+
+  .code-block{border:1px solid var(--border); border-radius:3px; overflow:hidden; margin-bottom:8px;}
+  .code-head{font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); background:var(--surface-2); padding:7px 14px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between;}
+  .code-head span.lang{color:var(--accent2);}
+  .code-block pre{border:none; border-radius:0; margin:0;}
+  .code-comment{color:var(--muted);}
+  .code-str{color:var(--good);}
+  .code-kw{color:var(--accent2);}
+  .case-box p{font-family:var(--font-display); font-size:17px; font-style:italic; margin:0;}
+  .timer-row{display:flex; gap:16px; margin-top:16px; font-family:var(--font-mono); font-size:12px; color:var(--muted); flex-wrap:wrap;}
+  .timer-row span{border:1px solid var(--border); padding:4px 10px; border-radius:2px;}
+  .steps{counter-reset:step; list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0;}
+  .steps li{counter-increment:step; border-bottom:1px solid var(--border); padding:14px 0 14px 44px; position:relative; font-size:14px;}
+  .steps li:last-child{border-bottom:none;}
+  .steps li::before{content:counter(step, decimal-leading-zero); position:absolute; left:0; top:14px; font-family:var(--font-mono); font-size:12px; color:var(--accent); font-weight:700;}
+  .steps b{display:block; font-family:var(--font-display); font-size:15px; margin-bottom:3px;}
+  details{margin-top:14px;}
+  summary{cursor:pointer; font-family:var(--font-mono); font-size:13px; color:var(--accent2); list-style:none;}
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:"▸ ";}
+  details[open] summary::before{content:"▾ ";}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:12px 0 4px;}
+  th, td{text-align:left; padding:9px 12px; border:1px solid var(--border); vertical-align:top;}
+  th{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); background:var(--surface-2);}
+  .table-wrap{overflow-x:auto; margin-bottom:8px;}
+  .score-cell{font-family:var(--font-mono); text-align:center; width:70px;}
+  .score-cell select{width:100%; font-family:var(--font-mono); font-size:13px; background:var(--bg); color:var(--ink); border:1px solid var(--border); border-radius:2px; padding:3px;}
+  .score-total{font-family:var(--font-mono); font-size:14px; border:1px solid var(--border); border-radius:3px; padding:12px 14px; background:var(--surface-2); margin-top:10px;}
+  .iq-list{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;}
+  .iq-list li{border:1px solid var(--border); border-radius:3px; padding:12px 14px; background:var(--surface); font-size:14px; display:flex; gap:10px;}
+  .iq-list li::before{content:"?"; font-family:var(--font-mono); color:var(--accent); font-weight:700; flex-shrink:0;}
+  .checklist{display:flex; flex-direction:column; gap:10px;}
+  .check-row{display:flex; align-items:flex-start; gap:10px; font-size:14px;}
+  .check-row input{margin-top:3px; width:16px; height:16px; accent-color:var(--good); flex-shrink:0; cursor:pointer;}
+  .check-row label{cursor:pointer;}
+  .nav-footer{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:18px; font-family:var(--font-mono); font-size:12px;}
+  .nav-footer a{text-decoration:none; border:1px solid var(--border); padding:7px 12px; border-radius:2px;}
+  .nav-footer a:hover{border-color:var(--accent2);}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <a class="backlink" href="index.html">&larr; Volver al hub</a>
+
+  <header class="masthead">
+    <div class="eyebrow">Semana 2 · Día 10 · Systems &amp; Cloud <span class="week-done">Cierra semana 2</span></div>
+    <div class="title-row">
+      <span class="day-numeral">10</span>
+      <h1>Mock System Design completo</h1>
+    </div>
+    <p class="sub">Todo lo de la Semana 2, en un solo caso, bajo tiempo. Esta es la simulación más cercana a la entrevista técnica real.</p>
+    <div class="meta-row">
+      <span><b>~90 min (60 resolviendo + 30 revisando)</b></span>
+      <span>Prerrequisito: <b>Días 06-09</b></span>
+      <span>Conecta con: <b>Día 11 — Product Thinking</b></span>
+    </div>
+  </header>
+
+  <section>
+    <div class="section-label">El caso</div>
+    <div class="case-box">
+      <span class="tag">Enunciado</span>
+      <p>"Una empresa quiere implementar un agente de IA que atienda clientes por voz, consulte sistemas internos, ejecute operaciones y transfiera la conversación a un humano cuando sea necesario."</p>
+    </div>
+    <div class="timer-row">
+      <span>⏱ 60 min para resolver</span>
+      <span>🎙 Ideal: grabarte hablando, no solo escribir</span>
+      <span>📋 Usa el framework de 16 pasos del Día 06</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Instrucciones</div>
+    <p>No leas la solución todavía. Pon un timer de 60 minutos y recorre los 16 pasos del Día 06 en voz alta, como si el entrevistador estuviera frente a ti. Dibuja el diagrama en papel. Solo después de terminar (o de que se acabe el tiempo), compara con el enfoque sugerido abajo.</p>
+  </section>
+
+  <section>
+    <div class="section-label">Enfoque sugerido</div>
+    <details>
+      <summary>Ver la solución completa (los 16 pasos)</summary>
+      <ol class="steps" style="margin-top:14px;">
+        <li><b>1. Clarificar</b> "¿Qué tipo de operaciones ejecuta — solo consultas, o también acciones que modifican estado (ej. cancelar un servicio)? ¿Qué canal de voz — call center tradicional o WhatsApp/app?" Asumimos: call center entrante, consultas + acciones de bajo-medio riesgo, con reembolsos/cambios de alto impacto escalando a humano.</li>
+        <li><b>2. Usuarios</b> Clientes finales (llaman por teléfono), agentes humanos de soporte (reciben el handoff), supervisores (auditan calidad de las llamadas).</li>
+        <li><b>3. Objetivos</b> Reducir tiempo de espera y costo por llamada, manteniendo NPS y una tasa de escalamiento a humano &lt;20% (patrón de Product Thinking del Día 19 del plan).</li>
+        <li><b>4. Funcionales</b> Autenticar al llamante, consultar cuenta/pedidos, ejecutar acciones simples (reprogramar, actualizar dato), transferir con contexto a un humano.</li>
+        <li><b>5. No funcionales</b> Latencia de respuesta &lt;1.5s percibida (crítico en voz — silencios largos se sienten como falla), alta disponibilidad 24/7, picos de tráfico en horario comercial.</li>
+        <li><b>6. Restricciones</b> Sistemas legacy de CRM, regulación de grabación de llamadas, el equipo de soporte humano ya opera con un dialer existente.</li>
+        <li><b>7. Arquitectura de alto nivel</b> Teléfono → STT → Agent Runtime → (Tools/RAG) → TTS → Teléfono, con handoff a un humano vía el dialer existente.</li>
+        <li><b>8. Arquitectura del agente</b> El diagrama base del Día 02: Agent Runtime + LLM + Memory (estado de la llamada) + RAG (FAQ/políticas) + Tools (CRM, sistema de reprogramación).</li>
+        <li><b>9. Integraciones</b> CRM vía REST + OAuth2 (Día 03), acciones que modifican estado con idempotency key, transferencia de llamada vía API del proveedor de telefonía.</li>
+        <li><b>10. Datos</b> Estado de la llamada en DynamoDB (Día 08), historial de cliente vía RAG sobre la base de conocimiento, nunca persistir el audio crudo más de lo estrictamente necesario por compliance.</li>
+        <li><b>11. Seguridad</b> Autenticación por voz es más débil que en chat (sin UI visual) — PIN verbal o verificación de 2 factores antes de cualquier acción sensible. Tools de solo lectura sin restricción; tools de escritura con scope mínimo (Día 04).</li>
+        <li><b>12. Resiliencia</b> Si el STT falla o hay ruido excesivo, fallback a "no te escuché bien, ¿puedes repetir?" antes de escalar. Si el LLM está lento, un mensaje de espera evita silencio incómodo (percibido como falla en voz).</li>
+        <li><b>13. Observabilidad</b> Trace por llamada completo (Día 05): transcript, tool calls, decisión de escalar o no, y tiempo en cada etapa del pipeline STT→LLM→TTS.</li>
+        <li><b>14. Escalabilidad</b> El cuello de botella más probable es el proveedor de STT/TTS bajo picos de tráfico — diseñar con múltiples proveedores o colas de espera con estimación de tiempo, no caída del servicio.</li>
+        <li><b>15. Trade-offs</b> Un modelo más grande da mejores respuestas pero más latencia — en voz, la latencia percibida pesa más que en chat, así que se prioriza un modelo más rápido con RAG bien acotado sobre uno más "inteligente" pero lento.</li>
+        <li><b>16. Rollout</b> Piloto con un subconjunto de tipos de llamada de bajo riesgo (consultas de estado), medir tasa de resolución y NPS antes de habilitar acciones que modifican estado.</li>
+      </ol>
+    </details>
+  </section>
+
+  <section>
+    <div class="section-label">Consideraciones específicas de voz</div>
+    <div class="analogy"><b>Lo que cambia frente a un canal de chat</b>Latencia percibida (un silencio de 2s se siente como falla, un delay de 2s en chat no), manejo de interrupciones (barge-in: el usuario habla mientras el agente responde), y autenticación sin UI visual. Voice &amp; Multichannel se cubre en profundidad en la página de referencia rápida de temas complementarios del bootcamp.</div>
+  </section>
+
+  <section>
+    <div class="section-label">Diagrama de implementación</div>
+    <h2>El pipeline de voz completo</h2>
+    <p>Componentes reales detrás del diagrama conceptual del enunciado — con la rama de escalamiento a humano.</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 660 210" role="img" aria-label="Diagrama: el teléfono envía audio a Speech-to-Text, que pasa el texto al Agent Runtime; el Agent Runtime consulta CRM y FAQ, genera una respuesta que Text-to-Speech convierte de vuelta en audio hacia el teléfono, o escala a un humano si es necesario.">
+        <defs>
+          <marker id="d10arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" class="darrow-head"/></marker>
+        </defs>
+
+        <rect x="10" y="20" width="110" height="40" rx="3" class="dbox"/>
+        <text x="65" y="44" text-anchor="middle" class="dtext">Teléfono</text>
+        <line x1="120" y1="40" x2="148" y2="40" class="darrow" marker-end="url(#d10arrow)"/>
+
+        <rect x="150" y="20" width="110" height="40" rx="3" class="dbox"/>
+        <text x="205" y="44" text-anchor="middle" class="dtext">Speech-to-Text</text>
+        <line x1="260" y1="40" x2="288" y2="40" class="darrow" marker-end="url(#d10arrow)"/>
+
+        <rect x="290" y="20" width="150" height="40" rx="3" class="dbox-accent"/>
+        <text x="365" y="44" text-anchor="middle" class="dtext">Agent Runtime</text>
+        <line x1="440" y1="40" x2="468" y2="40" class="darrow" marker-end="url(#d10arrow)"/>
+
+        <rect x="470" y="20" width="110" height="40" rx="3" class="dbox"/>
+        <text x="525" y="44" text-anchor="middle" class="dtext">Text-to-Speech</text>
+
+        <polyline points="525,60 525,95 65,95 65,60" class="darrow" marker-end="url(#d10arrow)"/>
+        <text x="295" y="90" text-anchor="middle" class="dtext-muted">audio de respuesta</text>
+
+        <line x1="365" y1="60" x2="365" y2="128" class="darrow" marker-end="url(#d10arrow)"/>
+        <text x="380" y="112" class="dtext-muted">consulta CRM/FAQ</text>
+        <rect x="290" y="130" width="150" height="40" rx="3" class="dbox"/>
+        <text x="365" y="154" text-anchor="middle" class="dtext">RAG + Tools</text>
+
+        <line x1="410" y1="60" x2="500" y2="128" class="darrow-dashed" marker-end="url(#d10arrow)"/>
+        <text x="470" y="112" class="dtext-muted">si escala</text>
+        <rect x="470" y="130" width="150" height="40" rx="3" class="dbox"/>
+        <text x="545" y="154" text-anchor="middle" class="dtext">Handoff humano</text>
+      </svg>
+      <figcaption>El handoff lleva transcript + intención detectada — el humano nunca arranca desde cero.</figcaption>
+    </figure>
+  </section>
+
+  <section>
+    <div class="section-label">Ejemplo de implementación</div>
+    <h2>Manejo de barge-in, en código</h2>
+    <p>El caso específico de voz que no existe en chat: cancelar el audio que se está reproduciendo en cuanto el usuario empieza a hablar encima.</p>
+    <div class="code-block">
+      <div class="code-head"><span>voice_session.py</span><span class="lang">python</span></div>
+      <pre><span class="code-kw">class</span> VoiceSession:
+    <span class="code-kw">def</span> __init__(self, call_id: str):
+        self.call_id = call_id
+        self.tts_task: asyncio.Task | <span class="code-kw">None</span> = <span class="code-kw">None</span>
+
+    <span class="code-kw">async def</span> on_audio_chunk(self, chunk: bytes):
+        <span class="code-comment"># Si el agente está hablando y llega audio nuevo del usuario,</span>
+        <span class="code-comment"># es barge-in: corta la reproducción YA, no esperes a que termine.</span>
+        <span class="code-kw">if</span> self.tts_task <span class="code-kw">and not</span> self.tts_task.done():
+            self.tts_task.cancel()
+            <span class="code-kw">await</span> self.telephony.stop_playback(self.call_id)
+
+        <span class="code-kw">await</span> self.stt_stream.feed(chunk)
+
+    <span class="code-kw">async def</span> on_utterance_end(self, transcript: str):
+        response_text = <span class="code-kw">await</span> self.agent_runtime.handle_message(self.call_id, transcript)
+        self.tts_task = asyncio.create_task(self._speak(response_text))
+
+    <span class="code-kw">async def</span> _speak(self, text: str):
+        audio_stream = <span class="code-kw">await</span> self.tts.synthesize(text)
+        <span class="code-kw">await</span> self.telephony.play(self.call_id, audio_stream)</pre>
+    </div>
+    <p style="font-size:13px; color:var(--muted); margin-top:8px;">La cancelación explícita del <code>tts_task</code> es lo que evita que el agente "siga hablando" sobre el usuario — el error de UX más notorio en agentes de voz mal implementados.</p>
+  </section>
+
+  <section>
+    <div class="section-label">Rúbrica de autoevaluación</div>
+    <p style="color:var(--muted); font-size:13px; margin-top:-6px;">Califícate del 1 (no lo hice) al 5 (lo hice con solidez) en cada criterio — honestidad, no autocomplacencia.</p>
+    <div class="table-wrap">
+      <table id="rubricTable">
+        <thead><tr><th>Criterio</th><th>1-5</th></tr></thead>
+        <tbody>
+          <tr><td>Clarifiqué el problema antes de diseñar</td><td class="score-cell"><select data-crit="c1"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>Cubrí requisitos funcionales Y no funcionales explícitamente</td><td class="score-cell"><select data-crit="c2"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>Dibujé la arquitectura del agente (Runtime/LLM/Memory/RAG/Tools)</td><td class="score-cell"><select data-crit="c3"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>Diseñé integraciones concretas con protocolo y autorización</td><td class="score-cell"><select data-crit="c4"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>Aborde seguridad específica del canal (voz)</td><td class="score-cell"><select data-crit="c5"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>Cubrí resiliencia y qué pasa cuando algo falla</td><td class="score-cell"><select data-crit="c6"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>Mencioné observabilidad concreta, no genérica</td><td class="score-cell"><select data-crit="c7"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>Nombré al menos un trade-off real y lo justifiqué</td><td class="score-cell"><select data-crit="c8"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+          <tr><td>Propuse un rollout por fases, no todo de una vez</td><td class="score-cell"><select data-crit="c9"><option>-</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="score-total" id="rubricTotal">Total: — / 45</div>
+  </section>
+
+  <section>
+    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <ul class="iq-list">
+      <li>¿Por qué la latencia importa más en un canal de voz que en uno de chat?</li>
+      <li>¿Cómo autenticarías a un usuario por teléfono sin depender de una UI visual?</li>
+      <li>¿Qué pasa si el sistema de Speech-to-Text falla a mitad de la llamada?</li>
+      <li>¿Cómo diseñarías el handoff a un humano para que no pierda el contexto de la conversación?</li>
+      <li>¿Qué mides para decidir si el piloto está listo para habilitar acciones de mayor riesgo?</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-label">Checklist de cierre — Semana 2</div>
+    <div class="checklist" id="checklist">
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Resolví el caso completo bajo tiempo (60 min) antes de ver la solución.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Completé la rúbrica con honestidad, no autocomplacencia.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Identifiqué al menos 2 criterios donde necesito repasar (Días 06-09).</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Completé la Semana 2 completa (Días 06-10).</label></div>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="index.html">&larr; Hub</a>
+    <span>Día 10 de 14 · fin Semana 2</span>
+    <a href="day-11.html">Día 11 &rarr;</a>
+  </div>
+</div>
+
+<script>
+  const RUBRIC_KEY = 'aiaeb-day10-rubric';
+  const selects = document.querySelectorAll('#rubricTable select');
+  function loadRubric(){ try{ return JSON.parse(localStorage.getItem(RUBRIC_KEY)) || {}; } catch(e){ return {}; } }
+  function saveRubric(state){ localStorage.setItem(RUBRIC_KEY, JSON.stringify(state)); }
+  function updateTotal(){
+    let total = 0, answered = 0;
+    selects.forEach(s => { const v = parseInt(s.value); if(!isNaN(v)){ total += v; answered++; } });
+    document.getElementById('rubricTotal').textContent = `Total: ${total} / 45  (${answered}/9 criterios calificados)`;
+  }
+  const rState = loadRubric();
+  selects.forEach(s => {
+    const crit = s.getAttribute('data-crit');
+    if (rState[crit]) s.value = rState[crit];
+    s.addEventListener('change', () => {
+      const r = loadRubric();
+      r[crit] = s.value;
+      saveRubric(r);
+      updateTotal();
+    });
+  });
+  updateTotal();
+
+  const CHECK_KEY = 'aiaeb-day10-checklist';
+  const boxes = document.querySelectorAll('#checklist input[type=checkbox]');
+  function loadChecks(){ try{ return JSON.parse(localStorage.getItem(CHECK_KEY)) || {}; } catch(e){ return {}; } }
+  function saveChecks(state){ localStorage.setItem(CHECK_KEY, JSON.stringify(state)); }
+  const cState = loadChecks();
+  boxes.forEach(b => {
+    if (cState[b.id]) b.checked = true;
+    b.addEventListener('change', () => { const s = loadChecks(); s[b.id] = b.checked; saveChecks(s); });
+  });
+</script>
+
+</body>
+</html>

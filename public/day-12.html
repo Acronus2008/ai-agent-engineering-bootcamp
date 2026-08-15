@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
+<title>Communication &amp; Executive Presence</title>
+<style>
+  :root{
+    --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
+    --border:#d3dbdd; --accent:#b8681f; --accent-ink:#fff8f0; --accent2:#256d87; --good:#3f7d52; --bad:#a8452a;
+    --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+      --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c; --bad:#e07a5c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+    --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c; --bad:#e07a5c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      repeating-linear-gradient(90deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      var(--bg);
+    color:var(--ink); font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent2);}
+  a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible{outline:2px solid var(--accent2); outline-offset:2px;}
+  .wrap{max-width:760px; margin:0 auto; padding:40px 24px 100px;}
+  .backlink{font-family:var(--font-mono); font-size:12px; text-decoration:none; color:var(--muted); display:inline-flex; gap:6px;}
+  .backlink:hover{color:var(--accent2);}
+  header.masthead{border-bottom:1px solid var(--border); padding-bottom:24px; margin:18px 0 36px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent2); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:20px; height:1px; background:var(--accent2); display:inline-block;}
+  .title-row{display:flex; align-items:baseline; gap:18px; margin-top:10px;}
+  .day-numeral{font-family:var(--font-display); font-size:56px; font-weight:600; color:var(--accent); line-height:1;}
+  h1{font-family:var(--font-display); font-weight:600; font-size:clamp(26px,4vw,34px); margin:0; text-wrap:balance; letter-spacing:-0.01em;}
+  .sub{color:var(--muted); font-size:15px; max-width:60ch; margin-top:10px;}
+  .meta-row{display:flex; gap:20px; margin-top:16px; flex-wrap:wrap; font-family:var(--font-mono); font-size:12px; color:var(--muted);}
+  .meta-row b{color:var(--ink); font-weight:600;}
+  section{margin-bottom:46px;}
+  .section-label{font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); border-top:1px solid var(--border); padding-top:8px; margin-bottom:16px;}
+  h2{font-family:var(--font-display); font-size:21px; margin:0 0 10px; font-weight:600;}
+  h3{font-family:var(--font-display); font-size:17px; margin:22px 0 6px; font-weight:600;}
+  p{margin:0 0 12px;}
+  ul, ol{margin:0 0 12px; padding-left:20px;}
+  li{margin-bottom:6px;}
+  .framework-flow{display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin:14px 0;}
+  .framework-flow .node{border:1px solid var(--accent); color:var(--accent); font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:.05em; padding:8px 14px; border-radius:2px;}
+  .framework-flow .arrow{color:var(--muted); font-family:var(--font-mono);}
+  .analogy{background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent2); padding:10px 14px; border-radius:2px; font-size:14px; margin:10px 0 16px;}
+  .analogy b{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent2); display:block; margin-bottom:4px;}
+  code{font-family:var(--font-mono); font-size:.9em; background:var(--surface-2); padding:1px 5px; border-radius:2px;}
+  .group-title{font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:26px 0 4px;}
+  .concept-grid{display:grid; grid-template-columns:1fr; gap:0;}
+  .concept{border-bottom:1px solid var(--border); padding:14px 0;}
+  .concept:first-child{padding-top:0;}
+  .concept:last-child{border-bottom:none;}
+  .concept-term{font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:4px;}
+  .phrase-list{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px;}
+  .phrase-list li{font-family:var(--font-mono); font-size:13.5px; border:1px solid var(--border); background:var(--surface); border-radius:2px; padding:9px 12px;}
+  .exercise-box{border:1px solid var(--border); background:var(--surface); border-radius:3px; padding:20px;}
+  details{margin-top:14px;}
+  summary{cursor:pointer; font-family:var(--font-mono); font-size:13px; color:var(--accent2); list-style:none;}
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:"▸ ";}
+  details[open] summary::before{content:"▾ ";}
+  .solution{margin-top:12px; padding-top:12px; border-top:1px dashed var(--border); font-size:14px;}
+  .iq-list{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;}
+  .iq-list li{border:1px solid var(--border); border-radius:3px; padding:12px 14px; background:var(--surface); font-size:14px; display:flex; gap:10px;}
+  .iq-list li::before{content:"?"; font-family:var(--font-mono); color:var(--accent); font-weight:700; flex-shrink:0;}
+  .quiz-item{border:1px solid var(--border); border-radius:3px; padding:16px; margin-bottom:12px; background:var(--surface);}
+  .quiz-q{font-weight:600; margin-bottom:10px; font-size:14.5px;}
+  .quiz-opts{display:flex; flex-direction:column; gap:8px;}
+  .quiz-opt{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--bg); color:var(--ink); padding:9px 12px; border-radius:2px; font-family:var(--font-body); font-size:13.5px; cursor:pointer;}
+  .quiz-opt:hover{border-color:var(--accent2);}
+  .quiz-opt.correct{border-color:var(--good); background:color-mix(in srgb, var(--good) 14%, var(--surface));}
+  .quiz-opt.incorrect{border-color:var(--bad); background:color-mix(in srgb, var(--bad) 12%, var(--surface));}
+  .quiz-opt[disabled]{cursor:default;}
+  .quiz-explain{font-size:13px; color:var(--muted); margin-top:10px; display:none; padding-top:10px; border-top:1px dashed var(--border);}
+  .quiz-explain.show{display:block;}
+  .quiz-score{font-family:var(--font-mono); font-size:13px; border:1px solid var(--border); border-radius:3px; padding:12px 14px; background:var(--surface-2); margin-top:6px;}
+  .checklist{display:flex; flex-direction:column; gap:10px;}
+  .check-row{display:flex; align-items:flex-start; gap:10px; font-size:14px;}
+  .check-row input{margin-top:3px; width:16px; height:16px; accent-color:var(--good); flex-shrink:0; cursor:pointer;}
+  .check-row label{cursor:pointer;}
+  .nav-footer{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:18px; font-family:var(--font-mono); font-size:12px;}
+  .nav-footer a{text-decoration:none; border:1px solid var(--border); padding:7px 12px; border-radius:2px;}
+  .nav-footer a:hover{border-color:var(--accent2);}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <a class="backlink" href="index.html">&larr; Volver al hub</a>
+
+  <header class="masthead">
+    <div class="eyebrow">Semana 3 · Día 12 · FDE, Cliente &amp; Mocks</div>
+    <div class="title-row">
+      <span class="day-numeral">12</span>
+      <h1>Communication &amp; Executive Presence</h1>
+    </div>
+    <p class="sub">Un framework para estructurar cualquier respuesta técnica, y el inglés específico para sostenerla en una entrevista de arquitectura.</p>
+    <div class="meta-row">
+      <span><b>~90 min</b></span>
+      <span>Prerrequisito: <b>Día 11</b></span>
+      <span>Conecta con: <b>Día 13 — Behavioral</b></span>
+    </div>
+  </header>
+
+  <section>
+    <div class="section-label">Objetivo del día</div>
+    <p>Tener un molde reutilizable para cualquier respuesta técnica — para no improvisar la estructura cada vez, solo el contenido.</p>
+  </section>
+
+  <section>
+    <div class="section-label">El framework: Context → Decision → Reason → Trade-off → Result</div>
+    <div class="framework-flow">
+      <span class="node">Context</span><span class="arrow">→</span>
+      <span class="node">Decision</span><span class="arrow">→</span>
+      <span class="node">Reason</span><span class="arrow">→</span>
+      <span class="node">Trade-off</span><span class="arrow">→</span>
+      <span class="node">Result</span>
+    </div>
+    <p>Úsalo para explicar cualquier decisión técnica en 60-90 segundos: sitúa el contexto, di qué decidiste, por qué, qué sacrificaste al elegirlo, y qué pasó.</p>
+    <div class="analogy"><b>Ejemplo aplicado (Día 08)</b><b>Context:</b> "Necesitábamos orquestar un flujo de reembolso con 4 pasos y compensaciones." <b>Decision:</b> "Elegí Step Functions en vez de coordinar la Saga manualmente con Kafka." <b>Reason:</b> "Porque necesitábamos retry y manejo de error por paso, con visibilidad clara del estado." <b>Trade-off:</b> "Sacrificamos algo de flexibilidad frente a un enfoque basado en eventos puro, a cambio de menos código de orquestación propio." <b>Result:</b> "El flujo quedó auditable paso a paso y el tiempo de implementación bajó."</div>
+  </section>
+
+  <section>
+    <div class="section-label">Las otras piezas de comunicación</div>
+    <div class="concept-grid">
+      <div class="concept">
+        <div class="concept-term">Elevator Pitch</div>
+        <h3>30-60 segundos, sin relleno</h3>
+        <p>Tu respuesta a "why this role, why this company, why now" debe caber en menos de un minuto, con una estructura: quién eres técnicamente, qué te conecta con el rol, y qué aportas específicamente que no es genérico.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Explicar un diagrama</div>
+        <h3>De afuera hacia adentro, nombrando el fallo que anticipaste</h3>
+        <p>Empieza por el usuario, sigue el flujo en el orden en que ocurre, y en cada caja menciona brevemente qué pasa si esa pieza falla — demuestra que diseñaste pensando en fallos, no solo en el camino feliz.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Presentaciones ejecutivas</div>
+        <h3>La conclusión primero, el detalle después</h3>
+        <p>A un ejecutivo no le interesa cómo llegaste a la conclusión antes de saber cuál es. Empieza con el resultado/recomendación, y ten el detalle técnico listo si preguntan "¿por qué?".</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Technical English — frases para entrevistas de arquitectura</div>
+    <ul class="phrase-list">
+      <li>"Let me clarify the requirements first."</li>
+      <li>"There are two main trade-offs here."</li>
+      <li>"I would start with a synchronous approach, but move to async if X."</li>
+      <li>"The bottleneck is likely to be..."</li>
+      <li>"I would introduce asynchronous processing if the volume grows beyond..."</li>
+      <li>"The main risk with this approach is..."</li>
+      <li>"To keep this idempotent, I'd use a key based on..."</li>
+      <li>"Let's walk through what happens on the failure path."</li>
+      <li>"I'll assume X for now — let me know if that's not the case."</li>
+      <li>"The reason I'm choosing this over Y is..."</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-label">Ejercicio práctico</div>
+    <div class="exercise-box">
+      <h2>Explica el diagrama del Día 10 completamente en inglés</h2>
+      <p>Toma el diagrama del agente de voz (Día 10) y explícalo en voz alta, en inglés, usando el framework Context→Decision→Reason→Trade-off→Result para <b>al menos dos</b> de las decisiones que tomaste (ej. la elección de latencia sobre "inteligencia" del modelo).</p>
+      <details>
+        <summary>Ver ejemplo de apertura en inglés</summary>
+        <div class="solution">
+          <p>"Let me walk you through the architecture. <b>Context:</b> the company needed a voice agent handling both inquiries and actions, with human handoff for high-risk cases. <b>Decision:</b> I chose a faster, smaller model with tightly-scoped RAG over a larger, more capable one. <b>Reason:</b> in voice, perceived latency matters more than in chat — a two-second silence feels like a failure. <b>Trade-off:</b> we accept slightly less nuanced answers in exchange for responsiveness. <b>Result:</b> average response time stayed under 1.5 seconds, which was the hard requirement."</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <ul class="iq-list">
+      <li>Walk me through a technical decision you made recently, and why.</li>
+      <li>How do you adjust your communication style between a developer and an executive audience?</li>
+      <li>Give me a 60-second pitch on why you want this role.</li>
+      <li>Explain this architecture to me as if I were a non-technical stakeholder.</li>
+      <li>What's the biggest risk in the design you just proposed?</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-label">Quiz de autoevaluación</div>
+    <div id="quiz"></div>
+    <div class="quiz-score" id="quizScore">0 / 5 respondidas correctamente</div>
+  </section>
+
+  <section>
+    <div class="section-label">Checklist de cierre</div>
+    <div class="checklist" id="checklist">
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Practiqué el framework CDRT con al menos 2 decisiones reales mías, no inventadas.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Tengo mi elevator pitch de "why this role, why this company" cronometrado en menos de 60s.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Expliqué el diagrama del Día 10 en inglés, en voz alta, sin leer un guion.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Completé el quiz con 5/5.</label></div>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="index.html">&larr; Hub</a>
+    <span>Día 12 de 14</span>
+    <a href="day-13.html">Día 13 &rarr;</a>
+  </div>
+</div>
+
+<script>
+  const QUIZ = [
+    {
+      q: "En el framework Context→Decision→Reason→Trade-off→Result, ¿qué va en 'Trade-off'?",
+      opts: ["Una repetición del contexto", "Qué sacrificaste al tomar esa decisión frente a las alternativas", "El resultado final medido", "Una lista de tecnologías descartadas sin justificación"],
+      correct: 1,
+      explain: "Trade-off es explícitamente nombrar el costo de la decisión — sin esto, la respuesta suena a que no hubo alternativas consideradas."
+    },
+    {
+      q: "Al presentar a una audiencia ejecutiva, la estructura recomendada es...",
+      opts: ["Explicar todo el proceso técnico antes de dar la conclusión", "Dar la conclusión/recomendación primero, con el detalle técnico disponible si preguntan", "Usar exclusivamente jerga técnica para demostrar profundidad", "Evitar mencionar riesgos para no generar dudas"],
+      correct: 1,
+      explain: "Los ejecutivos priorizan la conclusión; el detalle técnico es un respaldo, no el punto de entrada."
+    },
+    {
+      q: "Al explicar un diagrama de arquitectura en una entrevista, una buena práctica es...",
+      opts: ["Empezar por el componente técnicamente más complejo", "Seguir el flujo desde el usuario y mencionar qué pasa si cada pieza falla", "Omitir los casos de fallo para no sonar negativo", "Explicar todos los componentes en orden alfabético"],
+      correct: 1,
+      explain: "Seguir el flujo real y nombrar los fallos anticipados demuestra que el diseño consideró resiliencia, no solo el camino feliz."
+    },
+    {
+      q: "Un elevator pitch efectivo para 'why this role' debería...",
+      opts: ["Durar 5 minutos para cubrir todo el detalle", "Caber en 30-60 segundos, conectando tu experiencia con algo específico del rol", "Ser genérico para servir en cualquier entrevista", "Evitar mencionar por qué la empresa específicamente"],
+      correct: 1,
+      explain: "La brevedad y la especificidad (por qué esta empresa, este rol) son lo que lo distingue de una respuesta genérica."
+    },
+    {
+      q: "La frase 'I would introduce asynchronous processing if the volume grows beyond X' es útil porque...",
+      opts: ["Suena más formal sin aportar contenido", "Comunica una decisión condicionada a un criterio concreto, no una afirmación absoluta", "Evita comprometerse con cualquier decisión", "Solo aplica a sistemas sin IA"],
+      correct: 1,
+      explain: "Mostrar que la decisión depende de un umbral medible demuestra pensamiento de trade-offs, no una regla fija memorizada."
+    }
+  ];
+  const quizEl = document.getElementById('quiz');
+  let correctCount = 0, answered = 0;
+  QUIZ.forEach((item, i) => {
+    const box = document.createElement('div');
+    box.className = 'quiz-item';
+    const optsHtml = item.opts.map((o, j) => `<button class="quiz-opt" data-idx="${j}">${o}</button>`).join('');
+    box.innerHTML = `<div class="quiz-q">${i+1}. ${item.q}</div><div class="quiz-opts">${optsHtml}</div><div class="quiz-explain" id="explain-${i}">${item.explain}</div>`;
+    quizEl.appendChild(box);
+    box.querySelectorAll('.quiz-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (box.dataset.answered) return;
+        box.dataset.answered = "1"; answered++;
+        const idx = parseInt(btn.getAttribute('data-idx'));
+        box.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+        if (idx === item.correct) { btn.classList.add('correct'); correctCount++; }
+        else { btn.classList.add('incorrect'); box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct'); }
+        document.getElementById(`explain-${i}`).classList.add('show');
+        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+      });
+    });
+  });
+  const CHECK_KEY = 'aiaeb-day12-checklist';
+  const boxes = document.querySelectorAll('#checklist input[type=checkbox]');
+  function loadChecks(){ try{ return JSON.parse(localStorage.getItem(CHECK_KEY)) || {}; } catch(e){ return {}; } }
+  function saveChecks(state){ localStorage.setItem(CHECK_KEY, JSON.stringify(state)); }
+  const state = loadChecks();
+  boxes.forEach(b => {
+    if (state[b.id]) b.checked = true;
+    b.addEventListener('change', () => { const s = loadChecks(); s[b.id] = b.checked; saveChecks(s); });
+  });
+</script>
+
+</body>
+</html>

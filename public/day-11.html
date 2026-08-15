@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%93%90%3C/text%3E%3C/svg%3E">
+<title>Product Thinking &amp; Customer Skills</title>
+<style>
+  :root{
+    --bg:#eef1f0; --surface:#ffffff; --surface-2:#e4e9e7; --ink:#1a232b; --muted:#5c6b73;
+    --border:#d3dbdd; --accent:#b8681f; --accent-ink:#fff8f0; --accent2:#256d87; --good:#3f7d52; --bad:#a8452a;
+    --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+      --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c; --bad:#e07a5c;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#10161c; --surface:#171f28; --surface-2:#1c2530; --ink:#e6ecef; --muted:#93a3ac;
+    --border:#2a3540; --accent:#e0964e; --accent-ink:#171208; --accent2:#6db8d6; --good:#63b37c; --bad:#e07a5c;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      repeating-linear-gradient(90deg, transparent, transparent 31px, color-mix(in srgb, var(--border) 55%, transparent) 32px),
+      var(--bg);
+    color:var(--ink); font-family:var(--font-body); line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent2);}
+  a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible{outline:2px solid var(--accent2); outline-offset:2px;}
+  .wrap{max-width:760px; margin:0 auto; padding:40px 24px 100px;}
+  .backlink{font-family:var(--font-mono); font-size:12px; text-decoration:none; color:var(--muted); display:inline-flex; gap:6px;}
+  .backlink:hover{color:var(--accent2);}
+  header.masthead{border-bottom:1px solid var(--border); padding-bottom:24px; margin:18px 0 36px;}
+  .eyebrow{font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent2); display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:""; width:20px; height:1px; background:var(--accent2); display:inline-block;}
+  .week-start{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--accent2); border:1px solid var(--accent2); padding:3px 8px; border-radius:2px; margin-left:auto;}
+  .title-row{display:flex; align-items:baseline; gap:18px; margin-top:10px;}
+  .day-numeral{font-family:var(--font-display); font-size:56px; font-weight:600; color:var(--accent); line-height:1;}
+  h1{font-family:var(--font-display); font-weight:600; font-size:clamp(26px,4vw,34px); margin:0; text-wrap:balance; letter-spacing:-0.01em;}
+  .sub{color:var(--muted); font-size:15px; max-width:60ch; margin-top:10px;}
+  .meta-row{display:flex; gap:20px; margin-top:16px; flex-wrap:wrap; font-family:var(--font-mono); font-size:12px; color:var(--muted);}
+  .meta-row b{color:var(--ink); font-weight:600;}
+  section{margin-bottom:46px;}
+  .section-label{font-family:var(--font-mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); border-top:1px solid var(--border); padding-top:8px; margin-bottom:16px;}
+  h2{font-family:var(--font-display); font-size:21px; margin:0 0 10px; font-weight:600;}
+  h3{font-family:var(--font-display); font-size:17px; margin:22px 0 6px; font-weight:600;}
+  p{margin:0 0 12px;}
+  ul, ol{margin:0 0 12px; padding-left:20px;}
+  li{margin-bottom:6px;}
+  .analogy{background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent2); padding:10px 14px; border-radius:2px; font-size:14px; margin:10px 0 16px;}
+  .analogy b{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--accent2); display:block; margin-bottom:4px;}
+  .contrast{display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--border); border-radius:3px; overflow:hidden; margin:14px 0;}
+  .contrast > div{padding:14px 16px; font-size:14px;}
+  .contrast .bad-col{background:color-mix(in srgb, var(--bad) 7%, var(--surface)); border-right:1px solid var(--border);}
+  .contrast .good-col{background:color-mix(in srgb, var(--good) 7%, var(--surface));}
+  .contrast .label{font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px; display:block;}
+  .contrast .bad-col .label{color:var(--bad);}
+  .contrast .good-col .label{color:var(--good);}
+  @media (max-width:520px){.contrast{grid-template-columns:1fr;} .contrast .bad-col{border-right:none; border-bottom:1px solid var(--border);}}
+  code{font-family:var(--font-mono); font-size:.9em; background:var(--surface-2); padding:1px 5px; border-radius:2px;}
+  .group-title{font-family:var(--font-mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:26px 0 4px;}
+  .concept-grid{display:grid; grid-template-columns:1fr; gap:0;}
+  .concept{border-bottom:1px solid var(--border); padding:14px 0;}
+  .concept:first-child{padding-top:0;}
+  .concept:last-child{border-bottom:none;}
+  .concept-term{font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:4px;}
+  .exercise-box{border:1px solid var(--border); background:var(--surface); border-radius:3px; padding:20px;}
+  details{margin-top:14px;}
+  summary{cursor:pointer; font-family:var(--font-mono); font-size:13px; color:var(--accent2); list-style:none;}
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:"▸ ";}
+  details[open] summary::before{content:"▾ ";}
+  .solution{margin-top:12px; padding-top:12px; border-top:1px dashed var(--border); font-size:14px;}
+  .iq-list{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px;}
+  .iq-list li{border:1px solid var(--border); border-radius:3px; padding:12px 14px; background:var(--surface); font-size:14px; display:flex; gap:10px;}
+  .iq-list li::before{content:"?"; font-family:var(--font-mono); color:var(--accent); font-weight:700; flex-shrink:0;}
+  .quiz-item{border:1px solid var(--border); border-radius:3px; padding:16px; margin-bottom:12px; background:var(--surface);}
+  .quiz-q{font-weight:600; margin-bottom:10px; font-size:14.5px;}
+  .quiz-opts{display:flex; flex-direction:column; gap:8px;}
+  .quiz-opt{display:block; width:100%; text-align:left; border:1px solid var(--border); background:var(--bg); color:var(--ink); padding:9px 12px; border-radius:2px; font-family:var(--font-body); font-size:13.5px; cursor:pointer;}
+  .quiz-opt:hover{border-color:var(--accent2);}
+  .quiz-opt.correct{border-color:var(--good); background:color-mix(in srgb, var(--good) 14%, var(--surface));}
+  .quiz-opt.incorrect{border-color:var(--bad); background:color-mix(in srgb, var(--bad) 12%, var(--surface));}
+  .quiz-opt[disabled]{cursor:default;}
+  .quiz-explain{font-size:13px; color:var(--muted); margin-top:10px; display:none; padding-top:10px; border-top:1px dashed var(--border);}
+  .quiz-explain.show{display:block;}
+  .quiz-score{font-family:var(--font-mono); font-size:13px; border:1px solid var(--border); border-radius:3px; padding:12px 14px; background:var(--surface-2); margin-top:6px;}
+  .checklist{display:flex; flex-direction:column; gap:10px;}
+  .check-row{display:flex; align-items:flex-start; gap:10px; font-size:14px;}
+  .check-row input{margin-top:3px; width:16px; height:16px; accent-color:var(--good); flex-shrink:0; cursor:pointer;}
+  .check-row label{cursor:pointer;}
+  .nav-footer{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:18px; font-family:var(--font-mono); font-size:12px;}
+  .nav-footer a{text-decoration:none; border:1px solid var(--border); padding:7px 12px; border-radius:2px;}
+  .nav-footer a:hover{border-color:var(--accent2);}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <a class="backlink" href="index.html">&larr; Volver al hub</a>
+
+  <header class="masthead">
+    <div class="eyebrow">Semana 3 · Día 11 · FDE, Cliente &amp; Mocks <span class="week-start">Abre semana 3</span></div>
+    <div class="title-row">
+      <span class="day-numeral">11</span>
+      <h1>Product Thinking &amp; Customer Skills</h1>
+    </div>
+    <p class="sub">La parte que ninguna certificación técnica cubre: pensar en el problema de negocio antes que en la tecnología, y sostener eso frente a un cliente real.</p>
+    <div class="meta-row">
+      <span><b>~90 min</b></span>
+      <span>Prerrequisito: <b>Semana 2 completa</b></span>
+      <span>Conecta con: <b>Día 12 — Communication</b></span>
+    </div>
+  </header>
+
+  <section>
+    <div class="section-label">Objetivo del día</div>
+    <p>Interiorizar un reflejo: antes de proponer una arquitectura, pregúntate qué métrica de negocio se mueve con ella. Y practicar las habilidades de discovery que un FDE usa antes de escribir una sola línea de diseño.</p>
+  </section>
+
+  <section>
+    <div class="section-label">Product Thinking</div>
+    <p>El error más común de un perfil técnico fuerte: enamorarse de la solución antes de cuantificar el problema.</p>
+    <div class="contrast">
+      <div class="bad-col"><span class="label">Evitar</span>"Implementemos un multi-agent system."</div>
+      <div class="good-col"><span class="label">Preferir</span>"El objetivo es reducir el tiempo de resolución de tickets de 12 a 3 minutos, manteniendo el escalamiento humano bajo 15%."</div>
+    </div>
+    <p>La segunda frase es evaluable. La primera no. Todo lo que propongas en una entrevista de FDE debería poder reformularse en términos de: KPI, ROI, MVP, scope y criterio de éxito.</p>
+  </section>
+
+  <section>
+    <div class="section-label">Customer / Consulting Skills</div>
+    <div class="concept-grid">
+      <div class="concept">
+        <div class="concept-term">Discovery &amp; Requirements Gathering</div>
+        <h3>El cliente no siempre sabe lo que necesita — solo lo que le duele</h3>
+        <p>Tu trabajo es traducir "necesitamos IA" en requisitos concretos, igual que en el Composition Case del Día 09 — la diferencia es que ahora hay una persona real del otro lado, con su propia agenda.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Manejo de ambigüedad</div>
+        <h3>Avanzar con supuestos explícitos, no parálisis por falta de información</h3>
+        <p>"Voy a asumir X porque Y; corrígeme si me equivoco" — es más útil que quedarte esperando que el cliente te dé una spec completa que probablemente nunca tendrá.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Priorización &amp; Trade-offs</div>
+        <h3>No todo puede ser P0</h3>
+        <p>Un cliente enterprise siempre pedirá más de lo que cabe en el primer release. Tu valor es ayudarlo a decidir qué va en el MVP y qué espera, con criterio de negocio explícito, no solo técnico.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Conflictos entre Business, Security y Engineering</div>
+        <h3>Tres agendas legítimas que rara vez coinciden de entrada</h3>
+        <p>Business quiere velocidad, Security quiere control, Engineering quiere sostenibilidad. Tu trabajo no es tomar partido — es encontrar la solución que satisface el mínimo no negociable de cada una.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Explicar arquitectura a perfiles no técnicos</div>
+        <h3>El mismo diagrama, dos narrativas distintas</h3>
+        <p>A un ingeniero le hablas de tools, scopes y latencia. Al mismo diagrama, a un VP de negocio le hablas de tiempo de resolución, riesgo y costo por interacción — la arquitectura no cambia, el lenguaje sí.</p>
+      </div>
+      <div class="concept">
+        <div class="concept-term">Incidentes y troubleshooting con clientes</div>
+        <h3>La confianza se gana en el momento en que algo sale mal</h3>
+        <p>Un cliente recuerda más cómo comunicaste un incidente que si el sistema tuvo 99.9% o 99.5% de uptime. Transparencia + plan de acción concreto &gt; explicación técnica extensa.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Ejercicio práctico</div>
+    <div class="exercise-box">
+      <h2>Roleplay escrito: el cliente pide "un chatbot que lo haga todo"</h2>
+      <p>Un VP de una aseguradora te dice: "Queremos un chatbot que responda cualquier pregunta de nuestros clientes, procese reclamos automáticamente, y esté listo en 6 semanas." Escribe (en primera persona, como si le hablaras) tu respuesta cubriendo:</p>
+      <ol>
+        <li>Cómo acotas el scope sin sonar a que le estás diciendo que no.</li>
+        <li>Qué preguntas de discovery haces antes de comprometerte a un plazo.</li>
+        <li>Cómo conectas tu propuesta de MVP a una métrica de negocio.</li>
+      </ol>
+      <details>
+        <summary>Ver enfoque sugerido</summary>
+        <div class="solution">
+          <p><b>1.</b> "Para llegar a algo sólido en 6 semanas, propongo empezar por el caso de mayor volumen y menor riesgo — consultas de estado de reclamo — y dejar el procesamiento automático de reclamos para una segunda fase, una vez que veamos cómo se comporta en producción." (Acota sin decir "no".)</p>
+          <p><b>2.</b> "¿Cuál es el tipo de consulta más frecuente hoy? ¿Qué porcentaje de reclamos son suficientemente simples como para procesarse sin revisión humana? ¿Qué sistemas necesitaría consultar el agente — y con qué nivel de acceso?"</p>
+          <p><b>3.</b> "Si logramos que el 40% de las consultas de estado se resuelvan sin intervención humana en las primeras 6 semanas, eso libera X horas de tu equipo de soporte — y nos da datos reales para diseñar la fase de reclamos automáticos con mucho menos riesgo."</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">Preguntas de entrevista relacionadas</div>
+    <ul class="iq-list">
+      <li>Cuéntame de una vez que tuviste que decir "no" (o "todavía no") a un stakeholder. ¿Cómo lo manejaste?</li>
+      <li>¿Cómo priorizas cuando business, security y engineering piden cosas incompatibles?</li>
+      <li>¿Cómo explicarías este mismo sistema a un ingeniero versus a un ejecutivo no técnico?</li>
+      <li>Describe cómo manejarías un incidente de producción frente a un cliente enterprise.</li>
+      <li>¿Cómo conviertes "queremos usar IA" en un problema bien definido?</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-label">Quiz de autoevaluación</div>
+    <div id="quiz"></div>
+    <div class="quiz-score" id="quizScore">0 / 5 respondidas correctamente</div>
+  </section>
+
+  <section>
+    <div class="section-label">Checklist de cierre</div>
+    <div class="checklist" id="checklist">
+      <div class="check-row"><input type="checkbox" id="c1"><label for="c1">Escribí mi respuesta al roleplay del VP antes de ver la solución.</label></div>
+      <div class="check-row"><input type="checkbox" id="c2"><label for="c2">Puedo reformular cualquier propuesta técnica en términos de KPI/ROI.</label></div>
+      <div class="check-row"><input type="checkbox" id="c3"><label for="c3">Tengo un ejemplo real (no inventado) de un conflicto business/security/engineering que viví.</label></div>
+      <div class="check-row"><input type="checkbox" id="c4"><label for="c4">Completé el quiz con 5/5.</label></div>
+    </div>
+  </section>
+
+  <div class="nav-footer">
+    <a href="index.html">&larr; Hub</a>
+    <span>Día 11 de 14</span>
+    <a href="day-12.html">Día 12 &rarr;</a>
+  </div>
+</div>
+
+<script>
+  const QUIZ = [
+    {
+      q: "¿Qué distingue 'implementemos un multi-agent system' de un buen objetivo de producto?",
+      opts: ["Nada, ambas son igual de válidas", "La segunda debe ser evaluable: conectada a una métrica de negocio medible", "El multi-agent system siempre es mejor", "Los objetivos de producto no deberían mencionar tecnología nunca"],
+      correct: 1,
+      explain: "Un objetivo evaluable (tiempo de resolución, tasa de escalamiento) permite medir éxito; una solución técnica sin métrica no."
+    },
+    {
+      q: "Cuando business, security y engineering piden cosas incompatibles, el rol del FDE es...",
+      opts: ["Tomar partido por engineering siempre", "Encontrar la solución que satisface el mínimo no negociable de cada agenda", "Escalar siempre a un superior", "Ignorar la agenda de security por ser la más lenta"],
+      correct: 1,
+      explain: "No se trata de elegir un bando, sino de negociar una solución viable para las tres agendas legítimas."
+    },
+    {
+      q: "Al explicar la misma arquitectura a un ingeniero y a un VP de negocio, ¿qué cambia?",
+      opts: ["La arquitectura real cambia según la audiencia", "El lenguaje y el énfasis cambian, la arquitectura subyacente es la misma", "Nada, se debe usar siempre el mismo vocabulario técnico", "Al VP no se le debe mostrar ningún diagrama"],
+      correct: 1,
+      explain: "Mismo sistema, distinta narrativa: tools/latencia para el ingeniero, tiempo de resolución/riesgo/costo para el ejecutivo."
+    },
+    {
+      q: "Ante un scope demasiado amplio pedido por un cliente en un plazo corto, la mejor respuesta es...",
+      opts: ["Aceptar todo el scope para no perder el cliente", "Acotar proponiendo un MVP de mayor valor/menor riesgo, conectado a una métrica", "Decir que no es posible sin ofrecer alternativa", "Prometer el scope completo y ajustar silenciosamente después"],
+      correct: 1,
+      explain: "Acotar con una propuesta concreta de MVP es más útil (y más honesto) que aceptar todo o simplemente rechazar."
+    },
+    {
+      q: "Frente a un incidente de producción con un cliente enterprise, lo que más pesa en la confianza es...",
+      opts: ["El porcentaje exacto de uptime histórico", "Transparencia inmediata + un plan de acción concreto", "Una explicación técnica extensa del stack trace", "Minimizar la comunicación hasta tener la causa raíz confirmada"],
+      correct: 1,
+      explain: "Los clientes recuerdan cómo se comunicó el incidente más que los detalles técnicos de la causa."
+    }
+  ];
+  const quizEl = document.getElementById('quiz');
+  let correctCount = 0, answered = 0;
+  QUIZ.forEach((item, i) => {
+    const box = document.createElement('div');
+    box.className = 'quiz-item';
+    const optsHtml = item.opts.map((o, j) => `<button class="quiz-opt" data-idx="${j}">${o}</button>`).join('');
+    box.innerHTML = `<div class="quiz-q">${i+1}. ${item.q}</div><div class="quiz-opts">${optsHtml}</div><div class="quiz-explain" id="explain-${i}">${item.explain}</div>`;
+    quizEl.appendChild(box);
+    box.querySelectorAll('.quiz-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (box.dataset.answered) return;
+        box.dataset.answered = "1"; answered++;
+        const idx = parseInt(btn.getAttribute('data-idx'));
+        box.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+        if (idx === item.correct) { btn.classList.add('correct'); correctCount++; }
+        else { btn.classList.add('incorrect'); box.querySelectorAll('.quiz-opt')[item.correct].classList.add('correct'); }
+        document.getElementById(`explain-${i}`).classList.add('show');
+        document.getElementById('quizScore').textContent = `${correctCount} / ${QUIZ.length} respondidas correctamente (${answered}/${QUIZ.length} vistas)`;
+      });
+    });
+  });
+  const CHECK_KEY = 'aiaeb-day11-checklist';
+  const boxes = document.querySelectorAll('#checklist input[type=checkbox]');
+  function loadChecks(){ try{ return JSON.parse(localStorage.getItem(CHECK_KEY)) || {}; } catch(e){ return {}; } }
+  function saveChecks(state){ localStorage.setItem(CHECK_KEY, JSON.stringify(state)); }
+  const state = loadChecks();
+  boxes.forEach(b => {
+    if (state[b.id]) b.checked = true;
+    b.addEventListener('change', () => { const s = loadChecks(); s[b.id] = b.checked; saveChecks(s); });
+  });
+</script>
+
+</body>
+</html>
